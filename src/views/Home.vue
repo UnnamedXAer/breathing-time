@@ -1,18 +1,19 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <h1>home</h1>
+    <hr />
+    <app-counter></app-counter>
   </div>
 </template>
 
 <script lang="ts">
+import CounterVue from "@/components/counter/Counter.vue";
 import { defineComponent } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 
 export default defineComponent({
   name: "Home",
   components: {
-    HelloWorld,
+    appCounter: CounterVue,
   },
 });
 </script>
