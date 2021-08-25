@@ -1,8 +1,8 @@
 <template>
   <section class="breathing_exercise__summary">
     <app-button @click="$emit('start')">START</app-button>
-    <app-button @click="$emit('next')">Next Round</app-button>
-    <app-button @click="$emit('stop')">Finish</app-button>
+    <app-button @click="$emit('next')" mode="warning">NEXT ROUND</app-button>
+    <app-button @click="$emit('stop')" mode="success">FINISH</app-button>
   </section>
 </template>
 
@@ -26,6 +26,3 @@ export default defineComponent({
   emits: ["start", "next", "stop"],
 });
 </script>
-
-<style scoped>
-</style>
