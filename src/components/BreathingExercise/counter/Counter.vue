@@ -1,30 +1,28 @@
 <template>
   <section class="counter">
-    <div v-if="!finished">
-      <app-lungs
-        :breathNum="breathCount"
-        :animate="currentRoundState === 'Breathing'"
-        :animationDuration="breathTime"
-      ></app-lungs>
+    <!-- <app-lungs
+      :breathNum="breathCount"
+      :animate="currentRoundState === 'Breathing'"
+      :animationDuration="breathTime"
+    ></app-lungs> -->
 
-      <div class="counter__time">
+    <!-- <div class="counter__time">
         breaht # <time>{{ breathCount }}</time>
         <br />
         holding: <time>{{ breathOutSeconds }} s</time>
         <br />
         holding in: <time>{{ breathInTime }} s</time>
-      </div>
-    </div>
+      </div> -->
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
-import LungsVue from "./Lungs.vue";
+// import LungsVue from "./Lungs.vue";
 
 export default defineComponent({
   components: {
-    appLungs: LungsVue,
+    // appLungs: LungsVue,
   },
 });
 </script>

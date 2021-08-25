@@ -1,1 +1,1 @@
-export type TimeoutReturn = null | number;
+export type TimeoutReturn = undefined | number;

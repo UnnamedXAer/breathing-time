@@ -1,8 +1,21 @@
-import { createStore } from "vuex";
+import { createStore } from 'vuex';
+import { ExerciseState, exerciseStore } from './modules/exercise';
 
-export default createStore({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+const state = { error: null };
+
+const store = createStore({
+	state,
+	modules: {
+		exercise: exerciseStore
+	},
+	mutations: {},
+	actions: {}
 });
+
+export default store;
+
+export type RootState = typeof state;
+
+export type StoreState = RootState & {
+	exercise: ExerciseState;
+};

@@ -1,147 +1,116 @@
 <template>
   <div class="breathing_exercise">
     <h1>Breathing Exercise</h1>
-    <app-counter></app-counter>
-    <app-actions
-      :roundState="currentRoundState"
-      @start="startBreathingExercise"
-      @next="finishRound"
-      @stop="stopBreathingExercise"
-    ></app-actions>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
-import ActionsVue from "@/components/BreathingExercise/Actions.vue";
-import CounterVue from "@/components/BreathingExercise/counter/Counter.vue";
-import { RoundState } from "@/types/breath";
-import { TimeoutReturn } from "@/types/timeout";
 import { defineComponent } from "vue";
-
-let holdOutInterval: TimeoutReturn = null;
-let holdInTimeout: TimeoutReturn = null;
-let breathTiemout: TimeoutReturn = null;
+import { mapState } from "vuex";
 
 export default defineComponent({
   name: "BreathingExercise",
-  components: {
-    appCounter: CounterVue,
-    appActions: ActionsVue,
+
+  computed: {
+    ...mapState<unknown>({
+      rounds: "exercise.rounds",
+      currentRound: "exercise.currentRound",
+    }),
   },
 
-  data() {
-    return {
-      finished: false,
-      rounds: 3,
-      breathsInRound: 3,
-      breathInAfterRoundTime: 7,
-      currentRound: 0,
-      currentRoundState: RoundState.Stopped,
-      breathCount: 0,
-      breathTime: 1.4 * 1000,
-      breathOutTime: 0,
-      breathOutSeconds: 0,
-      breathInTime: 7,
-      holdTimes: [] as number[],
-    };
-  },
+  //   methods: {
+  //     startBreathingExercise() {
+  //       console.log("start exercise");
+  //       this.$router.push({
+  //         replace: true,
+  //         name: "Exercise-Breathing",
+  //       });
+  //       this.holdTimes = [];
+  //       this.breathOutTime = 0;
+  //       this.currentRound = 0;
+  //       this.breathCount = 0;
 
-  watch: {
-    finished() {
-      this.$nextTick(() => {
-        console.log(holdOutInterval, holdInTimeout, breathTiemout);
-      });
-    },
-  },
+  //       this.startBreathing();
+  //     },
+  //     stopBreathingExercise() {
+  //       console.log("stop exercise");
+  //       if (holdInTimeout) {
+  //         clearTimeout(holdInTimeout);
+  //         holdInTimeout = null;
+  //       } else if (breathTiemout) {
+  //         clearTimeout(breathTiemout);
+  //         breathTiemout = null;
+  //       }
 
-  methods: {
-    startBreathingExercise() {
-      console.log("start exercise");
-      this.holdTimes = [];
-      this.breathOutTime = 0;
-      this.currentRound = 0;
-      this.breathCount = 0;
+  //       if (this.currentRoundState === RoundState.HoldingOut) {
+  //         this.holdTimes.push((Date.now() - this.breathOutTime) / 1000);
+  //       }
 
-      this.startBreathing();
-    },
-    stopBreathingExercise() {
-      console.log("stop exercise");
-      if (holdInTimeout) {
-        clearTimeout(holdInTimeout);
-        holdInTimeout = null;
-      } else if (breathTiemout) {
-        clearTimeout(breathTiemout);
-        breathTiemout = null;
-      }
+  //       this.finished = true;
+  //       this.$router.replace({
+  //         name: "BreathingExerciseSummary",
+  //       });
+  //     },
+  //     startBreathing() {
+  //       console.log("start Breathing");
 
-      if (this.currentRoundState === RoundState.HoldingOut) {
-        this.holdTimes.push((Date.now() - this.breathOutTime) / 1000);
-      }
+  //       this.currentRound++;
+  //       this.currentRoundState = RoundState.Breathing;
+  //       this.breathCount = 0;
 
-      this.finished = true;
-      this.$router.replace({
-        name: "BreathingExerciseSummary",
-      });
-    },
-    startBreathing() {
-      console.log("start Breathing");
+  //       setTimeout(this.breath, this.breathTime);
+  //     },
+  //     breath() {
+  //       this.breathCount++;
+  //       if (this.breathCount < this.breathsInRound) {
+  //         breathTiemout = setTimeout(this.breath, this.breathTime);
+  //         return;
+  //       }
 
-      this.currentRound++;
-      this.currentRoundState = RoundState.Breathing;
-      this.breathCount = 0;
+  //       this.startHoldingOut();
+  //     },
+  //     startHoldingOut() {
+  //       console.log("start Holding Out");
 
-      setTimeout(this.breath, this.breathTime);
-    },
-    breath() {
-      this.breathCount++;
-      if (this.breathCount < this.breathsInRound) {
-        breathTiemout = setTimeout(this.breath, this.breathTime);
-        return;
-      }
+  //       this.breathOutTime = Date.now();
+  //       this.currentRoundState = RoundState.HoldingOut;
+  //       this.breathOutSeconds = 0;
 
-      this.startHoldingOut();
-    },
-    startHoldingOut() {
-      console.log("start Holding Out");
+  //       holdOutInterval = setInterval(() => {
+  //         this.breathOutSeconds++;
+  //       }, 1000);
+  //     },
+  //     startHoldingIn() {
+  //       console.log("start Holding In");
 
-      this.breathOutTime = Date.now();
-      this.currentRoundState = RoundState.HoldingOut;
-      this.breathOutSeconds = 0;
+  //       this.currentRoundState = RoundState.HoldingIn;
+  //       this.breathInTime = this.breathInAfterRoundTime;
+  //       const holdInCallback = () => {
+  //         if (this.breathInTime === 0) {
+  //           if (this.holdTimes.length < this.rounds) {
+  //             this.startBreathing();
+  //             return;
+  //           }
+  //           this.stopBreathingExercise();
+  //           return;
+  //         }
+  //         this.breathInTime--;
+  //         holdInTimeout = setTimeout(holdInCallback, 1000);
+  //       };
+  //       holdInTimeout = setTimeout(holdInCallback, 1000);
+  //     },
+  //     finishRound() {
+  //       console.log("finish round #", this.holdTimes.length + 1);
 
-      holdOutInterval = setInterval(() => {
-        this.breathOutSeconds++;
-      }, 1000);
-    },
-    startHoldingIn() {
-      console.log("start Holding In");
+  //       if (holdOutInterval) {
+  //         clearInterval(holdOutInterval);
+  //         holdOutInterval = null;
+  //       }
 
-      this.currentRoundState = RoundState.HoldingIn;
-      this.breathInTime = this.breathInAfterRoundTime;
-      const holdInCallback = () => {
-        if (this.breathInTime === 0) {
-          if (this.holdTimes.length < this.rounds) {
-            this.startBreathing();
-            return;
-          }
-          this.stopBreathingExercise();
-          return;
-        }
-        this.breathInTime--;
-        holdInTimeout = setTimeout(holdInCallback, 1000);
-      };
-      holdInTimeout = setTimeout(holdInCallback, 1000);
-    },
-    finishRound() {
-      console.log("finish round #", this.holdTimes.length + 1);
-
-      if (holdOutInterval) {
-        clearInterval(holdOutInterval);
-        holdOutInterval = null;
-      }
-
-      this.holdTimes.push((Date.now() - this.breathOutTime) / 1000);
-      this.startHoldingIn();
-    },
-  },
+  //       this.holdTimes.push((Date.now() - this.breathOutTime) / 1000);
+  //       this.startHoldingIn();
+  //     },
+  //   },
 });
 </script>
