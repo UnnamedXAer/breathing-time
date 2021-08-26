@@ -10,21 +10,36 @@
 
 <script lang="ts">
 import store, { StoreState } from "@/store";
+// import { TExerciseModuleMap } from "@/store/modules/exercise/types";
+import { ModuleStateProps } from "@/store/types";
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
 import LungsVue from "./counter/Lungs.vue";
 
-// type MState = (state: unknown, key: keyof StoreState) => StoreState[keyof StoreState]
+// const exerciseStateProps: ModuleStateProps<"exercise"> = [
+const exerciseStateProps = [
+  "finished",
+  "currentRoundState",
+  "currentRound",
+  "XD",
+] as const;
 
-// const mState: MState = (state, key) =>(state as StoreState)[key];
-// const mState = (state: unknown, key: keyof StoreState) => {
-//   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-//   return (state as StoreState)[key]!;
-// };
+type GetUnion<U, T> = T extends U ? T : never;
 
-// let x = mState({ exercise: "asd", error: null }, "exercise");
-type TypeStoreState = (s: unknown) => StoreState;
-const ts: TypeStoreState = (s) => s as StoreState;
+type ComputedKeys = GetUnion<
+  ModuleStateProps<"exercise">[number],
+  typeof exerciseStateProps[number]
+>;
+
+type ExerciseKeys = keyof StoreState["exercise"];
+
+type TExerciseModuleMap<CKeys extends Readonly<string[]>> = {
+  [key in CKeys[number]]: key extends ExerciseKeys
+    ? () => StoreState["exercise"][key]
+    : never;
+};
+
+type ComputedTypes = TExerciseModuleMap<typeof exerciseStateProps>;
 
 export default defineComponent({
   components: {
@@ -32,34 +47,15 @@ export default defineComponent({
   },
   name: "BreathingExercise-Breathing",
   computed: {
-    // ...mapState<
-    //   StoreState,
-    //   {
-    //     started: (s: StoreState) => typeof s.exercise["started"];
-    //     finished: (s: StoreState) => typeof s.exercise["started"];
-    //   }
-    //   //
-    //   //
-    // >({
-    //   started: (state) => state.exercise.started,
-    //   finished: (state) => state.exercise.finished,
-    // }),
-    ...mapState({
-      started: (s) => ts(s).exercise.started,
-      er: (s) => ts(s).error,
-    }),
-    ...mapState("exercise", {
-      finished: "finished",
-      currentRoundState: "currentRoundState",
-      currentRound: "currentRound",
-      breathsCount: "breathsCount",
-    }),
+    ...(mapState<StoreState>("exercise", exerciseStateProps) as ComputedTypes),
   },
+
   methods: {
-    x() {
-      const xx = this.started;
-      const xx2 = this.finished;
-      const ee = this.er;
+    do() {
+      const d = this.finished;
+      const currentRoundState = this.currentRoundState;
+      const xs = this.XD;
+      const x = this.holdInTime;
     },
   },
   beforeRouteEnter(to, from) {
