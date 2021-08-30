@@ -10,36 +10,18 @@
 
 <script lang="ts">
 import store, { StoreState } from "@/store";
-// import { TExerciseModuleMap } from "@/store/modules/exercise/types";
-import { ModuleStateProps } from "@/store/types";
+import { ExerciseModuleMap } from "@/store/modules/exercise/types";
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
 import LungsVue from "./counter/Lungs.vue";
 
-// const exerciseStateProps: ModuleStateProps<"exercise"> = [
 const exerciseStateProps = [
   "finished",
   "currentRoundState",
   "currentRound",
-  "XD",
 ] as const;
 
-type GetUnion<U, T> = T extends U ? T : never;
-
-type ComputedKeys = GetUnion<
-  ModuleStateProps<"exercise">[number],
-  typeof exerciseStateProps[number]
->;
-
-type ExerciseKeys = keyof StoreState["exercise"];
-
-type TExerciseModuleMap<CKeys extends Readonly<string[]>> = {
-  [key in CKeys[number]]: key extends ExerciseKeys
-    ? () => StoreState["exercise"][key]
-    : never;
-};
-
-type ComputedTypes = TExerciseModuleMap<typeof exerciseStateProps>;
+type ComputedTypes = ExerciseModuleMap<typeof exerciseStateProps>;
 
 export default defineComponent({
   components: {
@@ -50,14 +32,7 @@ export default defineComponent({
     ...(mapState<StoreState>("exercise", exerciseStateProps) as ComputedTypes),
   },
 
-  methods: {
-    do() {
-      const d = this.finished;
-      const currentRoundState = this.currentRoundState;
-      const xs = this.XD;
-      const x = this.holdInTime;
-    },
-  },
+  methods: {},
   beforeRouteEnter(to, from) {
     console.log("'BreathingExercise-Breathing' - beforeRouteEnter");
     if (

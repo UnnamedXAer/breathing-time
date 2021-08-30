@@ -7,6 +7,10 @@ export enum ExerciseStoreMutations {
 
 export enum ExerciseStoreActions {}
 
-export type TExerciseModuleMap = {
-	[key in ModuleStateProps<'exercise'>[number]]: () => StoreState['exercise'][key];
+type ExerciseKeys = keyof StoreState['exercise'];
+
+export type ExerciseModuleMap<CKeys extends Readonly<string[]>> = {
+	[key in CKeys[number]]: key extends ExerciseKeys
+		? () => StoreState['exercise'][key]
+		: never;
 };
