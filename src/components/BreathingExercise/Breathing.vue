@@ -1,38 +1,67 @@
 <template>
-  <code>{{ JSON.stringify($store.state.exercise, null, 2) }}</code>
   <app-lungs
-    :breathNum="breathsCount"
     :animate="currentRoundState === 'Breathing'"
     :animationDuration="breathTime"
-  ></app-lungs>
-  <hr />
+    :disableAnimation="disableAnimation"
+  />
+  <app-counter :number="breathNum" />
 </template>
 
 <script lang="ts">
-import store, { StoreState } from "@/store";
-import { ExerciseModuleMap } from "@/store/modules/exercise/types";
+import store, { namespaceName, StoreState } from "@/store";
+import {
+  ExerciseActions,
+  ExerciseModuleMap,
+  ExerciseMutations,
+} from "@/store/modules/exercise/types";
+import { TimeoutReturn } from "@/types/timeout";
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
+import CounterVue from "./counter/Counter.vue";
 import LungsVue from "./counter/Lungs.vue";
 
 const exerciseStateProps = [
-  "finished",
   "currentRoundState",
-  "currentRound",
+  "breathTime",
+  "breathsPerRound",
 ] as const;
 
 type ComputedTypes = ExerciseModuleMap<typeof exerciseStateProps>;
 
+let breathTiemout: TimeoutReturn;
+
 export default defineComponent({
+  name: "BreathingExercise-Breathing",
   components: {
     appLungs: LungsVue,
+    appCounter: CounterVue,
   },
-  name: "BreathingExercise-Breathing",
+  data() {
+    return {
+      breathNum: 0,
+      disableAnimation: false,
+    };
+  },
   computed: {
     ...(mapState<StoreState>("exercise", exerciseStateProps) as ComputedTypes),
   },
 
-  methods: {},
+  methods: {
+    breath() {
+      this.breathNum++;
+      if (this.breathNum < this.breathsPerRound) {
+        breathTiemout = setTimeout(this.breath, this.breathTime);
+        return;
+      }
+      breathTiemout = void 0;
+
+      console.log("completed");
+      this.$router.replace({
+        name: "BreathingExercise-HoldingOut",
+      });
+    },
+  },
+
   beforeRouteEnter(to, from) {
     console.log("'BreathingExercise-Breathing' - beforeRouteEnter");
     if (
@@ -47,8 +76,36 @@ export default defineComponent({
   beforeRouteLeave(to) {
     console.log("'BreathingExercise-Breathing' - beforeRouteLeave");
     if (to.name !== "BreathingExercise-HoldingOut") {
-      return false;
+      const ok = confirm("wanna leave breathing?");
+      if (ok) {
+        clearTimeout(breathTiemout);
+        breathTiemout = void 0;
+
+        this.$store.dispatch(namespaceName("exercise", ExerciseActions.Cancel));
+      }
+      return ok;
     }
+    return true;
+  },
+  beforeMount() {
+    this.$store.commit(namespaceName("exercise", ExerciseMutations.Start));
+  },
+  mounted() {
+    console.log("'BreathingExercise-Breathing' - mounted");
+    window.addEventListener("unload", unloadHander);
+
+    this.breath();
+  },
+  unmounted() {
+    window.removeEventListener("unload", unloadHander);
   },
 });
+
+function unloadHander(ev: Event) {
+  console.log("unload", ev.target);
+  if (confirm("wanna leave breathing?")) {
+    return;
+  }
+  ev.preventDefault();
+}
 </script>

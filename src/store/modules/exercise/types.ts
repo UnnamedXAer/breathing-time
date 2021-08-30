@@ -1,11 +1,15 @@
 import { StoreState } from '@/store';
-import { ModuleStateProps } from '@/store/types';
 
-export enum ExerciseStoreMutations {
-	StartExercise = 'exercise/START EXERCISE'
+export enum ExerciseMutations {
+	Start = 'START_EXERCISE',
+	Cancel = 'CANCEL_EXERCISE',
+	SetRoundState = 'SET_ROUND_STATUS',
+	AddHoldTime = 'ADD_HOLD_TIME'
 }
 
-export enum ExerciseStoreActions {}
+export enum ExerciseActions {
+	Cancel = 'CANCEL_EXERCISE'
+}
 
 type ExerciseKeys = keyof StoreState['exercise'];
 

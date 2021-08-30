@@ -1,11 +1,11 @@
 <template>
   <div class="counter__lungs">
-    <div
-      class="counter__lungs_animated"
-      :class="{ animate }"
-      :style="{ animationDuration: animationDuration / 2 + 'ms' }"
-    >
-      <div>
+    <div class="counter__lungs_wrapper">
+      <div
+        class="counter__lungs_animated"
+        :class="{ animate: animate && !disableAnimation }"
+        :style="{ animationDuration: animationDuration / 2 + 'ms' }"
+      >
         <div>
           <div>
             <div>
@@ -25,22 +25,31 @@
 <script lang="ts">
 export default {
   props: {
-    breathNum: { type: Number, required: true },
     animate: { type: Boolean, required: true },
     animationDuration: { type: Number, required: true },
+    disableAnimation: Boolean,
   },
 };
 </script>
 
 <style scoped>
 .counter__lungs {
+  width: 100%;
+}
+
+.counter__lungs_wrapper {
+  margin-left: auto;
+  margin-right: auto;
   width: 300px;
   height: 300px;
   border: 1px solid rgb(236, 236, 236);
   padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.counter__lungs div {
+.counter__lungs_wrapper div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,15 +58,15 @@ export default {
 .counter__lungs_animated {
   width: 98%;
   height: 98%;
-  border-radius: 45%;
+  border-radius: 60% 60% 30% 30% / 30% 30% 60% 60%;
   border: 1rem rgb(1, 90, 83) solid;
 }
 
 .counter__lungs_animated div {
   width: 80%;
   height: 80%;
-  border-radius: 25%;
-  border: 0.3rem rgb(1, 90, 83) solid;
+  border-radius: 60% 60% 30% 30% / 30% 30% 60% 60%;
+  border: 0.9rem rgb(1, 90, 83) solid;
 }
 
 .counter__lungs_animated.animate {

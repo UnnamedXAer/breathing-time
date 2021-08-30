@@ -4,6 +4,8 @@ import BreathingExerciseVue from '../views/BreathingExercise.vue';
 import BreathingExerciseSummaryVue from '../views/BreathingExerciseSummary.vue';
 import ExerciseStartVue from '../components/BreathingExercise/Start.vue';
 import BreathingVue from '../components/BreathingExercise/Breathing.vue';
+import HoldingOutVue from '../components/BreathingExercise/HoldingOut.vue';
+import HoldingInVue from '../components/BreathingExercise/HoldingIn.vue';
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -16,16 +18,16 @@ const routes: Array<RouteRecordRaw> = [
 				name: 'BreathingExercise-Breathing',
 				component: BreathingVue
 			},
-			// {
-			// 	path: 'holding-out',
-			// 	name: 'BreathingExercise-HoldingOut',
-			// 	component: CounterVue
-			// },
-			// {
-			// 	path: 'holding-in',
-			// 	name: 'BreathingExercise-HoldingIn',
-			// 	component: CounterVue
-			// },
+			{
+				path: 'holding-out',
+				name: 'BreathingExercise-HoldingOut',
+				component: HoldingOutVue
+			},
+			{
+				path: 'holding-in',
+				name: 'BreathingExercise-HoldingIn',
+				component: HoldingInVue
+			},
 			{
 				path: 'summary',
 				name: 'BreathingExercise-Summary',

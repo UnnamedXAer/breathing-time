@@ -1,55 +1,39 @@
 <template>
-  <section class="exercise__start">
-    <section style="display: flex; justify-content: center; margin: 3rem auto">
-      <app-button
-        @click="startExercise"
-        v-if="counter === 4"
-        style="padding-left: 3rem; padding-right: 3rem"
-        >START</app-button
-      >
-      <div v-else class="exercise__start__get_ready">
-        <p>Get Ready!</p>
-        <p>{{ counter > 0 ? counter : "Go" }}</p>
-      </div>
-    </section>
-    <hr v-if="counter === 4" />
-    <app-exercise-instructions v-if="counter === 4" />
+  <section class="exercise__houl_out">
+    <app-counter :number="15" />
   </section>
 </template>
 
 <script lang="ts">
 import { namespaceName } from "@/store";
 import { ExerciseMutations } from "@/store/modules/exercise/types";
+import { RoundState } from "@/types/breath";
 import { defineComponent } from "vue";
-import ButtonVue from "../ui/Button.vue";
-import ExerciseInstructionsVue from "./ExerciseInstructions.vue";
+import CounterVue from "./counter/Counter.vue";
 
 let interval: import("@/types/timeout").TimeoutReturn = void 0;
 export default defineComponent({
-  name: "BreathingExercise-Start",
+  name: "BreathingExercise-HouldingIn",
   components: {
-    appButton: ButtonVue,
-    appExerciseInstructions: ExerciseInstructionsVue,
+    appCounter: CounterVue,
   },
   data() {
     return {
-      counter: 4,
+      counter: 15,
     };
   },
   methods: {
-    startExercise() {
+    count() {
       this.counter--;
-
-      this.counter = 1;
 
       interval = setInterval(() => {
         if (this.counter === 0) {
           clearInterval(interval);
           interval = void 0;
-          this.$store.commit(
-            namespaceName("exercise", ExerciseMutations.Start)
-          );
-          console.log(this.$store.state.exercise.started);
+          //   this.$store.commit(
+          //     namespaceName("exercise", ExerciseMutations.Start)
+          //   );
+          //   console.log(this.$store.state.exercise.started);
           this.$router.replace({
             name: "BreathingExercise-Breathing",
           });
@@ -74,18 +58,17 @@ export default defineComponent({
       const ok = confirm("Cancel exercise?");
       if (!ok) {
         console.log("'START' - prevented from leaving");
-        this.startExercise();
+        this.count();
       }
       return ok;
     }
   },
+  mounted() {
+    this.$store.commit(
+      namespaceName("exercise", ExerciseMutations.SetRoundState),
+      RoundState.HoldingIn
+    );
+    interval = setInterval(this.count, 1000);
+  },
 });
 </script>
-
-<style scoped>
-.exercise__start__get_ready {
-  text-align: center;
-  font-variant: small-caps;
-  font-size: 10vh;
-}
-</style>

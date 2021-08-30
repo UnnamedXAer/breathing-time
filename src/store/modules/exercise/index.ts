@@ -1,40 +1,58 @@
 import { RootState } from '@/store';
 import { RoundState } from '@/types/breath';
 import { Module } from 'vuex';
-import { ExerciseStoreMutations } from './types';
+import { ExerciseActions, ExerciseMutations } from './types';
 
 const getDefaultExerciseStore = () => ({
 	started: false,
 	finished: false,
 	rounds: 3,
-	breathsPerRound: 3,
+	breathsPerRound: 7,
 	holdInTime: 7,
-	currentRound: 0,
-	currentRoundState: RoundState.Stopped,
-	breathsCount: 0,
 	breathTime: 1.4 * 1000,
+	holdInSecondsLeft: 7,
+	currentRoundState: RoundState.Stopped,
+	currentRound: 0,
 	holdOutTime: 0,
 	holdOutSeconds: 0,
-	holdInSecondsLeft: 7,
 	holdTimes: [] as number[]
 });
 
-const unnamespacedName = (name: string) => name.split('/')[1];
+function clearExerciseState(state: ExerciseState) {
+	state.started = false;
+	state.finished = false;
+	state.currentRoundState = RoundState.Stopped;
+	state.currentRound = 0;
+	state.holdOutTime = 0;
+	state.holdOutSeconds = 0;
+	state.holdInSecondsLeft = 0;
+	state.holdTimes = [];
+}
 
 export const exerciseStore: Module<ExerciseState, RootState> = {
 	namespaced: true,
 	state: getDefaultExerciseStore,
+
 	mutations: {
-		[unnamespacedName(ExerciseStoreMutations.StartExercise)]: (state) => {
+		[ExerciseMutations.Start]: (state) => {
+			clearExerciseState(state);
 			state.started = true;
-			state.finished = false;
-			state.currentRound = 0;
 			state.currentRoundState = RoundState.Breathing;
-			state.breathsCount = 0;
-			state.holdOutTime = 0;
-			state.holdOutSeconds = 0;
-			state.holdInSecondsLeft = 0;
-			state.holdTimes = [];
+		},
+		[ExerciseMutations.Cancel]: (state) => {
+			clearExerciseState(state);
+		},
+		[ExerciseMutations.SetRoundState]: (state, roundState: RoundState) => {
+			state.currentRoundState = roundState;
+		},
+		[ExerciseMutations.AddHoldTime]: (state, time) => {
+			state.holdTimes.push(time);
+		}
+	},
+
+	actions: {
+		[ExerciseActions.Cancel]({ commit }) {
+			commit(ExerciseMutations.Cancel);
 		}
 	}
 };
