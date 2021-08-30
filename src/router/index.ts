@@ -12,11 +12,6 @@ const routes: Array<RouteRecordRaw> = [
 		component: BreathingExerciseVue,
 		children: [
 			{
-				path: '',
-				name: 'BreathingExercise-Start',
-				component: ExerciseStartVue
-			},
-			{
 				path: 'breathing',
 				name: 'BreathingExercise-Breathing',
 				component: BreathingVue
@@ -35,6 +30,11 @@ const routes: Array<RouteRecordRaw> = [
 				path: 'summary',
 				name: 'BreathingExercise-Summary',
 				component: BreathingExerciseSummaryVue
+			},
+			{
+				path: '',
+				name: 'BreathingExercise-Start',
+				component: ExerciseStartVue
 			}
 		]
 	},

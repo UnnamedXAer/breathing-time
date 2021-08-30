@@ -3,224 +3,224 @@
     <h1>Welcome to Breathing Timer</h1>
     <br />
     <section class="cards">
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Start Your breathing</p>
       </router-link>
 
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
         <p class="text">Udjust Settings</p>
       </router-link>
-      <router-link :to="{ name: 'BreathingExercise' }" class="card">
+      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
