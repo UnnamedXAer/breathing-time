@@ -1,6 +1,7 @@
 <template>
   <section class="exercise__houl_out">
-    <app-counter :number="15" />
+    <p>Inhale deeply and stop breathing for {{ holdTime }} s.</p>
+    <app-counter :number="counter" />
   </section>
 </template>
 
@@ -19,49 +20,65 @@ export default defineComponent({
   },
   data() {
     return {
-      counter: 15,
+      counter: 0,
     };
   },
+
+  computed: {
+    holdTime() {
+      return this.$store.state.exercise.holdInTime;
+    },
+    isLastRound() {
+      return (
+        this.$store.state.exercise.holdTimes.length >=
+        this.$store.state.exercise.maxRounds
+      );
+    },
+  },
+
   methods: {
     count() {
-      this.counter--;
+      if (this.counter < this.holdTime) {
+        this.counter++;
+        return;
+      }
 
-      interval = setInterval(() => {
-        if (this.counter === 0) {
-          clearInterval(interval);
-          interval = void 0;
-          //   this.$store.commit(
-          //     namespaceName("exercise", ExerciseMutations.Start)
-          //   );
-          //   console.log(this.$store.state.exercise.started);
-          this.$router.replace({
-            name: "BreathingExercise-Breathing",
-          });
-
-          return;
-        }
-        this.counter--;
-      }, 1000);
+      clearInterval(interval);
+      interval = void 0;
+      let routeName = "BreathingExercise-Breathing";
+      if (this.isLastRound) {
+        routeName = "BreathingExercise-Summary";
+      }
+      this.$router.replace({
+        name: routeName,
+        params: {
+          fromHoldingIn: 1,
+        },
+      });
     },
   },
   beforeRouteLeave(to) {
-    console.log("beforeRouteLeave");
-    if (to.name === "BreathingExercise-Breathing") {
-      clearInterval(interval);
-      interval = void 0;
-      return;
+    console.log("beforeRouteLeave - 'Holding In'");
+    if (
+      to.name === "BreathingExercise-Breathing" ||
+      to.name === "BreathingExercise-Summary"
+    ) {
+      if (interval !== void 0) {
+        clearInterval(interval);
+        interval = void 0;
+      }
+      return true;
     }
 
-    if (this.counter < 4) {
-      clearInterval(interval);
-      interval = void 0;
-      const ok = confirm("Cancel exercise?");
-      if (!ok) {
-        console.log("'START' - prevented from leaving");
-        this.count();
+    const ok = confirm("Cancel exercise?");
+    if (ok) {
+      this.$store.dispatch(namespaceName("exercise", ExerciseMutations.Cancel));
+      if (interval !== void 0) {
+        clearInterval(interval);
+        interval = void 0;
       }
-      return ok;
     }
+    return ok;
   },
   mounted() {
     this.$store.commit(
@@ -70,5 +87,17 @@ export default defineComponent({
     );
     interval = setInterval(this.count, 1000);
   },
+  unmounted() {
+    if (interval !== void 0) {
+      clearInterval(interval);
+      interval = void 0;
+    }
+  },
 });
 </script>
+
+<style scoped>
+.exercise__houl_out {
+  text-align: center;
+}
+</style>

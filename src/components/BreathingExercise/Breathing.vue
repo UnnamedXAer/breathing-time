@@ -8,12 +8,13 @@
 </template>
 
 <script lang="ts">
-import store, { namespaceName, StoreState } from "@/store";
+import { namespaceName, StoreState } from "@/store";
 import {
   ExerciseActions,
   ExerciseModuleMap,
   ExerciseMutations,
 } from "@/store/modules/exercise/types";
+import { RoundState } from "@/types/breath";
 import { TimeoutReturn } from "@/types/timeout";
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
@@ -24,6 +25,7 @@ const exerciseStateProps = [
   "currentRoundState",
   "breathTime",
   "breathsPerRound",
+  "started",
 ] as const;
 
 type ComputedTypes = ExerciseModuleMap<typeof exerciseStateProps>;
@@ -55,23 +57,10 @@ export default defineComponent({
       }
       breathTiemout = void 0;
 
-      console.log("completed");
       this.$router.replace({
         name: "BreathingExercise-HoldingOut",
       });
     },
-  },
-
-  beforeRouteEnter(to, from) {
-    console.log("'BreathingExercise-Breathing' - beforeRouteEnter");
-    if (
-      from.name !== "BreathingExercise-Start" ||
-      !(store.state as StoreState).exercise.started
-    ) {
-      return {
-        name: "BreathingExercise-Start",
-      };
-    }
   },
   beforeRouteLeave(to) {
     console.log("'BreathingExercise-Breathing' - beforeRouteLeave");
@@ -88,12 +77,16 @@ export default defineComponent({
     return true;
   },
   beforeMount() {
-    this.$store.commit(namespaceName("exercise", ExerciseMutations.Start));
+    if (!this.started) {
+      this.$store.commit(namespaceName("exercise", ExerciseMutations.Start));
+    }
   },
   mounted() {
-    console.log("'BreathingExercise-Breathing' - mounted");
     window.addEventListener("unload", unloadHander);
-
+    this.$store.commit(
+      namespaceName("exercise", ExerciseMutations.SetRoundState),
+      RoundState.Breathing
+    );
     this.breath();
   },
   unmounted() {

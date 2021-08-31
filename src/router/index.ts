@@ -6,6 +6,7 @@ import ExerciseStartVue from '../components/BreathingExercise/Start.vue';
 import BreathingVue from '../components/BreathingExercise/Breathing.vue';
 import HoldingOutVue from '../components/BreathingExercise/HoldingOut.vue';
 import HoldingInVue from '../components/BreathingExercise/HoldingIn.vue';
+import store, { StoreState } from '@/store';
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -16,22 +17,26 @@ const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'breathing',
 				name: 'BreathingExercise-Breathing',
-				component: BreathingVue
+				component: BreathingVue,
+				beforeEnter: beforeExercisePartialRouteEnter
 			},
 			{
 				path: 'holding-out',
 				name: 'BreathingExercise-HoldingOut',
-				component: HoldingOutVue
+				component: HoldingOutVue,
+				beforeEnter: beforeExercisePartialRouteEnter
 			},
 			{
 				path: 'holding-in',
 				name: 'BreathingExercise-HoldingIn',
-				component: HoldingInVue
+				component: HoldingInVue,
+				beforeEnter: beforeExercisePartialRouteEnter
 			},
 			{
 				path: 'summary',
 				name: 'BreathingExercise-Summary',
-				component: BreathingExerciseSummaryVue
+				component: BreathingExerciseSummaryVue,
+				props: true
 			},
 			{
 				path: '',
@@ -59,5 +64,13 @@ const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
 	routes
 });
+
+function beforeExercisePartialRouteEnter() {
+	if (!(store.state as StoreState).exercise.started) {
+		return {
+			name: 'BreathingExercise-Start'
+		};
+	}
+}
 
 export default router;

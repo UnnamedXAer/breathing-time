@@ -6,13 +6,11 @@ import { ExerciseActions, ExerciseMutations } from './types';
 const getDefaultExerciseStore = () => ({
 	started: false,
 	finished: false,
-	rounds: 3,
-	breathsPerRound: 7,
-	holdInTime: 7,
+	maxRounds: 1,
+	breathsPerRound: 1,
+	holdInTime: 1,
 	breathTime: 1.4 * 1000,
-	holdInSecondsLeft: 7,
 	currentRoundState: RoundState.Stopped,
-	currentRound: 0,
 	holdOutTime: 0,
 	holdOutSeconds: 0,
 	holdTimes: [] as number[]
@@ -22,10 +20,8 @@ function clearExerciseState(state: ExerciseState) {
 	state.started = false;
 	state.finished = false;
 	state.currentRoundState = RoundState.Stopped;
-	state.currentRound = 0;
 	state.holdOutTime = 0;
 	state.holdOutSeconds = 0;
-	state.holdInSecondsLeft = 0;
 	state.holdTimes = [];
 }
 
