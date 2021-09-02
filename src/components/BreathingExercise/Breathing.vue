@@ -5,6 +5,11 @@
     :disableAnimation="disableAnimation"
   />
   <app-counter :number="breathNum" />
+  <app-leave-exercise-confirm
+    v-if="showModal"
+    :onCancel="preventCancelExercise"
+    :onConfirm="confirmCancelExercise"
+  />
 </template>
 
 <script lang="ts">
@@ -17,9 +22,12 @@ import {
 import { RoundState } from "@/types/breath";
 import { TimeoutReturn } from "@/types/timeout";
 import { defineComponent } from "vue";
+import { RouteRecordName } from "vue-router";
 import { mapState } from "vuex";
 import CounterVue from "./counter/Counter.vue";
 import LungsVue from "./counter/Lungs.vue";
+import LeaveExerciseConfirmVue from "./LeaveExerciseConfirm.vue";
+import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
 
 const exerciseStateProps = [
   "currentRoundState",
@@ -34,14 +42,16 @@ let breathTiemout: TimeoutReturn;
 
 export default defineComponent({
   name: "BreathingExercise-Breathing",
+  mixins: [MixinLeaveExerciseVue],
   components: {
     appLungs: LungsVue,
     appCounter: CounterVue,
+    appLeaveExerciseConfirm: LeaveExerciseConfirmVue,
   },
   data() {
     return {
       breathNum: 0,
-      disableAnimation: false,
+      disableAnimation: true,
     };
   },
   computed: {
@@ -61,20 +71,24 @@ export default defineComponent({
         name: "BreathingExercise-HoldingOut",
       });
     },
+
+    _confirmCancelExercise() {
+      this.$store.dispatch(namespaceName("exercise", ExerciseActions.Cancel));
+      this.confirmCancelExercise();
+    },
   },
   beforeRouteLeave(to) {
-    console.log("'BreathingExercise-Breathing' - beforeRouteLeave");
-    if (to.name !== "BreathingExercise-HoldingOut") {
-      const ok = confirm("wanna leave breathing?");
-      if (ok) {
-        clearTimeout(breathTiemout);
-        breathTiemout = void 0;
-
-        this.$store.dispatch(namespaceName("exercise", ExerciseActions.Cancel));
-      }
-      return ok;
+    if (to.name === "BreathingExercise-HoldingOut") {
+      clearTimeout(breathTiemout);
+      breathTiemout = void 0;
+      return true;
     }
-    return true;
+    if (to.params.allowNavigation) {
+      return true;
+    }
+    this.askBeforeLeave(to.name as RouteRecordName);
+
+    return false;
   },
   beforeMount() {
     if (!this.started) {

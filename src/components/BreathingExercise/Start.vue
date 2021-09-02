@@ -15,24 +15,11 @@
     <hr v-if="counter === countdountTime" />
     <app-exercise-instructions v-if="counter === countdountTime" />
   </section>
-  <teleport to="body">
-    <app-modal
-      v-if="showModal"
-      content="Cancel exercise?"
-      title="Warning!"
-      :dismiss="rejectCancelExercise"
-      :actions="[
-        {
-          label: 'Yes',
-          handler: confirmCancelExercise,
-        },
-        {
-          label: 'No',
-          handler: rejectCancelExercise,
-        },
-      ]"
-    />
-  </teleport>
+  <!-- <app-leave-exercise-confirm
+    v-if="showModal"
+    :onCancel="preventCancelExercise"
+    :onConfirm="confirmCancelExercise"
+  /> -->
 </template>
 
 <script lang="ts">
@@ -40,9 +27,9 @@ import { namespaceName } from "@/store";
 import { ExerciseMutations } from "@/store/modules/exercise/types";
 import { defineComponent } from "vue";
 import ButtonVue from "../ui/Button.vue";
-import ModalVue from "../modal/Modal.vue";
 import ExerciseInstructionsVue from "./ExerciseInstructions.vue";
-import { RouteRecordName } from "vue-router";
+// import { RouteRecordName } from "vue-router";
+// import LeaveExerciseConfirmVue from "./LeaveExerciseConfirm.vue";
 
 let interval: import("@/types/timeout").TimeoutReturn = void 0;
 export default defineComponent({
@@ -50,38 +37,38 @@ export default defineComponent({
   components: {
     appButton: ButtonVue,
     appExerciseInstructions: ExerciseInstructionsVue,
-    appModal: ModalVue,
+    // appLeaveExerciseConfirm: LeaveExerciseConfirmVue,
   },
   data() {
-    const countdountTime = 4;
+    const countdountTime = 0;
     return {
       countdountTime,
       counter: countdountTime,
-      showModal: false,
-      allowNavigation: false,
-      routeToNavigate: null as RouteRecordName | null,
+      //   showModal: false,
+      //   allowNavigation: false,
+      //   routeToNavigate: null as RouteRecordName | null,
     };
   },
 
-  watch: {
-    allowNavigation(val: boolean) {
-      if (val && this.routeToNavigate) {
-        this.$router.replace({
-          name: this.routeToNavigate,
-          params: {
-            allowNavigation: 1,
-          },
-        });
-      }
-    },
-  },
+  //   watch: {
+  //     allowNavigation(val: boolean) {
+  //       if (val && this.routeToNavigate) {
+  //         this.$router.replace({
+  //           name: this.routeToNavigate,
+  //           params: {
+  //             allowNavigation: 1,
+  //           },
+  //         });
+  //       }
+  //     },
+  //   },
 
   methods: {
     startExercise() {
       this.counter--;
 
       interval = setInterval(() => {
-        if (this.counter === 0) {
+        if (this.counter <= 0) {
           clearInterval(interval);
           interval = void 0;
           this.$store.commit(
@@ -97,44 +84,41 @@ export default defineComponent({
         this.counter--;
       }, 1000);
     },
-    askBeforeLeave(routeName: RouteRecordName | null) {
-      this.routeToNavigate = routeName;
-      this.showModal = true;
-    },
-    confirmCancelExercise() {
-      console.log("confirming");
-      this.allowNavigation = true;
-    },
-    rejectCancelExercise() {
-      console.log("rejecting");
-      this.allowNavigation = false;
-      this.routeToNavigate = null;
-      this.showModal = false;
-      this.startExercise();
-    },
+    // askBeforeLeave(routeName: RouteRecordName | null) {
+    //   this.routeToNavigate = routeName;
+    //   this.showModal = true;
+    // },
+    // confirmCancelExercise() {
+    //   this.allowNavigation = true;
+    // },
+    // preventCancelExercise() {
+    //   this.allowNavigation = false;
+    //   this.routeToNavigate = null;
+    //   this.showModal = false;
+    //   this.startExercise();
+    // },
   },
-  beforeRouteLeave(to) {
-    console.log("beforeRouteLeave");
-    if (to.name === "BreathingExercise-Breathing") {
-      clearInterval(interval);
-      interval = void 0;
-      return;
-    }
+  //   beforeRouteLeave(to) {
+  //     if (to.name === "BreathingExercise-Breathing") {
+  //       clearInterval(interval);
+  //       interval = void 0;
+  //       return;
+  //     }
 
-    if (to.params.allowNavigation) {
-      return true;
-    }
+  //     if (to.params.allowNavigation) {
+  //       return true;
+  //     }
 
-    if (this.counter < this.countdountTime) {
-      clearInterval(interval);
-      interval = void 0;
+  //     if (this.counter < this.countdountTime) {
+  //       clearInterval(interval);
+  //       interval = void 0;
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.askBeforeLeave(to.name!);
+  //       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  //       this.askBeforeLeave(to.name!);
 
-      return false;
-    }
-  },
+  //       return false;
+  //     }
+  //   },
 });
 </script>
 

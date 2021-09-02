@@ -7,7 +7,7 @@ const getDefaultExerciseStore = () => ({
 	started: false,
 	finished: false,
 	maxRounds: 1,
-	breathsPerRound: 1,
+	breathsPerRound: 11,
 	holdInTime: 1,
 	breathTime: 1.4 * 1000,
 	currentRoundState: RoundState.Stopped,

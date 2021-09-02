@@ -1,34 +1,42 @@
 <template>
-  <div
-    class="modal"
-    role="dialog"
-    aria-labelledby="modal-title"
-    aria-describedby="modal-body"
-  >
-    <div class="modal__content">
-      <div id="modal-title" class="modal__title">
-        <p role="heading">{{ title || "Message" }}</p>
-      </div>
-      <div id="moda-body" class="modal__body">
-        <p v-if="content">{{ content }}</p>
-        <slot />
-      </div>
-      <div class="modal__actions">
-        <app-button
-          v-for="action in actions"
-          :key="action.label"
-          @click="action.handler"
-        >
-          {{ action.label }}
-        </app-button>
+  <teleport to="body">
+    <div
+      class="modal"
+      role="dialog"
+      aria-labelledby="modal-title"
+      aria-describedby="modal-body"
+      @keydown="handleKeyDown"
+      ref="modal"
+    >
+      <div class="modal__content">
+        <div id="modal-title" class="modal__title">
+          <p role="heading">{{ title || "Message" }}</p>
+        </div>
+        <div id="moda-body" class="modal__body">
+          <p v-if="content">{{ content }}</p>
+          <slot />
+        </div>
+        <div class="modal__actions">
+          <app-button
+            v-for="action in actions"
+            :key="action.label"
+            @click="action.handler"
+          >
+            {{ action.label }}
+          </app-button>
 
-        <app-button aria-label="close dialog" v-if="!actions" @click="dismiss">
-          Ok
-        </app-button>
+          <app-button
+            aria-label="close dialog"
+            v-if="!actions"
+            @click="dismiss"
+          >
+            Ok
+          </app-button>
+        </div>
       </div>
+      <div class="modal__backdrop" @click="dismiss" tabindex="-1"></div>
     </div>
-    <div class="modal__backdrop" @click="dismiss"></div>
-  </div>
+  </teleport>
 </template>
 
 <script lang="ts">
@@ -50,22 +58,77 @@ export default defineComponent({
       handler: (ev: MouseEvent) => void;
     }>,
   },
+  setup() {
+    const focusable: HTMLElement[] = [];
+    const prevAvtiveElement = document.activeElement;
+
+    return { focusable, prevAvtiveElement };
+  },
+
+  methods: {
+    handleKeyDown(ev: KeyboardEvent) {
+      var KEY_TAB = 9;
+      var KEY_ESC = 27;
+
+      const handleBackwardTab = () => {
+        if (document.activeElement === this.focusable[0]) {
+          ev.preventDefault();
+          this.focusable[this.focusable.length - 1].focus();
+        }
+      };
+      const handleForwardTab = () => {
+        if (
+          document.activeElement === this.focusable[this.focusable.length - 1]
+        ) {
+          ev.preventDefault();
+          this.focusable[0].focus();
+        }
+      };
+
+      switch (ev.keyCode) {
+        case KEY_TAB:
+          if (this.focusable.length === 1) {
+            ev.preventDefault();
+            break;
+          }
+
+          if (ev.shiftKey) {
+            handleBackwardTab();
+          } else {
+            handleForwardTab();
+          }
+
+          break;
+        case KEY_ESC:
+          this.dismiss(ev);
+          break;
+        default:
+          break;
+      }
+    },
+  },
 
   mounted() {
     const focusable = (
-      this.$el as HTMLDivElement
+      this.$refs.modal as HTMLDivElement
     ).querySelectorAll<HTMLElement>(
       'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]'
     );
-
-    this.focusable = focusable;
     focusable[0].focus();
+
+    this.focusable = [...focusable];
+  },
+
+  unmounted() {
+    if (this.prevAvtiveElement) {
+      (this.prevAvtiveElement as HTMLElement).focus();
+    }
   },
 });
 </script>
 <style scoped>
 .modal {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   right: 0;
@@ -119,7 +182,7 @@ export default defineComponent({
 }
 
 .modal__backdrop {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   right: 0;
