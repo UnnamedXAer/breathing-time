@@ -13,6 +13,22 @@ body {
 	background-color: rgb(253, 253, 253);
 }
 
+p,
+li,
+a,
+button {
+	font-family: 'Lato', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'EB Garamond';
+}
+
 * {
 	box-sizing: border-box;
 }

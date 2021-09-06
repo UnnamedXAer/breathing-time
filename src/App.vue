@@ -7,6 +7,7 @@
 import { defineComponent } from "vue";
 import HeaderVue from "./components/header/Header.vue";
 import FooterVue from "./components/footer/Footer.vue";
+import "./assets/fonts/fonts.module.css";
 
 export default defineComponent({
   components: {
