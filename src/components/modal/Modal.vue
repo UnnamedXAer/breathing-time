@@ -140,7 +140,7 @@ export default defineComponent({
 }
 
 .modal__content {
-  background-color: whitesmoke;
+  background-color: rgb(245, 245, 245, 0.9);
   padding: 1rem;
   margin: 1rem;
 
