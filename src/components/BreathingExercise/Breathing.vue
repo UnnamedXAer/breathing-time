@@ -8,7 +8,7 @@
   <app-leave-exercise-confirm
     v-if="showModal"
     :onCancel="preventCancelExercise"
-    :onConfirm="confirmCancelExercise"
+    :onConfirm="_confirmCancelExercise"
   />
 </template>
 
@@ -52,10 +52,21 @@ export default defineComponent({
     return {
       breathNum: 0,
       disableAnimation: true,
+      countingFinished: false,
     };
   },
   computed: {
     ...(mapState<StoreState>("exercise", exerciseStateProps) as ComputedTypes),
+  },
+
+  watch: {
+    showModal(val) {
+      if (!val && this.countingFinished) {
+        this.$router.replace({
+          name: "BreathingExercise-HoldingOut",
+        });
+      }
+    },
   },
 
   methods: {
@@ -66,7 +77,7 @@ export default defineComponent({
         return;
       }
       breathTiemout = void 0;
-
+      this.countingFinished = true;
       this.$router.replace({
         name: "BreathingExercise-HoldingOut",
       });
@@ -78,12 +89,18 @@ export default defineComponent({
     },
   },
   beforeRouteLeave(to) {
+    if (this.showModal && !this.allowNavigation) {
+      return false;
+    }
+
     if (to.name === "BreathingExercise-HoldingOut") {
       clearTimeout(breathTiemout);
       breathTiemout = void 0;
       return true;
     }
     if (to.params.allowNavigation) {
+      clearTimeout(breathTiemout);
+      breathTiemout = void 0;
       return true;
     }
     this.askBeforeLeave(to.name as RouteRecordName);

@@ -1,5 +1,5 @@
 <template>
-  <section class="exercise__houl_out">
+  <section class="exercise__houlding_out">
     <p v-if="isLastRound">
       This is last round. Don't forget to about 15 second recover phase.
     </p>
@@ -11,24 +11,37 @@
       isLastRound ? "FINISH" : "NEXT Round"
     }}</app-button>
   </section>
+  <app-leave-exercise-confirm
+    v-if="showModal"
+    :onCancel="preventCancelExercise"
+    :onConfirm="_confirmCancelExercise"
+  />
 </template>
 
 <script lang="ts">
 import { namespaceName } from "@/store";
-import { ExerciseMutations } from "@/store/modules/exercise/types";
+import {
+  ExerciseActions,
+  ExerciseMutations,
+} from "@/store/modules/exercise/types";
 import { RoundState } from "@/types/breath";
 import { defineComponent } from "vue";
+import { RouteRecordName } from "vue-router";
 import AlertVue from "../ui/Alert.vue";
 import ButtonVue from "../ui/Button.vue";
 import CounterVue from "./counter/Counter.vue";
+import LeaveExerciseConfirmVue from "./LeaveExerciseConfirm.vue";
+import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
 
 let interval: import("@/types/timeout").TimeoutReturn = void 0;
 export default defineComponent({
   name: "BreathingExercise-HouldingOut",
+  mixins: [MixinLeaveExerciseVue],
   components: {
     appCounter: CounterVue,
     appButton: ButtonVue,
     appAlert: AlertVue,
+    appLeaveExerciseConfirm: LeaveExerciseConfirmVue,
   },
   data() {
     return {
@@ -58,7 +71,7 @@ export default defineComponent({
 
       this.counter++;
     },
-    stopAndStore() {
+    stopAndStoreResults() {
       if (interval !== void 0) {
         clearInterval(interval);
         interval = void 0;
@@ -75,26 +88,38 @@ export default defineComponent({
     },
     dismissAlert() {
       this.showAreYouThere = false;
-      this.showAreYouThere = true;
+    },
+
+    _confirmCancelExercise() {
+      this.$store.dispatch(namespaceName("exercise", ExerciseActions.Cancel));
+      this.confirmCancelExercise();
     },
   },
   beforeRouteLeave(to) {
-    console.log("beforeRouteLeave - 'Holding Out'");
     if (to.name === "BreathingExercise-HoldingIn") {
-      this.stopAndStore();
+      this.stopAndStoreResults();
       return true;
     }
 
-    const ok = confirm("Cancel exercise?");
-    if (ok) {
-      this.$store.dispatch(namespaceName("exercise", ExerciseMutations.Cancel));
-      if (interval !== void 0) {
-        clearInterval(interval);
-        interval = void 0;
-      }
+    if (to.params.allowNavigation) {
+      clearInterval();
+      interval = void 0;
+      return true;
     }
+    this.askBeforeLeave(to.name as RouteRecordName);
 
-    return ok;
+    return false;
+
+    // const ok = confirm("Cancel exercise?");
+    // if (ok) {
+    //   this.$store.dispatch(namespaceName("exercise", ExerciseMutations.Cancel));
+    //   if (interval !== void 0) {
+    //     clearInterval(interval);
+    //     interval = void 0;
+    //   }
+    // }
+
+    // return ok;
   },
   mounted() {
     this.$store.commit(
