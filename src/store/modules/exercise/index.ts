@@ -6,9 +6,9 @@ import { ExerciseActions, ExerciseMutations } from './types';
 const getDefaultExerciseStore = () => ({
 	started: false,
 	finished: false,
-	maxRounds: 1,
-	breathsPerRound: 1,
-	holdInTime: 1,
+	maxRounds: 3,
+	breathsPerRound: 3,
+	holdInTime: 5,
 	breathTime: 1.4 * 1000,
 	currentRoundState: RoundState.Stopped,
 	holdOutTime: 0,

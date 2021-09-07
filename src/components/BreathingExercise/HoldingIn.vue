@@ -1,7 +1,16 @@
 <template>
-  <section class="exercise__houl_out">
-    <p>Inhale deeply and stop breathing for {{ holdTime }} s.</p>
+  <section class="exercise__hold_in">
+    <app-exercise-header> Recovery </app-exercise-header>
+
     <app-counter :number="counter" />
+
+    <app-button variant="link" @click="nextScreen">
+      Skip to the {{ isLastRound ? "Summary screen" : "next phase" }}
+    </app-button>
+
+    <app-exercise-footer>
+      Take one deep breath and hold for {{ holdInTime }} seconds.
+    </app-exercise-footer>
   </section>
 </template>
 
@@ -10,13 +19,19 @@ import { namespaceName } from "@/store";
 import { ExerciseMutations } from "@/store/modules/exercise/types";
 import { RoundState } from "@/types/breath";
 import { defineComponent } from "vue";
+import ButtonVue from "../ui/Button.vue";
 import CounterVue from "./counter/Counter.vue";
+import FooterVue from "./Footer.vue";
+import HeaderVue from "./Header.vue";
 
 let interval: import("@/types/timeout").TimeoutReturn = void 0;
 export default defineComponent({
   name: "BreathingExercise-HouldingIn",
   components: {
     appCounter: CounterVue,
+    appExerciseFooter: FooterVue,
+    appExerciseHeader: HeaderVue,
+    appButton: ButtonVue,
   },
   data() {
     return {
@@ -43,6 +58,22 @@ export default defineComponent({
         return;
       }
 
+      //   clearInterval(interval);
+      //   interval = void 0;
+      //   let routeName = "BreathingExercise-Breathing";
+      //   if (this.isLastRound) {
+      //     routeName = "BreathingExercise-Summary";
+      //   }
+      //   this.$router.replace({
+      //     name: routeName,
+      //     params: {
+      //       fromHoldingIn: 1,
+      //     },
+      //   });
+      this.nextScreen();
+    },
+
+    nextScreen() {
       clearInterval(interval);
       interval = void 0;
       let routeName = "BreathingExercise-Breathing";
@@ -58,7 +89,6 @@ export default defineComponent({
     },
   },
   beforeRouteLeave(to) {
-    console.log("beforeRouteLeave - 'Holding In'");
     if (
       to.name === "BreathingExercise-Breathing" ||
       to.name === "BreathingExercise-Summary"
@@ -97,7 +127,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.exercise__houl_out {
+.exercise__hold_in {
   text-align: center;
 }
 </style>

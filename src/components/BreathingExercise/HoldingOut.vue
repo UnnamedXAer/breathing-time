@@ -1,16 +1,31 @@
 <template>
-  <section class="exercise__houlding_out">
-    <p v-if="isLastRound">
-      This is last round. Don't forget to about 15 second recover phase.
-    </p>
-    <app-alert v-if="showAreYouThere" mode="warning" :dismiss="dismissAlert"
-      >Are you still there?</app-alert
-    >
+  <section class="exercise__hould_out">
+    <app-exercise-header>
+      Breath Hold
+      <template v-slot:additional>
+        <app-alert
+          v-if="showAreYouThere"
+          mode="warning"
+          :dismiss="dismissAlert"
+        >
+          Are you still there?
+        </app-alert>
+      </template>
+    </app-exercise-header>
     <app-counter :number="counter" />
-    <app-button @click="nextRound">{{
-      isLastRound ? "FINISH" : "NEXT Round"
-    }}</app-button>
+    <section>
+      <app-exercise-action-btn @click="nextScreen">
+        Next Phase
+      </app-exercise-action-btn>
+    </section>
+    <app-exercise-footer>
+      Exhale and stop breathing until you feel urge to inhale.
+      <p v-if="isLastRound">
+        "This is last round. Don't forget about recover phase.
+      </p>
+    </app-exercise-footer>
   </section>
+
   <app-leave-exercise-confirm
     v-if="showModal"
     :onCancel="preventCancelExercise"
@@ -28,8 +43,10 @@ import { RoundState } from "@/types/breath";
 import { defineComponent } from "vue";
 import { RouteRecordName } from "vue-router";
 import AlertVue from "../ui/Alert.vue";
-import ButtonVue from "../ui/Button.vue";
+import ActionBtnVue from "./ActionBtn.vue";
 import CounterVue from "./counter/Counter.vue";
+import FooterVue from "./Footer.vue";
+import HeaderVue from "./Header.vue";
 import LeaveExerciseConfirmVue from "./LeaveExerciseConfirm.vue";
 import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
 
@@ -39,9 +56,11 @@ export default defineComponent({
   mixins: [MixinLeaveExerciseVue],
   components: {
     appCounter: CounterVue,
-    appButton: ButtonVue,
+    appExerciseActionBtn: ActionBtnVue,
     appAlert: AlertVue,
     appLeaveExerciseConfirm: LeaveExerciseConfirmVue,
+    appExerciseFooter: FooterVue,
+    appExerciseHeader: HeaderVue,
   },
   data() {
     return {
@@ -81,13 +100,14 @@ export default defineComponent({
         (Date.now() - this.startTime) / 1000
       );
     },
-    nextRound() {
+    nextScreen() {
       this.$router.replace({
         name: "BreathingExercise-HoldingIn",
       });
     },
     dismissAlert() {
       this.showAreYouThere = false;
+      this.warningDismissed = true;
     },
 
     _confirmCancelExercise() {
@@ -109,17 +129,6 @@ export default defineComponent({
     this.askBeforeLeave(to.name as RouteRecordName);
 
     return false;
-
-    // const ok = confirm("Cancel exercise?");
-    // if (ok) {
-    //   this.$store.dispatch(namespaceName("exercise", ExerciseMutations.Cancel));
-    //   if (interval !== void 0) {
-    //     clearInterval(interval);
-    //     interval = void 0;
-    //   }
-    // }
-
-    // return ok;
   },
   mounted() {
     this.$store.commit(
@@ -131,3 +140,17 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.exercise__hould_out {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.exercise__hould_out .content {
+  margin-bottom: 1.5rem;
+}
+</style>

@@ -36,7 +36,9 @@ const routes: Array<RouteRecordRaw> = [
 				path: 'summary',
 				name: 'BreathingExercise-Summary',
 				component: BreathingExerciseSummaryVue,
-				props: true
+				props: (route) => ({
+					fromHoldingIn: route.params.fromHoldingIn === '1'
+				})
 			},
 			{
 				path: '',

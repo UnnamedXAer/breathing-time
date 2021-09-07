@@ -25,6 +25,8 @@ export default defineComponent({
 
 .counter__time {
   margin: 1rem auto;
-  font-size: 10vh;
+  font-size: 15vh;
+  text-shadow: 6px 6px 8px rgb(0 0 0 / 80%);
+  font-weight: 600;
 }
 </style>

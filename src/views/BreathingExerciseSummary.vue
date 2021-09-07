@@ -38,7 +38,7 @@ type ComputedTypes = ExerciseModuleMap<typeof exerciseStateProps>;
 export default defineComponent({
   name: "BreathingExercise-Summary",
   props: {
-    fromHoldingIn: Number,
+    fromHoldingIn: Boolean,
   },
   computed: {
     ...(mapState<StoreState>("exercise", exerciseStateProps) as ComputedTypes),

@@ -86,7 +86,8 @@ export default defineComponent({
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
     0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
   min-width: 300px;
-  width: 100%;
+  width: 100% !important;
+  max-width: 100%;
 
   display: flex;
   justify-content: space-between;
@@ -95,8 +96,7 @@ export default defineComponent({
 
 @media screen and (min-width: 540px) {
   .alert {
-    min-width: 300px;
-    width: initial;
+    min-width: 200px;
   }
 }
 
@@ -112,7 +112,7 @@ export default defineComponent({
   border: 1pt solid rgb(0, 145, 230);
   padding: calc(1rem - 1pt) calc(1.1rem - 1pt);
   color: rgb(0, 145, 230);
-  background: white;
+  background: var(--light);
 }
 
 .alert.link {
@@ -158,6 +158,12 @@ export default defineComponent({
   background-color: inherit;
   border: none;
   font-size: 2rem;
+  color: rgb(255, 235, 170);
+  cursor: pointer;
+}
+
+.alert .close_btn:hover {
+  background-color: rgba(0, 0, 0, 0.15);
   color: inherit;
 }
 </style>

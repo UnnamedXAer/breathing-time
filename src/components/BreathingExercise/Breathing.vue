@@ -5,6 +5,14 @@
     :disableAnimation="disableAnimation"
   />
   <app-counter :number="breathNum" />
+  <app-button variant="link" @click="nextScreen">
+    Skip to the next phase
+  </app-button>
+
+  <app-exercise-footer>
+    Inhale deeply and exhale as counter changes.
+  </app-exercise-footer>
+
   <app-leave-exercise-confirm
     v-if="showModal"
     :onCancel="preventCancelExercise"
@@ -24,7 +32,9 @@ import { TimeoutReturn } from "@/types/timeout";
 import { defineComponent } from "vue";
 import { RouteRecordName } from "vue-router";
 import { mapState } from "vuex";
+import ButtonVue from "../ui/Button.vue";
 import CounterVue from "./counter/Counter.vue";
+import FooterVue from "./Footer.vue";
 import LungsVue from "./counter/Lungs.vue";
 import LeaveExerciseConfirmVue from "./LeaveExerciseConfirm.vue";
 import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
@@ -44,9 +54,11 @@ export default defineComponent({
   name: "BreathingExercise-Breathing",
   mixins: [MixinLeaveExerciseVue],
   components: {
+    appButton: ButtonVue,
     appLungs: LungsVue,
     appCounter: CounterVue,
     appLeaveExerciseConfirm: LeaveExerciseConfirmVue,
+    appExerciseFooter: FooterVue,
   },
   data() {
     return {
@@ -76,16 +88,23 @@ export default defineComponent({
         breathTiemout = setTimeout(this.breath, this.breathTime);
         return;
       }
-      breathTiemout = void 0;
-      this.countingFinished = true;
-      this.$router.replace({
-        name: "BreathingExercise-HoldingOut",
-      });
+      this.nextScreen();
     },
 
     _confirmCancelExercise() {
       this.$store.dispatch(namespaceName("exercise", ExerciseActions.Cancel));
       this.confirmCancelExercise();
+    },
+
+    nextScreen() {
+      if (breathTiemout) {
+        clearTimeout(breathTiemout);
+        breathTiemout = void 0;
+      }
+      this.countingFinished = true;
+      this.$router.replace({
+        name: "BreathingExercise-HoldingOut",
+      });
     },
   },
   beforeRouteLeave(to) {
