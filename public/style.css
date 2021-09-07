@@ -36,11 +36,7 @@ h6 {
 	max-width: var(--width-max);
 	margin: 0 auto;
 
-	padding: 0 0.3rem;
-}
-
-@media screen and (min-width: 540px) {
-	#root {
-		padding: 0 1rem;
-	}
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }

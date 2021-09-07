@@ -1,6 +1,8 @@
 <template>
   <app-header />
-  <router-view />
+  <main class="main">
+    <router-view />
+  </main>
   <app-footer />
 </template>
 <script lang="ts">
@@ -18,7 +20,19 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.app {
-  margin-bottom: 1rem;
+.main {
+  flex: 1;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 540px) {
+  .main {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
 }
 </style>
