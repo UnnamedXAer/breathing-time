@@ -6,6 +6,7 @@ import ExerciseStartVue from '../components/BreathingExercise/Start.vue';
 import BreathingVue from '../components/BreathingExercise/Breathing.vue';
 import HoldingOutVue from '../components/BreathingExercise/HoldingOut.vue';
 import HoldingInVue from '../components/BreathingExercise/HoldingIn.vue';
+import SettingsVue from '../views/Settings.vue';
 import store, { StoreState } from '@/store';
 
 const routes: Array<RouteRecordRaw> = [
@@ -46,6 +47,11 @@ const routes: Array<RouteRecordRaw> = [
 				component: ExerciseStartVue
 			}
 		]
+	},
+	{
+		path: '/settings',
+		name: 'Settings',
+		component: SettingsVue // convert to lazy-loaded
 	},
 	{
 		path: '/about',

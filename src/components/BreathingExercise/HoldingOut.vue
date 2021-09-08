@@ -74,7 +74,7 @@ export default defineComponent({
     isLastRound() {
       return (
         this.$store.state.exercise.holdTimes.length + 1 ===
-        this.$store.state.exercise.maxRounds
+        this.$store.state.exercise.numberOfRounds
       );
     },
   },

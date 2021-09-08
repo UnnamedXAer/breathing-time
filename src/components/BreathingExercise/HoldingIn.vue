@@ -9,7 +9,7 @@
     </app-button>
 
     <app-exercise-footer>
-      Take one deep breath and hold for {{ holdInTime }} seconds.
+      Take one deep breath and hold for {{ recoveryTime }} seconds.
     </app-exercise-footer>
   </section>
 </template>
@@ -41,12 +41,12 @@ export default defineComponent({
 
   computed: {
     holdTime() {
-      return this.$store.state.exercise.holdInTime;
+      return this.$store.state.exercise.recoveryTime;
     },
     isLastRound() {
       return (
         this.$store.state.exercise.holdTimes.length >=
-        this.$store.state.exercise.maxRounds
+        this.$store.state.exercise.numberOfRounds
       );
     },
   },

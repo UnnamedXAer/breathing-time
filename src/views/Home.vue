@@ -7,27 +7,14 @@
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
-        <p class="text Lato">Start Your breathing</p>
-        <p class="text ZenTokyo">Start Your breathing</p>
-      </router-link>
-      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
-        <div class="image">
-          <app-couthing-alt-svg></app-couthing-alt-svg>
-        </div>
-        <p class="text Lato">ĄąŚśŻżŹźĆćÓóŃńĘę ...#$%^%$^&*[😎(</p>
-      </router-link>
-      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
-        <div class="image">
-          <app-couthing-alt-svg></app-couthing-alt-svg>
-        </div>
-        <p class="text">ĄąŚśŻżŹźĆćÓóŃńĘę ...#$%^%$^&*[😎(</p>
+        <p class="text">Start Your breathing</p>
       </router-link>
 
-      <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
+      <router-link :to="{ name: 'Settings' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
-        <p class="text">Settings</p>
+        <p class="text">Adjust Breathing Settings</p>
       </router-link>
     </section>
   </div>
@@ -71,10 +58,14 @@ export default defineComponent({
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
 
   text-decoration: none;
+}
+
+.card .text {
+  flex: 1;
+  text-align: center;
 }
 
 .card:hover {

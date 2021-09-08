@@ -1,6 +1,7 @@
 :root {
 	--width-max: 1140px;
 	--primary: rgb(1, 77, 77);
+	--primary1: #014d4d;
 	--light: rgb(253, 253, 253);
 	--dark: rgb(18, 18, 18);
 	--dark-rgb: 18, 18, 18;
@@ -17,7 +18,8 @@ body {
 	color: var(--dark);
 }
 
-html {
+html,
+button {
 	font-family: 'Lato', sans-serif;
 }
 
@@ -44,3 +46,94 @@ h6 {
 	flex-direction: column;
 	justify-content: space-between;
 }
+
+input[type='range'] {
+	height: 39px;
+	-webkit-appearance: none;
+	margin: 10px 0;
+	width: 100%;
+}
+input[type='range']:focus {
+	outline: none;
+}
+input[type='range']::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 8px;
+	cursor: pointer;
+	animate: 0.2s;
+	box-shadow: 2px 2px 4px #000000;
+	background: #019191;
+	border-radius: 2px;
+	border: 0px solid #000000;
+}
+input[type='range']::-webkit-slider-thumb {
+	box-shadow: 1px 1px 4px #000000;
+	border: 4px solid var(--primary);
+	height: 28px;
+	width: 28px;
+	border-radius: 16px;
+	background: #019191;
+	cursor: pointer;
+	-webkit-appearance: none;
+	margin-top: -10px;
+}
+input[type='range']:focus::-webkit-slider-runnable-track {
+	background: #019191;
+}
+input[type='range']::-moz-range-track {
+	width: 100%;
+	height: 8px;
+	cursor: pointer;
+	animate: 0.2s;
+	box-shadow: 2px 2px 4px #000000;
+	background: #019191;
+	border-radius: 2px;
+	border: 0px solid #000000;
+}
+input[type='range']::-moz-range-thumb {
+	box-shadow: 1px 1px 4px #000000;
+	border: 4px solid var(--primary);
+	height: 22px;
+	width: 22px;
+	border-radius: 50%;
+	background: #019191;
+	cursor: pointer;
+}
+input[type='range']::-ms-track {
+	width: 100%;
+	height: 8px;
+	cursor: pointer;
+	animate: 0.2s;
+	background: transparent;
+	border-color: transparent;
+	color: transparent;
+}
+input[type='range']::-ms-fill-lower {
+	background: #019191;
+	border: 0px solid #000000;
+	border-radius: 4px;
+	box-shadow: 2px 2px 4px #000000;
+}
+input[type='range']::-ms-fill-upper {
+	background: #019191;
+	border: 0px solid #000000;
+	border-radius: 4px;
+	box-shadow: 2px 2px 4px #000000;
+}
+input[type='range']::-ms-thumb {
+	margin-top: 1px;
+	box-shadow: 1px 1px 4px #000000;
+	border: 4px solid var(--primary);
+	height: 28px;
+	width: 28px;
+	border-radius: 16px;
+	background: #019191;
+	cursor: pointer;
+}
+input[type='range']:focus::-ms-fill-lower {
+	background: #019191;
+}
+input[type='range']:focus::-ms-fill-upper {
+	background: #019191;
+}
+/* radio - end */

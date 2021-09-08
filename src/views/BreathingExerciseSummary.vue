@@ -31,7 +31,7 @@ import { RoundState } from "@/types/breath";
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
 
-const exerciseStateProps = ["holdTimes", "maxRounds"] as const;
+const exerciseStateProps = ["holdTimes", "numberOfRounds"] as const;
 
 type ComputedTypes = ExerciseModuleMap<typeof exerciseStateProps>;
 

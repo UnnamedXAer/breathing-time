@@ -1,20 +1,37 @@
 import { RootState } from '@/store';
 import { RoundState } from '@/types/breath';
 import { Module } from 'vuex';
-import { ExerciseActions, ExerciseMutations } from './types';
+import {
+	ExerciseActions,
+	ExerciseCustomizableProps,
+	ExerciseCustomizableState,
+	ExerciseMutations,
+	UpdateSettingsPayload
+} from './types';
 
 const getDefaultExerciseStore = () => ({
 	started: false,
 	finished: false,
-	maxRounds: 3,
+	disableAnimation: true,
+	numberOfRounds: 3,
 	breathsPerRound: 3,
-	holdInTime: 5,
+	recoveryTime: 5,
 	breathTime: 1.4 * 1000,
 	currentRoundState: RoundState.Stopped,
 	holdOutTime: 0,
 	holdOutSeconds: 0,
 	holdTimes: [] as number[]
 });
+
+export const customizableExerciseStateProps = [
+	'numberOfRounds',
+	'breathsPerRound',
+	'recoveryTime',
+	'breathTime',
+	'disableAnimation'
+] as ReadonlyArray<ExerciseCustomizableProps>;
+
+customizableExerciseStateProps[0];
 
 function clearExerciseState(state: ExerciseState) {
 	state.started = false;
@@ -43,12 +60,36 @@ export const exerciseStore: Module<ExerciseState, RootState> = {
 		},
 		[ExerciseMutations.AddHoldTime]: (state, time) => {
 			state.holdTimes.push(time);
+		},
+
+		[ExerciseMutations.UpdateSettings]: (
+			state,
+			{ propName, value }: UpdateSettingsPayload
+		) => {
+			(<K extends ExerciseCustomizableProps>(prop: K) => {
+				state[prop] = value as ExerciseState[K];
+			})(propName);
+		},
+
+		[ExerciseMutations.RestoreDefault]: (state) => {
+			const defaultState = getDefaultExerciseStore();
+			customizableExerciseStateProps.forEach(
+				<K extends ExerciseCustomizableProps>(prop: K) => {
+					state[prop] = defaultState[prop];
+				}
+			);
+			return customizableExerciseStateProps;
 		}
 	},
 
 	actions: {
 		[ExerciseActions.Cancel]({ commit }) {
 			commit(ExerciseMutations.Cancel);
+		},
+
+		[ExerciseActions.RestoreDefault]({ commit }) {
+			localStorage.removeItem('exerciseSetup');
+			commit(ExerciseMutations.RestoreDefault);
 		}
 	}
 };
