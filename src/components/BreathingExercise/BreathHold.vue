@@ -52,7 +52,7 @@ import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
 
 let interval: import("@/types/timeout").TimeoutReturn = void 0;
 export default defineComponent({
-  name: "BreathingExercise-HouldingOut",
+  name: "BreathingExercise-BreathHold",
   mixins: [MixinLeaveExerciseVue],
   components: {
     appCounter: CounterVue,
@@ -102,7 +102,7 @@ export default defineComponent({
     },
     nextScreen() {
       this.$router.replace({
-        name: "BreathingExercise-HoldingIn",
+        name: "BreathingExercise-Recovery",
       });
     },
     dismissAlert() {
@@ -116,7 +116,7 @@ export default defineComponent({
     },
   },
   beforeRouteLeave(to) {
-    if (to.name === "BreathingExercise-HoldingIn") {
+    if (to.name === "BreathingExercise-Recovery") {
       this.stopAndStoreResults();
       return true;
     }
@@ -133,7 +133,7 @@ export default defineComponent({
   mounted() {
     this.$store.commit(
       namespaceName("exercise", ExerciseMutations.SetRoundState),
-      RoundState.HoldingOut
+      RoundState.BreathHold
     );
     this.startTime = Date.now();
     interval = setInterval(this.count, 1000);

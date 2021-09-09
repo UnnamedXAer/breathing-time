@@ -7,7 +7,7 @@ import {
 	ExerciseCustomizableProps,
 	ExerciseCustomizableState,
 	ExerciseMutations,
-	UpdateSettingsPayload
+	UpdatePreferencesPayload
 } from './types';
 
 const getDefaultState =
@@ -66,9 +66,9 @@ export const exerciseStore: Module<ExerciseState, RootState> = {
 			state.holdTimes.push(time);
 		},
 
-		[ExerciseMutations.UpdateSettings]: (
+		[ExerciseMutations.UpdatePreferences]: (
 			state,
-			{ propName, value }: UpdateSettingsPayload
+			{ propName, value }: UpdatePreferencesPayload
 		) => {
 			(<K extends ExerciseCustomizableProps>(prop: K) => {
 				state[prop] = value as ExerciseState[K];
@@ -104,7 +104,7 @@ export const exerciseStore: Module<ExerciseState, RootState> = {
 			commit(ExerciseMutations.Cancel);
 		},
 
-		[ExerciseActions.ReadCachedSettings]: ({ commit }) => {
+		[ExerciseActions.ReadCachedPreferences]: ({ commit }) => {
 			const cached = localStorage.getItem('exerciseSetup');
 			if (cached === null) {
 				return;
@@ -114,11 +114,11 @@ export const exerciseStore: Module<ExerciseState, RootState> = {
 			commit(ExerciseMutations.SetPartialState, customizableState);
 		},
 
-		[ExerciseActions.UpdateSettings]: (
+		[ExerciseActions.UpdatePreferences]: (
 			{ commit, state },
-			payload: UpdateSettingsPayload
+			payload: UpdatePreferencesPayload
 		) => {
-			commit(ExerciseMutations.UpdateSettings, payload);
+			commit(ExerciseMutations.UpdatePreferences, payload);
 
 			const customizableState = {} as ExerciseCustomizableState;
 			customizableExerciseStateProps.forEach(

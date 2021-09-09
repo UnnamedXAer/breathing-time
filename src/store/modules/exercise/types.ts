@@ -5,15 +5,15 @@ export enum ExerciseMutations {
 	Cancel = 'CANCEL_EXERCISE',
 	SetRoundState = 'SET_ROUND_STATUS',
 	AddHoldTime = 'ADD_HOLD_TIME',
-	UpdateSettings = 'UPDATE_SETTINGS',
+	UpdatePreferences = 'UPDATE_PREFERENCES',
 	RestoreDefault = 'RESTORE_DEFAULT',
 	SetPartialState = 'SET_PARTIAL_STATE'
 }
 
 export enum ExerciseActions {
 	Cancel = 'CANCEL_EXERCISE',
-	ReadCachedSettings = 'READ_CACHED_SETTINGS',
-	UpdateSettings = 'UPDATE_SETTINGS',
+	ReadCachedPreferences = 'READ_CACHED_PREFERENCES',
+	UpdatePreferences = 'UPDATE_PREFERENCES',
 	RestoreDefault = 'RESTORE_DEFAULT'
 }
 
@@ -42,7 +42,7 @@ export type ExerciseCustomizableState = Pick<
 
 export type ExerciseCustomizableProps = keyof ExerciseCustomizableState;
 
-export type UpdateSettingsPayload = {
+export type UpdatePreferencesPayload = {
 	propName: ExerciseCustomizableProps;
 	value: ExerciseState[ExerciseCustomizableProps];
 };

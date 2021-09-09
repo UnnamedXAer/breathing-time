@@ -10,11 +10,11 @@
         <p class="text">Start Your breathing</p>
       </router-link>
 
-      <router-link :to="{ name: 'Settings' }" class="card">
+      <router-link :to="{ name: 'Preferences' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
-        <p class="text">Adjust Breathing Settings</p>
+        <p class="text">Breathing Preferences</p>
       </router-link>
     </section>
   </div>

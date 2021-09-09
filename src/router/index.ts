@@ -4,9 +4,9 @@ import BreathingExerciseVue from '../views/BreathingExercise.vue';
 import BreathingExerciseSummaryVue from '../views/BreathingExerciseSummary.vue';
 import ExerciseStartVue from '../components/BreathingExercise/Start.vue';
 import BreathingVue from '../components/BreathingExercise/Breathing.vue';
-import HoldingOutVue from '../components/BreathingExercise/HoldingOut.vue';
-import HoldingInVue from '../components/BreathingExercise/HoldingIn.vue';
-import SettingsVue from '../views/Settings.vue';
+import BreathHoldVue from '../components/BreathingExercise/BreathHold.vue';
+import RecoveryVue from '../components/BreathingExercise/Recovery.vue';
+import PreferencesVue from '../views/Preferences.vue';
 import store, { StoreState } from '@/store';
 
 const routes: Array<RouteRecordRaw> = [
@@ -22,15 +22,15 @@ const routes: Array<RouteRecordRaw> = [
 				beforeEnter: beforeExercisePartialRouteEnter
 			},
 			{
-				path: 'holding-out',
-				name: 'BreathingExercise-HoldingOut',
-				component: HoldingOutVue,
+				path: 'breath-hold',
+				name: 'BreathingExercise-BreathHold',
+				component: BreathHoldVue,
 				beforeEnter: beforeExercisePartialRouteEnter
 			},
 			{
-				path: 'holding-in',
-				name: 'BreathingExercise-HoldingIn',
-				component: HoldingInVue,
+				path: 'recovery',
+				name: 'BreathingExercise-Recovery',
+				component: RecoveryVue,
 				beforeEnter: beforeExercisePartialRouteEnter
 			},
 			{
@@ -38,20 +38,26 @@ const routes: Array<RouteRecordRaw> = [
 				name: 'BreathingExercise-Summary',
 				component: BreathingExerciseSummaryVue,
 				props: (route) => ({
-					fromHoldingIn: route.params.fromHoldingIn === '1'
+					fromRecovery: route.params.fromRecovery === '1'
 				})
 			},
 			{
 				path: '',
+				redirect: {
+					name: 'BreathingExercise-Start'
+				}
+			},
+			{
+				path: 'start',
 				name: 'BreathingExercise-Start',
 				component: ExerciseStartVue
 			}
 		]
 	},
 	{
-		path: '/settings',
-		name: 'Settings',
-		component: SettingsVue // convert to lazy-loaded
+		path: '/preferences',
+		name: 'Preferences',
+		component: PreferencesVue // convert to lazy-loaded
 	},
 	{
 		path: '/about',
@@ -65,6 +71,12 @@ const routes: Array<RouteRecordRaw> = [
 		path: '/',
 		name: 'Home',
 		component: HomeVue
+	},
+	{
+		path: '/:pathMatch(.*)*',
+		redirect: {
+			name: 'Home'
+		}
 	}
 ];
 

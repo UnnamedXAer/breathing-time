@@ -75,7 +75,7 @@ export default defineComponent({
     showModal(val) {
       if (!val && this.countingFinished) {
         this.$router.replace({
-          name: "BreathingExercise-HoldingOut",
+          name: "BreathingExercise-BreathHold",
         });
       }
     },
@@ -103,7 +103,7 @@ export default defineComponent({
       }
       this.countingFinished = true;
       this.$router.replace({
-        name: "BreathingExercise-HoldingOut",
+        name: "BreathingExercise-BreathHold",
       });
     },
   },
@@ -112,7 +112,7 @@ export default defineComponent({
       return false;
     }
 
-    if (to.name === "BreathingExercise-HoldingOut") {
+    if (to.name === "BreathingExercise-BreathHold") {
       clearTimeout(breathTiemout);
       breathTiemout = void 0;
       return true;

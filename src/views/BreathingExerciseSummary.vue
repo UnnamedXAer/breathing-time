@@ -1,6 +1,6 @@
 <template>
   <article class="summary">
-    <h2 v-if="!fromHoldingIn">
+    <h2 v-if="!fromRecovery">
       Go to
       <router-link :to="{ name: 'BreathingExercise-Start' }"
         >Breathing Exercise</router-link
@@ -38,13 +38,13 @@ type ComputedTypes = ExerciseModuleMap<typeof exerciseStateProps>;
 export default defineComponent({
   name: "BreathingExercise-Summary",
   props: {
-    fromHoldingIn: Boolean,
+    fromRecovery: Boolean,
   },
   computed: {
     ...(mapState<StoreState>("exercise", exerciseStateProps) as ComputedTypes),
   },
   mounted() {
-    console.log("fromHoldingIn", this.fromHoldingIn);
+    console.log("fromRecovery", this.fromRecovery);
     this.$store.commit(
       namespaceName("exercise", ExerciseMutations.SetRoundState),
       RoundState.Stopped

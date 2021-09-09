@@ -1,7 +1,7 @@
 <template>
-  <section class="settings">
-    <h1>Settings</h1>
-    <div class="settings__fields_container">
+  <section class="preferences">
+    <h1>Breathing Exercise Preferences</h1>
+    <div class="preferences__fields_container">
       <app-range
         id="num-of-rounds"
         name="numberOfRounds"
@@ -71,8 +71,7 @@ import { customizableExerciseStateProps } from "@/store/modules/exercise";
 import {
   ExerciseActions,
   ExerciseModuleMap,
-  ExerciseMutations,
-  UpdateSettingsPayload,
+  UpdatePreferencesPayload,
 } from "@/store/modules/exercise/types";
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
@@ -80,7 +79,7 @@ import { mapState } from "vuex";
 type ComputedTypes = ExerciseModuleMap<typeof customizableExerciseStateProps>;
 
 export default defineComponent({
-  name: "Settings",
+  name: "Preferences",
   components: {
     appCheckbox: CheckboxVue,
     appRange: RangeVue,
@@ -96,15 +95,15 @@ export default defineComponent({
 
   methods: {
     changeHandler(
-      propName: UpdateSettingsPayload["propName"],
-      value: UpdateSettingsPayload["value"]
+      propName: UpdatePreferencesPayload["propName"],
+      value: UpdatePreferencesPayload["value"]
     ) {
       this.$store.dispatch(
-        namespaceName("exercise", ExerciseActions.UpdateSettings),
+        namespaceName("exercise", ExerciseActions.UpdatePreferences),
         {
           propName: propName,
           value: value,
-        } as UpdateSettingsPayload
+        } as UpdatePreferencesPayload
       );
     },
 
@@ -118,14 +117,14 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.settings {
+.preferences {
   flex: 1;
 
   display: flex;
   flex-direction: column;
 }
 
-.settings__fields_container {
+.preferences__fields_container {
   max-width: 540px;
   margin-bottom: 2rem;
 }

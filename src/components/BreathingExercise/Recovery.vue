@@ -1,5 +1,5 @@
 <template>
-  <section class="exercise__hold_in">
+  <section class="exercise__recovery">
     <app-exercise-header> Recovery </app-exercise-header>
 
     <app-counter :number="counter" />
@@ -26,7 +26,7 @@ import HeaderVue from "./Header.vue";
 
 let interval: import("@/types/timeout").TimeoutReturn = void 0;
 export default defineComponent({
-  name: "BreathingExercise-HouldingIn",
+  name: "BreathingExercise-Recovery",
   components: {
     appCounter: CounterVue,
     appExerciseFooter: FooterVue,
@@ -67,7 +67,7 @@ export default defineComponent({
       //   this.$router.replace({
       //     name: routeName,
       //     params: {
-      //       fromHoldingIn: 1,
+      //       fromRecovery: 1,
       //     },
       //   });
       this.nextScreen();
@@ -83,7 +83,7 @@ export default defineComponent({
       this.$router.replace({
         name: routeName,
         params: {
-          fromHoldingIn: 1,
+          fromRecovery: 1,
         },
       });
     },
@@ -113,7 +113,7 @@ export default defineComponent({
   mounted() {
     this.$store.commit(
       namespaceName("exercise", ExerciseMutations.SetRoundState),
-      RoundState.HoldingIn
+      RoundState.Recovery
     );
     interval = setInterval(this.count, 1000);
   },
@@ -127,7 +127,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.exercise__hold_in {
+.exercise__recovery {
   text-align: center;
 }
 </style>

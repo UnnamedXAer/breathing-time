@@ -21,7 +21,7 @@ export default defineComponent({
 
   mounted() {
     this.$store.dispatch(
-      namespaceName("exercise", ExerciseActions.ReadCachedSettings)
+      namespaceName("exercise", ExerciseActions.ReadCachedPreferences)
     );
   },
 });
