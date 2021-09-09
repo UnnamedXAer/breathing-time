@@ -6,11 +6,14 @@ export enum ExerciseMutations {
 	SetRoundState = 'SET_ROUND_STATUS',
 	AddHoldTime = 'ADD_HOLD_TIME',
 	UpdateSettings = 'UPDATE_SETTINGS',
-	RestoreDefault = 'RESTORE_DEFAULT'
+	RestoreDefault = 'RESTORE_DEFAULT',
+	SetPartialState = 'SET_PARTIAL_STATE'
 }
 
 export enum ExerciseActions {
 	Cancel = 'CANCEL_EXERCISE',
+	ReadCachedSettings = 'READ_CACHED_SETTINGS',
+	UpdateSettings = 'UPDATE_SETTINGS',
 	RestoreDefault = 'RESTORE_DEFAULT'
 }
 

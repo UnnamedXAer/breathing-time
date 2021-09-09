@@ -10,11 +10,19 @@ import { defineComponent } from "vue";
 import HeaderVue from "./components/header/Header.vue";
 import FooterVue from "./components/footer/Footer.vue";
 import "./assets/fonts/fonts.module.css";
+import { namespaceName } from "./store";
+import { ExerciseActions } from "./store/modules/exercise/types";
 
 export default defineComponent({
   components: {
     appHeader: HeaderVue,
     appFooter: FooterVue,
+  },
+
+  mounted() {
+    this.$store.dispatch(
+      namespaceName("exercise", ExerciseActions.ReadCachedSettings)
+    );
   },
 });
 </script>

@@ -1,7 +1,7 @@
 <template>
   <section class="settings">
     <h1>Settings</h1>
-    <div>
+    <div class="settings__fields_container">
       <app-range
         id="num-of-rounds"
         name="numberOfRounds"
@@ -99,8 +99,8 @@ export default defineComponent({
       propName: UpdateSettingsPayload["propName"],
       value: UpdateSettingsPayload["value"]
     ) {
-      this.$store.commit(
-        namespaceName("exercise", ExerciseMutations.UpdateSettings),
+      this.$store.dispatch(
+        namespaceName("exercise", ExerciseActions.UpdateSettings),
         {
           propName: propName,
           value: value,
@@ -123,5 +123,10 @@ export default defineComponent({
 
   display: flex;
   flex-direction: column;
+}
+
+.settings__fields_container {
+  max-width: 540px;
+  margin-bottom: 2rem;
 }
 </style>

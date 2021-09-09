@@ -1,6 +1,7 @@
 import { RootState } from '@/store';
 import { RoundState } from '@/types/breath';
 import { Module } from 'vuex';
+import { getProductionExerciseDefaultState } from './defaultState';
 import {
 	ExerciseActions,
 	ExerciseCustomizableProps,
@@ -9,19 +10,22 @@ import {
 	UpdateSettingsPayload
 } from './types';
 
-const getDefaultExerciseStore = () => ({
-	started: false,
-	finished: false,
-	disableAnimation: true,
-	numberOfRounds: 3,
-	breathsPerRound: 3,
-	recoveryTime: 5,
-	breathTime: 1.4 * 1000,
-	currentRoundState: RoundState.Stopped,
-	holdOutTime: 0,
-	holdOutSeconds: 0,
-	holdTimes: [] as number[]
-});
+const getDefaultState =
+	process.env.NODE_ENV === 'production'
+		? getProductionExerciseDefaultState
+		: () => ({
+				started: false,
+				finished: false,
+				disableAnimation: true,
+				numberOfRounds: 3,
+				breathsPerRound: 3,
+				recoveryTime: 5,
+				breathTime: 1.4 * 1000,
+				currentRoundState: RoundState.Stopped,
+				holdOutTime: 0,
+				holdOutSeconds: 0,
+				holdTimes: [] as number[]
+		  });
 
 export const customizableExerciseStateProps = [
 	'numberOfRounds',
@@ -44,7 +48,7 @@ function clearExerciseState(state: ExerciseState) {
 
 export const exerciseStore: Module<ExerciseState, RootState> = {
 	namespaced: true,
-	state: getDefaultExerciseStore,
+	state: getDefaultState,
 
 	mutations: {
 		[ExerciseMutations.Start]: (state) => {
@@ -72,26 +76,65 @@ export const exerciseStore: Module<ExerciseState, RootState> = {
 		},
 
 		[ExerciseMutations.RestoreDefault]: (state) => {
-			const defaultState = getDefaultExerciseStore();
+			const defaultState = getDefaultState();
 			customizableExerciseStateProps.forEach(
 				<K extends ExerciseCustomizableProps>(prop: K) => {
 					state[prop] = defaultState[prop];
 				}
 			);
 			return customizableExerciseStateProps;
+		},
+
+		[ExerciseMutations.SetPartialState]: (
+			state,
+			partialState: Partial<ExerciseState>
+		) => {
+			for (const prop in partialState) {
+				if (Object.prototype.hasOwnProperty.call(state, prop)) {
+					(<K extends keyof ExerciseState>(prop: K) => {
+						state[prop] = partialState[prop] as ExerciseState[K];
+					})(prop as keyof ExerciseState);
+				}
+			}
 		}
 	},
 
 	actions: {
-		[ExerciseActions.Cancel]({ commit }) {
+		[ExerciseActions.Cancel]: ({ commit }) => {
 			commit(ExerciseMutations.Cancel);
 		},
 
-		[ExerciseActions.RestoreDefault]({ commit }) {
+		[ExerciseActions.ReadCachedSettings]: ({ commit }) => {
+			const cached = localStorage.getItem('exerciseSetup');
+			if (cached === null) {
+				return;
+			}
+
+			const customizableState = JSON.parse(cached) as ExerciseCustomizableState;
+			commit(ExerciseMutations.SetPartialState, customizableState);
+		},
+
+		[ExerciseActions.UpdateSettings]: (
+			{ commit, state },
+			payload: UpdateSettingsPayload
+		) => {
+			commit(ExerciseMutations.UpdateSettings, payload);
+
+			const customizableState = {} as ExerciseCustomizableState;
+			customizableExerciseStateProps.forEach(
+				<K extends ExerciseCustomizableProps>(prop: K) => {
+					customizableState[prop] = state[prop];
+				}
+			);
+
+			localStorage.setItem('exerciseSetup', JSON.stringify(customizableState));
+		},
+
+		[ExerciseActions.RestoreDefault]: ({ commit }) => {
 			localStorage.removeItem('exerciseSetup');
 			commit(ExerciseMutations.RestoreDefault);
 		}
 	}
 };
 
-export type ExerciseState = ReturnType<typeof getDefaultExerciseStore>;
+export type ExerciseState = ReturnType<typeof getDefaultState>;
