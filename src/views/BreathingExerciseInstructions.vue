@@ -1,26 +1,8 @@
 <template>
-  <article class="round_phases">
-    <h2>Round Phaes</h2>
-    <ol>
-      <li>Breathing - take 30 - 50 deep breaths.</li>
-      <li>
-        Breath hold - exhale then stop breathing until you feel urge to inhale.
-      </li>
-      <li>Recovery - inhale deeply and hold it for 15 s.</li>
-    </ol>
-  </article>
-
-  <article class="warning_note">
-    <h2>Attention</h2>
-    <p>
-      This breathing exercises can affect your motor control, cause temporary
-      dizziness or even make you faint - do NOT do it while driving or in kind
-      of dangerous places. Find safe place like sofa or bed.
-    </p>
-  </article>
+  <app-warning-note />
 
   <article class="instructions">
-    <h2>Exercise instructions</h2>
+    <h1>Exercise instructions</h1>
     <ol>
       <li>
         <p>
@@ -69,3 +51,13 @@
     </ol>
   </article>
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import WarningNoteVue from "../components/BreathingExercise/WarningNote.vue";
+export default defineComponent({
+  components: {
+    appWarningNote: WarningNoteVue,
+  },
+});
+</script>

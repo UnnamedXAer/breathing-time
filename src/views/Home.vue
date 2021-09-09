@@ -1,38 +1,62 @@
 <template>
   <div class="home">
     <h1>Welcome to Breathing Timer</h1>
-    <br />
-    <section class="cards">
+    <section class="dashboard">
       <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
-        <p class="text">Start Your breathing</p>
+        <p class="text" style="font-weight: bold">Start Your Breathing</p>
       </router-link>
+      <section class="cards">
+        <router-link
+          :to="{ name: 'BreathingExercisePreferences' }"
+          class="card"
+        >
+          <div class="image">
+            <app-preferences-svg></app-preferences-svg>
+          </div>
+          <p class="text">Breathing Preferences</p>
+        </router-link>
 
-      <router-link :to="{ name: 'Preferences' }" class="card">
-        <div class="image">
-          <app-couthing-alt-svg></app-couthing-alt-svg>
-        </div>
-        <p class="text">Breathing Preferences</p>
-      </router-link>
+        <router-link
+          :to="{ name: 'BreathingExerciseInstructions' }"
+          class="card"
+        >
+          <div class="image">
+            <app-instruction-svg></app-instruction-svg>
+          </div>
+          <p class="text">Breathing Instructions</p>
+        </router-link>
+      </section>
     </section>
   </div>
 </template>
 
 <script lang="ts">
 import CoughingAltSvgVue from "../components/svg/CoughingAltSvg.vue";
+import PreferencesSvgVue from "../components/svg/PreferencesSvg.vue";
+import InstructionSvgVue from "../components/svg/InstructionSvg.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Home",
   components: {
     appCouthingAltSvg: CoughingAltSvgVue,
+    appPreferencesSvg: PreferencesSvgVue,
+    appInstructionSvg: InstructionSvgVue,
   },
 });
 </script>
 
 <style scoped>
+.dashboard {
+  width: 100%;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .cards {
   width: 100%;
   display: flex;
@@ -47,20 +71,17 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 1rem;
-
-  color: teal;
-  box-shadow: 0px 3px 8px teal;
-  margin: 1rem;
-  cursor: pointer;
-
-  font-size: 1.5rem;
-
-  display: flex;
-  flex-direction: row;
   align-items: center;
 
+  padding: 1rem;
+  margin: 1rem;
+
+  font-size: 1.5rem;
   text-decoration: none;
+
+  color: var(--primary);
+  box-shadow: 0px 3px 8px var(--dark);
+  cursor: pointer;
 }
 
 .card .text {
@@ -83,12 +104,22 @@ export default defineComponent({
 }
 
 @media screen and (min-width: 760px) {
+  .dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .cards {
     flex-direction: row;
     flex-wrap: wrap;
   }
 
-  .card {
+  .dashboard .card {
+    width: calc(660px + 2rem);
+  }
+
+  .cards .card {
     width: 330px;
   }
 }

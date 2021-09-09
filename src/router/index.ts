@@ -56,8 +56,13 @@ const routes: Array<RouteRecordRaw> = [
 	},
 	{
 		path: '/preferences',
-		name: 'Preferences',
+		name: 'BreathingExercisePreferences',
 		component: PreferencesVue // convert to lazy-loaded
+	},
+	{
+		path: '/instructions',
+		name: 'BreathingExerciseInstructions',
+		component: () => import('../views/BreathingExerciseInstructions.vue')
 	},
 	{
 		path: '/about',

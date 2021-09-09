@@ -13,7 +13,23 @@
       </div>
     </section>
     <hr v-if="counter === countdountTime" />
-    <app-exercise-instructions v-if="counter === countdountTime" />
+
+    <template v-if="counter === countdountTime">
+      <app-warning-note />
+      <app-round-phases />
+
+      <app-button
+        style="margin-top: 2rem"
+        variant="outlined"
+        @click="
+          $router.navigate({
+            name: 'BreathingExerciseInstruction',
+          })
+        "
+      >
+        See instructions
+      </app-button>
+    </template>
   </section>
 </template>
 
@@ -22,14 +38,17 @@ import { namespaceName } from "@/store";
 import { ExerciseMutations } from "@/store/modules/exercise/types";
 import { defineComponent } from "vue";
 import ButtonVue from "../ui/Button.vue";
-import ExerciseInstructionsVue from "./ExerciseInstructions.vue";
+import RoundPhasesVue from "./RoundPhases.vue";
+import WarningNoteVue from "./WarningNote.vue";
 
 let interval: import("@/types/timeout").TimeoutReturn = void 0;
 export default defineComponent({
   name: "BreathingExercise-Start",
   components: {
     appButton: ButtonVue,
-    appExerciseInstructions: ExerciseInstructionsVue,
+    appWarningNote: WarningNoteVue,
+    appRoundPhases: RoundPhasesVue,
+    // appExerciseInstructions: ExerciseInstructionsVue,
   },
   data() {
     const countdountTime = 0;

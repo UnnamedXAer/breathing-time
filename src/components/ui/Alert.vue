@@ -67,7 +67,6 @@ export default defineComponent({
           break;
       }
 
-      console.log(icon);
       return icon;
     },
   },

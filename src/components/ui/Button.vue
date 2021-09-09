@@ -78,6 +78,7 @@ export default defineComponent({
 
 .normal:hover {
   background-color: rgb(0, 120, 205);
+  color: rgb(250, 250, 250);
 }
 
 .danger {
