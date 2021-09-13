@@ -1,7 +1,5 @@
 <template>
-  <app-button @click="$emit('click')" class="exercise__action_btn"
-    ><slot
-  /></app-button>
+  <app-button class="exercise__action_btn"><slot /></app-button>
 </template>
 
 <script lang="ts">

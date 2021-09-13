@@ -95,12 +95,16 @@ export default defineComponent({
         clearInterval(interval);
         interval = void 0;
       }
+
+      const holdTime = (Date.now() - this.startTime) / 1000;
       this.$store.commit(
         namespaceName("exercise", ExerciseMutations.AddHoldTime),
-        (Date.now() - this.startTime) / 1000
+        holdTime
       );
     },
     nextScreen() {
+      this.stopAndStoreResults();
+
       this.$router.replace({
         name: "BreathingExercise-Recovery",
       });
@@ -117,7 +121,6 @@ export default defineComponent({
   },
   beforeRouteLeave(to) {
     if (to.name === "BreathingExercise-Recovery") {
-      this.stopAndStoreResults();
       return true;
     }
 
