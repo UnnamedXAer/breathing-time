@@ -126,23 +126,11 @@ export default defineComponent({
     }
   },
   mounted() {
-    window.addEventListener("unload", unloadHander);
     this.$store.commit(
       namespaceName("exercise", ExerciseMutations.SetRoundState),
       RoundState.Breathing
     );
     this.breath();
   },
-  unmounted() {
-    window.removeEventListener("unload", unloadHander);
-  },
 });
-
-function unloadHander(ev: Event) {
-  console.log("unload", ev.target);
-  if (confirm("wanna leave breathing?")) {
-    return;
-  }
-  ev.preventDefault();
-}
 </script>
