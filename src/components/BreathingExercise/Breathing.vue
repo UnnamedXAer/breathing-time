@@ -16,14 +16,13 @@
   <app-leave-exercise-confirm
     v-if="showModal"
     :onCancel="preventCancelExercise"
-    :onConfirm="_confirmCancelExercise"
+    :onConfirm="confirmCancelExercise"
   />
 </template>
 
 <script lang="ts">
 import { namespaceName, StoreState } from "@/store";
 import {
-  ExerciseActions,
   ExerciseModuleMap,
   ExerciseMutations,
 } from "@/store/modules/exercise/types";
@@ -89,11 +88,6 @@ export default defineComponent({
         return;
       }
       this.nextScreen();
-    },
-
-    _confirmCancelExercise() {
-      this.$store.dispatch(namespaceName("exercise", ExerciseActions.Cancel));
-      this.confirmCancelExercise();
     },
 
     nextScreen() {

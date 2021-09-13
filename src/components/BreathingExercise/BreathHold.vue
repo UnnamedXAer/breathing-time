@@ -29,16 +29,13 @@
   <app-leave-exercise-confirm
     v-if="showModal"
     :onCancel="preventCancelExercise"
-    :onConfirm="_confirmCancelExercise"
+    :onConfirm="confirmCancelExercise"
   />
 </template>
 
 <script lang="ts">
 import { namespaceName } from "@/store";
-import {
-  ExerciseActions,
-  ExerciseMutations,
-} from "@/store/modules/exercise/types";
+import { ExerciseMutations } from "@/store/modules/exercise/types";
 import { RoundState } from "@/types/breath";
 import { defineComponent } from "vue";
 import { RouteRecordName } from "vue-router";
@@ -113,11 +110,6 @@ export default defineComponent({
       this.showAreYouThere = false;
       this.warningDismissed = true;
     },
-
-    _confirmCancelExercise() {
-      this.$store.dispatch(namespaceName("exercise", ExerciseActions.Cancel));
-      this.confirmCancelExercise();
-    },
   },
   beforeRouteLeave(to) {
     if (to.name === "BreathingExercise-Recovery") {
@@ -125,7 +117,7 @@ export default defineComponent({
     }
 
     if (to.params.allowNavigation) {
-      clearInterval();
+      clearInterval(interval);
       interval = void 0;
       return true;
     }

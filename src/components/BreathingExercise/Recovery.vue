@@ -12,6 +12,12 @@
       Take one deep breath and hold for {{ recoveryTime }} seconds.
     </app-exercise-footer>
   </section>
+
+  <app-leave-exercise-confirm
+    v-if="showModal"
+    :onCancel="preventCancelExercise"
+    :onConfirm="confirmCancelExercise"
+  />
 </template>
 
 <script lang="ts">
@@ -19,19 +25,24 @@ import { namespaceName } from "@/store";
 import { ExerciseMutations } from "@/store/modules/exercise/types";
 import { RoundState } from "@/types/breath";
 import { defineComponent } from "vue";
+import { RouteRecordName } from "vue-router";
 import ButtonVue from "../ui/Button.vue";
 import CounterVue from "./counter/Counter.vue";
 import FooterVue from "./Footer.vue";
 import HeaderVue from "./Header.vue";
+import LeaveExerciseConfirmVue from "./LeaveExerciseConfirm.vue";
+import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
 
 let interval: import("@/types/timeout").TimeoutReturn = void 0;
 export default defineComponent({
   name: "BreathingExercise-Recovery",
+  mixins: [MixinLeaveExerciseVue],
   components: {
     appCounter: CounterVue,
     appExerciseFooter: FooterVue,
     appExerciseHeader: HeaderVue,
     appButton: ButtonVue,
+    appLeaveExerciseConfirm: LeaveExerciseConfirmVue,
   },
   data() {
     return {
@@ -53,6 +64,7 @@ export default defineComponent({
 
   methods: {
     count() {
+      console.log(this.counter);
       if (this.counter < this.recoveryTime) {
         this.counter++;
         return;
@@ -77,6 +89,10 @@ export default defineComponent({
     },
   },
   beforeRouteLeave(to) {
+    if (this.showModal && !this.allowNavigation) {
+      return false;
+    }
+
     if (
       to.name === "BreathingExercise-Breathing" ||
       to.name === "BreathingExercise-Summary"
@@ -85,18 +101,18 @@ export default defineComponent({
         clearInterval(interval);
         interval = void 0;
       }
+
       return true;
     }
 
-    const ok = confirm("Cancel exercise?");
-    if (ok) {
-      this.$store.dispatch(namespaceName("exercise", ExerciseMutations.Cancel));
-      if (interval !== void 0) {
-        clearInterval(interval);
-        interval = void 0;
-      }
+    if (to.params.allowNavigation) {
+      clearInterval(interval);
+      interval = void 0;
+      return true;
     }
-    return ok;
+    this.askBeforeLeave(to.name as RouteRecordName);
+
+    return false;
   },
   mounted() {
     this.$store.commit(

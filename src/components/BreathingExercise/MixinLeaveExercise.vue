@@ -1,4 +1,6 @@
 <script lang="ts">
+import { namespaceName } from "@/store";
+import { ExerciseActions } from "@/store/modules/exercise/types";
 import { defineComponent } from "vue";
 import { RouteRecordName } from "vue-router";
 
@@ -31,6 +33,7 @@ export default defineComponent({
     },
 
     confirmCancelExercise() {
+      this.$store.dispatch(namespaceName("exercise", ExerciseActions.Cancel));
       this.allowNavigation = true;
     },
     preventCancelExercise() {
