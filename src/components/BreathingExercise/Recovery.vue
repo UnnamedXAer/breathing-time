@@ -40,7 +40,7 @@ export default defineComponent({
   },
 
   computed: {
-    holdTime() {
+    recoveryTime() {
       return this.$store.state.exercise.recoveryTime;
     },
     isLastRound() {
@@ -53,23 +53,11 @@ export default defineComponent({
 
   methods: {
     count() {
-      if (this.counter < this.holdTime) {
+      if (this.counter < this.recoveryTime) {
         this.counter++;
         return;
       }
 
-      //   clearInterval(interval);
-      //   interval = void 0;
-      //   let routeName = "BreathingExercise-Breathing";
-      //   if (this.isLastRound) {
-      //     routeName = "BreathingExercise-Summary";
-      //   }
-      //   this.$router.replace({
-      //     name: routeName,
-      //     params: {
-      //       fromRecovery: 1,
-      //     },
-      //   });
       this.nextScreen();
     },
 
