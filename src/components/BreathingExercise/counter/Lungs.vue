@@ -3,7 +3,7 @@
     <div class="counter__lungs_wrapper">
       <div
         class="counter__lungs_animated one"
-        :class="{ animate: animate && !disableAnimation }"
+        :class="{ animate: animate && !disableAnimation && !stop }"
         :style="{ animationDuration: animationDuration / 2 + 'ms' }"
       >
         <div
@@ -26,13 +26,32 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   props: {
     animate: { type: Boolean, required: true },
     animationDuration: { type: Number, required: true },
     disableAnimation: Boolean,
+    counter: { type: Number, required: true },
   },
-};
+
+  data() {
+    return {
+      stop: false,
+    };
+  },
+
+  watch: {
+    counter() {
+      this.stop = true;
+      //   setTimeout(() => (this.stop = false), 1);
+      this.$nextTick(() => {
+        this.stop = false;
+      });
+    },
+  },
+});
 </script>
 
 <style scoped>
@@ -63,10 +82,12 @@ export default {
 }
 
 .counter__lungs_animated.animate {
+  /* animation: breath ease-out both alternate-reverse; */
   animation: breath infinite ease-out both alternate-reverse;
 }
 
 .counter__lungs_animated * {
+  /* animation: breath-div ease-out both alternate-reverse; */
   animation: breath-div infinite ease-out both alternate-reverse;
 }
 

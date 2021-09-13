@@ -3,6 +3,7 @@
     :animate="currentRoundState === 'Breathing'"
     :animationDuration="breathTime"
     :disableAnimation="disableAnimation"
+    :counter="breathNum"
   />
   <app-counter :number="breathNum" />
   <app-button variant="link" @click="nextScreen">
