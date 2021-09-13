@@ -18,7 +18,7 @@ const getDefaultState =
 				finished: false,
 				disableAnimation: true,
 				numberOfRounds: 3,
-				breathsPerRound: 3,
+				breathsPerRound: 10,
 				recoveryTime: 5,
 				breathTime: 1.4 * 1000,
 				currentRoundState: RoundState.Stopped,
