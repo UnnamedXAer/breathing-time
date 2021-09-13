@@ -22,8 +22,6 @@ const getDefaultState =
 				recoveryTime: 5,
 				breathTime: 1.4 * 1000,
 				currentRoundState: RoundState.Stopped,
-				holdOutTime: 0,
-				holdOutSeconds: 0,
 				holdTimes: [] as number[]
 		  });
 
@@ -41,8 +39,6 @@ function clearExerciseState(state: ExerciseState) {
 	state.started = false;
 	state.finished = false;
 	state.currentRoundState = RoundState.Stopped;
-	state.holdOutTime = 0;
-	state.holdOutSeconds = 0;
 	state.holdTimes = [];
 }
 

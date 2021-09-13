@@ -9,7 +9,5 @@ export const getProductionExerciseDefaultState = () => ({
 	recoveryTime: 15,
 	breathTime: 2 * 1000,
 	currentRoundState: RoundState.Stopped,
-	holdOutTime: 0,
-	holdOutSeconds: 0,
 	holdTimes: [] as number[]
 });
