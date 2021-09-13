@@ -44,6 +44,7 @@ const exerciseStateProps = [
   "breathTime",
   "breathsPerRound",
   "started",
+  "disableAnimation",
 ] as const;
 
 type ComputedTypes = ExerciseModuleMap<typeof exerciseStateProps>;
@@ -63,7 +64,6 @@ export default defineComponent({
   data() {
     return {
       breathNum: 0,
-      disableAnimation: true,
       countingFinished: false,
     };
   },
