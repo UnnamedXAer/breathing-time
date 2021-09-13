@@ -105,6 +105,7 @@ export default defineComponent({
 .link:hover {
   background-color: inherit;
   text-decoration: underline;
+  color: rgb(0, 145, 230);
 }
 
 .btn > .spinner {
