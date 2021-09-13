@@ -22,8 +22,8 @@
         style="margin-top: 2rem"
         variant="outlined"
         @click="
-          $router.navigate({
-            name: 'BreathingExerciseInstruction',
+          $router.push({
+            name: 'BreathingExerciseInstructions',
           })
         "
       >
