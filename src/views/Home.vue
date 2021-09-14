@@ -10,16 +10,6 @@
       </router-link>
       <section class="cards">
         <router-link
-          :to="{ name: 'BreathingExercisePreferences' }"
-          class="card"
-        >
-          <div class="image">
-            <app-preferences-svg></app-preferences-svg>
-          </div>
-          <p class="text">Breathing Preferences</p>
-        </router-link>
-
-        <router-link
           :to="{ name: 'BreathingExerciseInstructions' }"
           class="card"
         >
@@ -27,6 +17,16 @@
             <app-instruction-svg></app-instruction-svg>
           </div>
           <p class="text">Breathing Instructions</p>
+        </router-link>
+
+        <router-link
+          :to="{ name: 'BreathingExercisePreferences' }"
+          class="card"
+        >
+          <div class="image">
+            <app-preferences-svg></app-preferences-svg>
+          </div>
+          <p class="text">Breathing Preferences</p>
         </router-link>
       </section>
     </section>
