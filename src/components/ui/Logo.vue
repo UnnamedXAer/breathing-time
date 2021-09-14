@@ -1,5 +1,5 @@
 <template>
-  <div class="counter__lungs_animated one" title="Breathing Timer">
+  <div class="counter__lungs_animated one" title="Breathing Time">
     <div class="two">
       <div class="three">
         <div class="four"></div>

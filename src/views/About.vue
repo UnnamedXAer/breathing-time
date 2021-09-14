@@ -3,7 +3,7 @@
     <h1>About</h1>
     <article class="about__contetn">
       <p>
-        <strong>Breathing Timer</strong> is a simple web application designed to
+        <strong>Breathing Time</strong> is a simple web application designed to
         help you with breathing exercises based on the Wim Hof method.<br />It
         allows you to easily adjust tempo of exercise based on your
         <router-link :to="{ name: 'BreathingExercisePreferences' }"

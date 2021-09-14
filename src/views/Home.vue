@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Welcome to Breathing Timer</h1>
+    <h1>Welcome to Breathing Time</h1>
     <section class="dashboard">
       <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
