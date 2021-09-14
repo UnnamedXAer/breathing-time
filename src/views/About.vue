@@ -8,8 +8,8 @@
         allows you to easily adjust tempo of exercise based on your
         <router-link :to="{ name: 'BreathingExercisePreferences' }"
           >preferences</router-link
-        >. The breathing exercise is first of the three pillars in the Wim Hof
-        Method. You can find more information on the
+        >. The breathing exercises are the first of the three pillars in the Wim
+        Hof Method. You can find more information on the
         <a
           href="https://www.wimhofmethod.com/"
           target="_blank"
