@@ -8,7 +8,7 @@
       <div
         class="counter__lungs_animated one"
         :class="{
-          animate: animate && !disableAnimation && !stop,
+          animate: animate && !disableAnimation,
           [counter % 2 ? 'odd' : 'even']: true,
         }"
         :style="{ animationDuration: animationDuration + 'ms' }"

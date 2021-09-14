@@ -36,7 +36,6 @@ export default defineComponent({
 .nav__links {
   flex: 1;
   display: flex;
-  justify-content: center;
 }
 
 .nav__item {

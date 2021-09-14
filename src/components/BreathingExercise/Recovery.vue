@@ -64,7 +64,6 @@ export default defineComponent({
 
   methods: {
     count() {
-      console.log(this.counter);
       if (this.counter < this.recoveryTime) {
         this.counter++;
         return;

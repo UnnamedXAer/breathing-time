@@ -35,7 +35,7 @@
           2000: 'moderate',
           2600: 'slow',
         }"
-        >Breathing pace</app-range
+        >Breathing pace:</app-range
       >
 
       <app-range
@@ -119,12 +119,14 @@ export default defineComponent({
 <style scoped>
 .preferences {
   flex: 1;
-
   display: flex;
   flex-direction: column;
 }
 
 .preferences__fields_container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
   max-width: 540px;
   margin-bottom: 2rem;
 }

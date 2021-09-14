@@ -48,10 +48,9 @@ export default defineComponent({
     appButton: ButtonVue,
     appWarningNote: WarningNoteVue,
     appRoundPhases: RoundPhasesVue,
-    // appExerciseInstructions: ExerciseInstructionsVue,
   },
   data() {
-    const countdountTime = 0;
+    const countdountTime = 3 + 1;
     return {
       countdountTime,
       counter: countdountTime,
