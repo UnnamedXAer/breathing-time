@@ -20,9 +20,9 @@
     </section>
     <app-exercise-footer>
       Exhale and stop breathing until you feel urge to inhale.
-      <p v-if="isLastRound">
-        "This is last round. Don't forget about recover phase.
-      </p>
+      <small class="last_round_info" v-if="isLastRound">
+        This is last round. Don't forget about recover phase.
+      </small>
     </app-exercise-footer>
   </section>
 
@@ -147,5 +147,10 @@ export default defineComponent({
 
 .exercise__hould_out .content {
   margin-bottom: 1.5rem;
+}
+
+.last_round_info {
+  display: block;
+  margin-top: 0.3em;
 }
 </style>

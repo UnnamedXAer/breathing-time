@@ -50,6 +50,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.home > h1 {
+  text-align: center;
+}
+
 .dashboard {
   width: 100%;
 

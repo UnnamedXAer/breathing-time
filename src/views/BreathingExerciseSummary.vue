@@ -18,7 +18,7 @@
         <td>{{ time }} s</td>
       </tr>
     </table>
-    <p v-if="holdTimes.length > 1 && fromRecovery">
+    <p class="average" v-if="holdTimes.length > 1 && fromRecovery">
       Average Time:
       <strong style="font-size: 1.1em">{{ averageTime }}</strong> seconds.
     </p>
@@ -72,6 +72,11 @@ export default defineComponent({
   align-items: center;
 }
 
+.summary h2,
+.average {
+  text-align: center;
+}
+
 .summary__results_table {
   font-size: 1.3em;
   border-spacing: 0;
@@ -87,5 +92,14 @@ export default defineComponent({
 
 .summary__results_table tr:nth-child(even) {
   background-color: rgb(240, 240, 240);
+}
+
+@media screen and (max-width: 350px) {
+  .summary__results_table th {
+    padding-left: 1rem;
+  }
+  .summary__results_table td {
+    padding-right: 1rem;
+  }
 }
 </style>

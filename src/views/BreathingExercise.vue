@@ -1,6 +1,6 @@
 <template>
   <div class="breathing_exercise">
-    <h1>Breathing Exercise</h1>
+    <h1 class="breathing_exercise__header">Breathing Exercise</h1>
     <router-view></router-view>
   </div>
 </template>
@@ -16,10 +16,12 @@ export default defineComponent({
 <style scoped>
 .breathing_exercise {
   flex: 1;
-
   display: flex;
   flex-direction: column;
-
   align-items: center;
+}
+
+.breathing_exercise__header {
+  text-align: center;
 }
 </style>

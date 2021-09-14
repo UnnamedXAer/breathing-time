@@ -72,6 +72,8 @@ export default defineComponent({
   margin-right: auto;
   width: 300px;
   height: 300px;
+  max-height: 30vh;
+  max-width: 30vh;
   padding: 1rem;
   display: flex;
   align-items: center;

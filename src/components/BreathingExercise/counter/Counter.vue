@@ -29,4 +29,10 @@ export default defineComponent({
   text-shadow: 6px 6px 8px rgb(0 0 0 / 80%);
   font-weight: 600;
 }
+
+@media screen and (max-height: 570px) {
+  .counter__time {
+    margin-top: 0.5rem;
+  }
+}
 </style>
