@@ -1,5 +1,9 @@
 <template>
-  <div class="counter__lungs">
+  <div
+    class="counter__lungs"
+    @click="toggleAnimation"
+    :title="(disableAnimation ? 'Enable' : 'Disable') + ' animation'"
+  >
     <div class="counter__lungs_wrapper">
       <div
         class="counter__lungs_animated one"
@@ -29,6 +33,11 @@
 </template>
 
 <script lang="ts">
+import { namespaceName } from "@/store";
+import {
+  ExerciseActions,
+  UpdatePreferencesPayload,
+} from "@/store/modules/exercise/types";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -37,6 +46,18 @@ export default defineComponent({
     animationDuration: { type: Number, required: true },
     disableAnimation: Boolean,
     counter: { type: Number, required: true },
+  },
+
+  methods: {
+    toggleAnimation() {
+      this.$store.dispatch(
+        namespaceName("exercise", ExerciseActions.UpdatePreferences),
+        {
+          propName: "disableAnimation",
+          value: !this.disableAnimation,
+        } as UpdatePreferencesPayload
+      );
+    },
   },
 });
 </script>
