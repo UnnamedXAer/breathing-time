@@ -3,20 +3,23 @@
     <div class="counter__lungs_wrapper">
       <div
         class="counter__lungs_animated one"
-        :class="{ animate: animate && !disableAnimation && !stop }"
-        :style="{ animationDuration: animationDuration / 2 + 'ms' }"
+        :class="{
+          animate: animate && !disableAnimation && !stop,
+          [counter % 2 ? 'odd' : 'even']: true,
+        }"
+        :style="{ animationDuration: animationDuration + 'ms' }"
       >
         <div
           class="two"
-          :style="{ animationDuration: animationDuration / 2 + 'ms' }"
+          :style="{ animationDuration: animationDuration + 'ms' }"
         >
           <div
             class="three"
-            :style="{ animationDuration: animationDuration / 2 + 'ms' }"
+            :style="{ animationDuration: animationDuration + 'ms' }"
           >
             <div
               class="four"
-              :style="{ animationDuration: animationDuration / 2 + 'ms' }"
+              :style="{ animationDuration: animationDuration + 'ms' }"
             ></div>
           </div>
         </div>
@@ -34,22 +37,6 @@ export default defineComponent({
     animationDuration: { type: Number, required: true },
     disableAnimation: Boolean,
     counter: { type: Number, required: true },
-  },
-
-  data() {
-    return {
-      stop: false,
-    };
-  },
-
-  watch: {
-    counter() {
-      this.stop = true;
-      //   setTimeout(() => (this.stop = false), 1);
-      this.$nextTick(() => {
-        this.stop = false;
-      });
-    },
   },
 });
 </script>
@@ -76,19 +63,35 @@ export default defineComponent({
   align-items: center;
 }
 
+.counter__lungs_animated {
+  width: 100px;
+  height: 100px;
+}
+
+.counter__lungs_animated * {
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+}
+
 .counter__lungs_animated,
 .counter__lungs_animated * {
   border-radius: 30% 30% 60% 60% / 60% 60% 30% 30%;
 }
 
-.counter__lungs_animated.animate {
-  /* animation: breath ease-out both alternate-reverse; */
-  animation: breath infinite ease-out both alternate-reverse;
+.counter__lungs_animated.animate.even {
+  animation: breath ease-out both alternate;
 }
 
-.counter__lungs_animated * {
-  /* animation: breath-div ease-out both alternate-reverse; */
-  animation: breath-div infinite ease-out both alternate-reverse;
+.counter__lungs_animated.animate.even * {
+  animation: breath-div ease-out forwards alternate;
+}
+
+.counter__lungs_animated.animate.odd {
+  animation: breath-odd ease-out forwards alternate;
+}
+
+.counter__lungs_animated.animate.odd * {
+  animation: breath-div-odd ease-out forwards alternate;
 }
 
 .one {
@@ -128,18 +131,17 @@ export default defineComponent({
 }
 
 @keyframes breath {
-  0% {
-    width: 98%;
-    height: 98%;
-  }
-  5% {
-    width: 98%;
-    height: 98%;
-  }
-  95% {
+  0%,
+  2.5% {
     width: 100px;
     height: 100px;
   }
+  48%,
+  53% {
+    width: 98%;
+    height: 98%;
+  }
+  97.5%,
   100% {
     width: 100px;
     height: 100px;
@@ -147,18 +149,53 @@ export default defineComponent({
 }
 
 @keyframes breath-div {
-  0% {
-    width: calc(100% - 8px);
-    height: calc(100% - 8px);
-  }
-  5% {
-    width: calc(100% - 8px);
-    height: calc(100% - 8px);
-  }
-  95% {
+  0%,
+  2.5% {
     width: calc(100% - 30px);
     height: calc(100% - 30px);
   }
+  48%,
+  53% {
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+  }
+  97.5%,
+  100% {
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+  }
+}
+
+@keyframes breath-odd {
+  0%,
+  2.5% {
+    width: 100px;
+    height: 100px;
+  }
+  48%,
+  53% {
+    width: 98%;
+    height: 98%;
+  }
+  97.5%,
+  100% {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@keyframes breath-div-odd {
+  0%,
+  2.5% {
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+  }
+  48%,
+  53% {
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+  }
+  97.5%,
   100% {
     width: calc(100% - 30px);
     height: calc(100% - 30px);
