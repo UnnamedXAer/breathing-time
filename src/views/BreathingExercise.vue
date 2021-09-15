@@ -18,7 +18,6 @@ export default defineComponent({
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .breathing_exercise__header {
