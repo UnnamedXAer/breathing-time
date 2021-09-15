@@ -50,7 +50,7 @@ export default defineComponent({
     appRoundPhases: RoundPhasesVue,
   },
   data() {
-    const countdountTime = 3 + 1;
+    const countdountTime = process.env.NODE_ENV === "development" ? 0 : 3 + 1;
     return {
       countdountTime,
       counter: countdountTime,

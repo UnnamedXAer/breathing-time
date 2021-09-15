@@ -12,18 +12,24 @@
         </app-alert>
       </template>
     </app-exercise-header>
-    <app-counter :number="counter" />
-    <section>
-      <app-exercise-action-btn @click="nextScreen">
-        Next Phase
-      </app-exercise-action-btn>
-    </section>
-    <app-exercise-footer>
-      Exhale and stop breathing until you feel urge to inhale.
-      <small class="last_round_info" v-if="isLastRound">
-        This is last round. Don't forget about recover phase.
-      </small>
-    </app-exercise-footer>
+
+    <app-start-tip v-if="showStartTip">
+      Take final deep breath, then exhale and stop breathing.
+    </app-start-tip>
+    <template v-else>
+      <app-counter :number="counter" />
+      <section>
+        <app-exercise-action-btn @click="nextScreen">
+          Next Phase
+        </app-exercise-action-btn>
+      </section>
+      <app-exercise-footer>
+        Stop breathing until you feel urge to inhale.
+        <small class="last_round_info" v-if="isLastRound">
+          This is last round. Don't forget about recover phase.
+        </small>
+      </app-exercise-footer>
+    </template>
   </section>
 
   <app-leave-exercise-confirm
@@ -37,6 +43,7 @@
 import { namespaceName } from "@/store";
 import { ExerciseMutations } from "@/store/modules/exercise/types";
 import { RoundState } from "@/types/breath";
+import { TimeoutReturn } from "@/types/timeout";
 import { defineComponent } from "vue";
 import { RouteRecordName } from "vue-router";
 import AlertVue from "../ui/Alert.vue";
@@ -44,10 +51,12 @@ import ActionBtnVue from "./ActionBtn.vue";
 import CounterVue from "./counter/Counter.vue";
 import FooterVue from "./Footer.vue";
 import HeaderVue from "./Header.vue";
+import StartTipVue from "./StartTip.vue";
 import LeaveExerciseConfirmVue from "./LeaveExerciseConfirm.vue";
 import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
 
-let interval: import("@/types/timeout").TimeoutReturn = void 0;
+let interval: TimeoutReturn = void 0;
+let startTipTimeout: TimeoutReturn = void 0;
 export default defineComponent({
   name: "BreathingExercise-BreathHold",
   mixins: [MixinLeaveExerciseVue],
@@ -58,6 +67,7 @@ export default defineComponent({
     appLeaveExerciseConfirm: LeaveExerciseConfirmVue,
     appExerciseFooter: FooterVue,
     appExerciseHeader: HeaderVue,
+    appStartTip: StartTipVue,
   },
   data() {
     return {
@@ -65,6 +75,7 @@ export default defineComponent({
       showAreYouThere: false,
       warningDismissed: false,
       startTime: 0,
+      showStartTip: true,
     };
   },
   computed: {
@@ -125,13 +136,24 @@ export default defineComponent({
 
     return false;
   },
+  beforeUnmount() {
+    if (startTipTimeout) {
+      clearTimeout(startTipTimeout);
+      startTipTimeout = void 0;
+    }
+  },
+
   mounted() {
     this.$store.commit(
       namespaceName("exercise", ExerciseMutations.SetRoundState),
       RoundState.BreathHold
     );
-    this.startTime = Date.now();
-    interval = setInterval(this.count, 1000);
+    startTipTimeout = setTimeout(() => {
+      startTipTimeout = void 0;
+      this.showStartTip = false;
+      this.startTime = Date.now();
+      interval = setInterval(this.count, 1000);
+    }, this.$store.state.exercise.breathTime);
   },
 });
 </script>
@@ -143,6 +165,7 @@ export default defineComponent({
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
+  position: relative;
 }
 
 .exercise__hould_out .content {
