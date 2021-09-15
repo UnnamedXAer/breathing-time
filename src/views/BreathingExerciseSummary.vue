@@ -12,6 +12,7 @@
     </h2>
     <h2 v-else-if="holdTimes.length === 0">You did not finish any rounds.</h2>
     <h2 v-else>Breathing finished.</h2>
+    <button @click="share">share</button>
     <table class="summary__results_table">
       <tr v-for="(time, idx) in holdTimes" :key="idx">
         <th>Round {{ idx + 1 }}</th>
@@ -48,14 +49,57 @@ export default defineComponent({
     ...(mapState<StoreState>("exercise", exerciseStateProps) as ComputedTypes),
     averageTime() {
       if (this.holdTimes.length === 0) {
-        return 0;
+        return "0";
       }
 
-      return (
-        this.holdTimes.reduce((pv, v) => pv + v) / this.holdTimes.length
-      ).toFixed(3);
+      return (this.holdTimes.reduce((pv, v) => pv + v) / this.holdTimes.length)
+        .toFixed(3)
+        .replace(/((\.0+)|(0+))$/g, "");
     },
   },
+
+  methods: {
+    share() {
+      let text = "";
+      this.holdTimes.forEach((v, idx) => {
+        if (idx > 0) {
+          text += "\n";
+        }
+        text += `Round ${idx + 1}:\t${v} s`;
+      });
+
+      if (this.holdTimes.length > 1) {
+        text += `\n\nAverage time: ${this.averageTime} seconds.`;
+      }
+      if (navigator.share) {
+        navigator
+          .share({
+            url: "/",
+            title: "Breathing Exercise Results",
+            text,
+          })
+          .catch((err: Error) => {
+            console.log("sharing failed", err);
+          });
+      } else {
+        console.info("sharing API is not available in your browser");
+        const url = document.location.protocol + "//" + document.location.host;
+        text = "Breathing Exerciese Results\n\n" + text;
+        text += "\n\nTry yourself on " + url;
+
+        console.log(text);
+        navigator.clipboard
+          .writeText(text)
+          .then((args) => {
+            console.log("copied", args);
+          })
+          .catch((err: Error) => {
+            console.log("could not insert text to your clipboard", err);
+          });
+      }
+    },
+  },
+
   mounted() {
     this.$store.commit(
       namespaceName("exercise", ExerciseMutations.SetRoundState),
