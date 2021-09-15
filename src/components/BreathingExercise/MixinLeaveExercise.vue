@@ -42,18 +42,5 @@ export default defineComponent({
       this.showModal = false;
     },
   },
-
-  beforeMount() {
-    window.addEventListener("beforeunload", beforeunloadHander);
-  },
-  unmounted() {
-    window.removeEventListener("beforeunload", beforeunloadHander);
-  },
 });
-
-function beforeunloadHander(ev: Event) {
-  ev.preventDefault();
-  ev.returnValue = true;
-  return true;
-}
 </script>

@@ -135,10 +135,7 @@ export default defineComponent({
   },
 
   mounted() {
-    this.$store.commit(
-      namespaceName("exercise", ExerciseMutations.SetRoundState),
-      RoundState.Stopped
-    );
+    this.$store.commit(namespaceName("exercise", ExerciseMutations.Finish));
   },
 });
 </script>
