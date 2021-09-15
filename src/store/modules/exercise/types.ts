@@ -2,7 +2,6 @@ import { RoundState } from "@/types/breath";
 
 export type ExerciseState = {
   started: boolean;
-  finished: boolean;
   disableAnimation: boolean;
   numberOfRounds: number;
   breathsPerRound: number;
@@ -14,6 +13,7 @@ export type ExerciseState = {
 
 export enum ExerciseMutations {
   Start = "START_EXERCISE",
+  Finish = "FINISH_EXERCISE",
   Cancel = "CANCEL_EXERCISE",
   SetRoundState = "SET_ROUND_STATUS",
   AddHoldTime = "ADD_HOLD_TIME",

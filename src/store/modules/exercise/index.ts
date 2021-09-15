@@ -16,7 +16,6 @@ const getDefaultState =
     ? getProductionExerciseDefaultState
     : (): ExerciseState => ({
         started: false,
-        finished: false,
         disableAnimation: true,
         numberOfRounds: 3,
         breathsPerRound: 10,
@@ -38,7 +37,6 @@ customizableExerciseStateProps[0];
 
 function clearExerciseState(state: ExerciseState) {
   state.started = false;
-  state.finished = false;
   state.currentRoundState = RoundState.Stopped;
   state.holdTimes = [];
 }
@@ -52,6 +50,10 @@ export const exerciseStore: Module<ExerciseState, RootState> = {
       clearExerciseState(state);
       state.started = true;
       state.currentRoundState = RoundState.Breathing;
+    },
+    [ExerciseMutations.Finish]: (state) => {
+      state.started = false;
+      state.currentRoundState = RoundState.Stopped;
     },
     [ExerciseMutations.Cancel]: (state) => {
       clearExerciseState(state);

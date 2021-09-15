@@ -3,7 +3,6 @@ import { ExerciseState } from "./types";
 
 export const getProductionExerciseDefaultState = (): ExerciseState => ({
   started: false,
-  finished: false,
   disableAnimation: false,
   numberOfRounds: 3,
   breathsPerRound: 30,
