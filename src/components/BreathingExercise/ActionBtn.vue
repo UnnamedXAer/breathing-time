@@ -13,7 +13,6 @@ export default defineComponent({
 });
 </script>
 
-
 <style scoped>
 .exercise__action_btn {
   background-color: black !important;
