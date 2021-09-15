@@ -1,7 +1,5 @@
-import { StoreState } from '.';
-
-type StateProps = Readonly<Array<keyof StoreState>>;
+import { StoreState } from ".";
 
 export type ModuleStateProps<Key extends keyof StoreState> = Readonly<
-	Array<keyof StoreState[Key]>
+  Array<keyof StoreState[Key]>
 >;
