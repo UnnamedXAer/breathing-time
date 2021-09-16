@@ -1,6 +1,6 @@
 <template>
   <article class="round_phases">
-    <h2>Round's phases</h2>
+    <h2>Round phases</h2>
     <ol style="line-height: 2em">
       <li>Breathing - take {{ breathsPerRound }} deep breaths.</li>
       <li>
