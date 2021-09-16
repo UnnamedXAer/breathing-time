@@ -6,10 +6,10 @@
       :title="(disableAnimation ? 'Enable' : 'Disable') + ' animation'"
     >
       <div
-        v-if="animate && !disableAnimation"
+        v-if="!disableAnimation"
         class="counter__lungs_animated one"
         :class="{
-          animate: animate && !disableAnimation,
+          animate: !disableAnimation,
           [counter % 2 ? 'odd' : 'even']: true,
         }"
         :style="{ animationDuration: animationDuration + 'ms' }"
@@ -37,7 +37,6 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
-    animate: { type: Boolean, required: true },
     animationDuration: { type: Number, required: true },
     disableAnimation: Boolean,
     counter: { type: Number, required: true },

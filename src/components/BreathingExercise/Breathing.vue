@@ -7,7 +7,6 @@
     </app-start-tip>
     <template v-else>
       <app-lungs
-        :animate="currentRoundState === 'Breathing'"
         :animationDuration="breathTime"
         :disableAnimation="disableAnimation"
         :counter="counter"
@@ -49,7 +48,6 @@ import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
 import StartTipVue from "./StartTip.vue";
 
 const exerciseStateProps = [
-  "currentRoundState",
   "breathTime",
   "breathsPerRound",
   "started",
