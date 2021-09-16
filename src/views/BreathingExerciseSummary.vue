@@ -117,7 +117,7 @@ export default defineComponent({
           "Sharing API is not available in your browser. We will copy your results to clipboard."
         );
         const url = document.location.protocol + "//" + document.location.host;
-        text = "Breathing Exerciese Results\n\n" + text;
+        text = "Breathing Exercise Results\n\n" + text;
         text += "\n\nTry yourself on " + url;
 
         navigator.clipboard
