@@ -8,7 +8,7 @@
         <p>
           Get comfortable - lie down or sit depending what is the most
           comfortable for you, make sure you can breath freely - your lungs can
-          expand without any constriction. Any additional muscle constraction
+          expand without any constriction. Any additional muscle contraction
           will hinder the exercise and shorten the duration of your breath
           holding.
         </p>
@@ -20,7 +20,7 @@
           exhale, just let the air go.
         </p>
         <p>
-          You may expirience dizzines, tingling and numbness in fingers and legs
+          You may experience dizziness, tingling and numbness in fingers and legs
           - these are normal, harmless side effects of lowering the level of
           carbon dioxide in the blood stream.
         </p>
