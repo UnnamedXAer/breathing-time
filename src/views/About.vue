@@ -19,13 +19,37 @@
         official website.
       </p>
     </article>
+    <p class="about__app_version">App Version: {{ version }}</p>
   </div>
 </template>
 
+<script lang="ts">
+import { defineComponent } from "vue";
+export default defineComponent({
+  data() {
+    return {
+      version: process.env.APP_VERSION as string,
+    };
+  },
+});
+</script>
+
 <style scoped>
+.about {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .about__contetn {
+  flex: 1;
   max-width: 760px;
   margin: auto auto;
   line-height: 1.5rem;
+}
+
+.about__app_version {
+  text-align: right;
+  color: rgba(var(--dark-rgb), 0.7);
 }
 </style>

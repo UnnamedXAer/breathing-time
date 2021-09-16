@@ -1,19 +1,26 @@
 <template>
-  <app-lungs
-    :animate="currentRoundState === 'Breathing'"
-    :animationDuration="breathTime"
-    :disableAnimation="disableAnimation"
-    :counter="breathNum"
-  />
-  <app-counter :number="breathNum" />
-  <app-button variant="link" @click="nextScreen">
-    Skip to the next phase
-  </app-button>
+  <section class="exercise__breath">
+    <app-exercise-header>Breathing</app-exercise-header>
 
-  <app-exercise-footer>
-    Inhale deeply and exhale as counter changes.
-  </app-exercise-footer>
+    <app-start-tip v-if="showStartTip">
+      Breath deeply with counter.
+    </app-start-tip>
+    <template v-else>
+      <app-lungs
+        :animationDuration="breathTime"
+        :disableAnimation="disableAnimation"
+        :counter="counter"
+      />
+      <app-counter :number="counter" />
+      <app-button variant="link" @click="nextScreen">
+        Skip to the next phase
+      </app-button>
 
+      <app-exercise-footer>
+        Inhale deeply and exhale as counter changes.
+      </app-exercise-footer>
+    </template>
+  </section>
   <app-leave-exercise-confirm
     v-if="showModal"
     :onCancel="preventCancelExercise"
@@ -27,7 +34,6 @@ import {
   ExerciseModuleMap,
   ExerciseMutations,
 } from "@/store/modules/exercise/types";
-import { RoundState } from "@/types/breath";
 import { TimeoutReturn } from "@/types/timeout";
 import { defineComponent } from "vue";
 import { RouteRecordName } from "vue-router";
@@ -35,21 +41,24 @@ import { mapState } from "vuex";
 import ButtonVue from "../ui/Button.vue";
 import CounterVue from "./counter/Counter.vue";
 import FooterVue from "./Footer.vue";
+import HeaderVue from "./Header.vue";
 import LungsVue from "./counter/Lungs.vue";
 import LeaveExerciseConfirmVue from "./LeaveExerciseConfirm.vue";
 import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
+import StartTipVue from "./StartTip.vue";
 
 const exerciseStateProps = [
-  "currentRoundState",
   "breathTime",
   "breathsPerRound",
   "started",
   "disableAnimation",
+  "disableStartTips",
 ] as const;
 
 type ComputedTypes = ExerciseModuleMap<typeof exerciseStateProps>;
 
 let breathTiemout: TimeoutReturn;
+let startTipTimeout: TimeoutReturn = void 0;
 
 export default defineComponent({
   name: "BreathingExercise-Breathing",
@@ -59,12 +68,15 @@ export default defineComponent({
     appLungs: LungsVue,
     appCounter: CounterVue,
     appLeaveExerciseConfirm: LeaveExerciseConfirmVue,
+    appExerciseHeader: HeaderVue,
     appExerciseFooter: FooterVue,
+    appStartTip: StartTipVue,
   },
   data() {
     return {
-      breathNum: 0,
+      counter: 1,
       countingFinished: false,
+      showStartTip: true,
     };
   },
   computed: {
@@ -82,9 +94,12 @@ export default defineComponent({
   },
 
   methods: {
+    count() {
+      breathTiemout = setTimeout(this.breath, this.breathTime);
+    },
     breath() {
-      this.breathNum++;
-      if (this.breathNum < this.breathsPerRound) {
+      this.counter++;
+      if (this.counter <= this.breathsPerRound) {
         breathTiemout = setTimeout(this.breath, this.breathTime);
         return;
       }
@@ -122,16 +137,39 @@ export default defineComponent({
     return false;
   },
   beforeMount() {
+    this.showStartTip = !this.disableStartTips;
     if (!this.started) {
       this.$store.commit(namespaceName("exercise", ExerciseMutations.Start));
     }
   },
   mounted() {
-    this.$store.commit(
-      namespaceName("exercise", ExerciseMutations.SetRoundState),
-      RoundState.Breathing
-    );
-    this.breath();
+    if (!this.showStartTip) {
+      this.count();
+      return;
+    }
+
+    startTipTimeout = setTimeout(() => {
+      startTipTimeout = void 0;
+      this.showStartTip = false;
+      this.count();
+    }, 1400);
+  },
+  beforeUnmount() {
+    if (startTipTimeout) {
+      clearTimeout(startTipTimeout);
+      startTipTimeout = void 0;
+    }
   },
 });
 </script>
+
+<style scoped>
+.exercise__breath {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  position: relative;
+}
+</style>

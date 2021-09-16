@@ -3,6 +3,7 @@ import { RoundState } from "@/types/breath";
 export type ExerciseState = {
   started: boolean;
   disableAnimation: boolean;
+  disableStartTips: boolean;
   numberOfRounds: number;
   breathsPerRound: number;
   recoveryTime: number;
@@ -52,6 +53,7 @@ export type ExerciseCustomizableState = Pick<
   | "recoveryTime"
   | "breathTime"
   | "disableAnimation"
+  | "disableStartTips"
 >;
 
 export type ExerciseCustomizableProps = keyof ExerciseCustomizableState;

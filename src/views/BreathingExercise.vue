@@ -19,7 +19,6 @@ export default defineComponent({
 
   watch: {
     "$store.state.exercise.started"(val) {
-      console.log(val);
       if (val) {
         window.addEventListener("beforeunload", beforeWindowUnloadHander);
       } else {
@@ -39,5 +38,14 @@ export default defineComponent({
 
 .breathing_exercise__header {
   text-align: center;
+  margin-block-end: 0.2em;
+  margin-block-start: 0.2em;
+}
+
+@media screen and (min-height: 650px) {
+  .breathing_exercise__header {
+    margin-block-end: revert;
+    margin-block-start: revert;
+  }
 }
 </style>

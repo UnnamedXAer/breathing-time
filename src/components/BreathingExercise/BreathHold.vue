@@ -136,24 +136,29 @@ export default defineComponent({
 
     return false;
   },
-  beforeUnmount() {
-    if (startTipTimeout) {
-      clearTimeout(startTipTimeout);
-      startTipTimeout = void 0;
-    }
+  beforeMount() {
+    this.showStartTip = !this.$store.state.exercise.disableStartTips;
   },
-
   mounted() {
     this.$store.commit(
       namespaceName("exercise", ExerciseMutations.SetRoundState),
       RoundState.BreathHold
     );
-    startTipTimeout = setTimeout(() => {
+    startTipTimeout = setTimeout(
+      () => {
+        startTipTimeout = void 0;
+        this.showStartTip = false;
+        this.startTime = Date.now();
+        interval = setInterval(this.count, 1000);
+      },
+      this.showStartTip ? this.$store.state.exercise.breathTime : 0
+    );
+  },
+  beforeUnmount() {
+    if (startTipTimeout) {
+      clearTimeout(startTipTimeout);
       startTipTimeout = void 0;
-      this.showStartTip = false;
-      this.startTime = Date.now();
-      interval = setInterval(this.count, 1000);
-    }, this.$store.state.exercise.breathTime);
+    }
   },
 });
 </script>

@@ -17,8 +17,9 @@ const getDefaultState =
     : (): ExerciseState => ({
         started: false,
         disableAnimation: true,
+        disableStartTips: false,
         numberOfRounds: 3,
-        breathsPerRound: 10,
+        breathsPerRound: 3,
         recoveryTime: 5,
         breathTime: 1.4 * 1000,
         currentRoundState: RoundState.Stopped,
@@ -31,6 +32,7 @@ export const customizableExerciseStateProps = [
   "recoveryTime",
   "breathTime",
   "disableAnimation",
+  "disableStartTips",
 ] as ReadonlyArray<ExerciseCustomizableProps>;
 
 customizableExerciseStateProps[0];
