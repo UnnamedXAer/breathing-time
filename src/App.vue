@@ -20,6 +20,8 @@ export default defineComponent({
   },
 
   mounted() {
+    console.log(process.env);
+
     this.$store.dispatch(
       namespaceName("exercise", ExerciseActions.ReadCachedPreferences)
     );

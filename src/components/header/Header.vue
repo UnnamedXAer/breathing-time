@@ -5,8 +5,12 @@
         <app-logo />
       </router-link>
       <div class="nav__links">
-        <router-link class="nav__item" to="/">Home</router-link>
-        <router-link class="nav__item" to="/about">About</router-link>
+        <router-link class="nav__item" to="/">{{
+          $t("header.home")
+        }}</router-link>
+        <router-link class="nav__item" to="/about">{{
+          $t("header.about")
+        }}</router-link>
       </div>
     </nav>
   </header>

@@ -1,12 +1,14 @@
 <template>
   <div class="home">
-    <h1>Welcome to Breathing Time</h1>
+    <h1>{{ $t("home.welcome", ["Breathing Time"]) }}</h1>
     <section class="dashboard">
       <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
           <app-couthing-alt-svg></app-couthing-alt-svg>
         </div>
-        <p class="text" style="font-weight: bold">Start Your Breathing</p>
+        <p class="text" style="font-weight: bold">
+          {{ $t("home.start_exercise") }}
+        </p>
       </router-link>
       <section class="cards">
         <router-link
@@ -16,7 +18,7 @@
           <div class="image">
             <app-instruction-svg></app-instruction-svg>
           </div>
-          <p class="text">Breathing Instructions</p>
+          <p class="text">{{ $t("home.exercise_instructions") }}</p>
         </router-link>
 
         <router-link
@@ -26,7 +28,7 @@
           <div class="image">
             <app-preferences-svg></app-preferences-svg>
           </div>
-          <p class="text">Breathing Preferences</p>
+          <p class="text">{{ $t("home.exercise_preferences") }}</p>
         </router-link>
       </section>
     </section>

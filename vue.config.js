@@ -8,6 +8,7 @@ module.exports = {
       new webpack.DefinePlugin({
         "process.env": {
           APP_VERSION: `"${version}"`,
+          APP_TITLE: `"${appTitle}"`,
         },
       }),
     ],
