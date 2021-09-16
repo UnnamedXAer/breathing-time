@@ -1,11 +1,12 @@
 <template>
-  <div
-    class="counter__lungs"
-    @click="toggleAnimation"
-    :title="(disableAnimation ? 'Enable' : 'Disable') + ' animation'"
-  >
-    <div class="counter__lungs_wrapper">
+  <div class="counter__lungs">
+    <div
+      class="counter__lungs_wrapper"
+      @click="toggleAnimation"
+      :title="(disableAnimation ? 'Enable' : 'Disable') + ' animation'"
+    >
       <div
+        v-if="animate && !disableAnimation"
         class="counter__lungs_animated one"
         :class="{
           animate: animate && !disableAnimation,
@@ -13,20 +14,14 @@
         }"
         :style="{ animationDuration: animationDuration + 'ms' }"
       >
-        <div
-          class="two"
-          :style="{ animationDuration: animationDuration + 'ms' }"
-        >
-          <div
-            class="three"
-            :style="{ animationDuration: animationDuration + 'ms' }"
-          >
-            <div
-              class="four"
-              :style="{ animationDuration: animationDuration + 'ms' }"
-            ></div>
+        <div class="two">
+          <div class="three">
+            <div class="four"></div>
           </div>
         </div>
+      </div>
+      <div v-else>
+        <p class="enable_animation_text">Enable animation</p>
       </div>
     </div>
   </div>
@@ -67,6 +62,11 @@ export default defineComponent({
   width: 100%;
 }
 
+.enable_animation_text {
+  color: rgba(var(--dark-rgb), 0.3);
+  user-select: none;
+}
+
 .counter__lungs_wrapper {
   margin-left: auto;
   margin-right: auto;
@@ -87,11 +87,14 @@ export default defineComponent({
 }
 
 .counter__lungs_animated {
+  animation-duration: 1401ms;
+  opacity: 0.7;
   width: 100px;
   height: 100px;
 }
 
 .counter__lungs_animated * {
+  animation-duration: inherit !important;
   width: calc(100% - 30px);
   height: calc(100% - 30px);
 }
@@ -156,16 +159,19 @@ export default defineComponent({
 @keyframes breath {
   0%,
   2.5% {
+    opacity: 0.7;
     width: 100px;
     height: 100px;
   }
   48%,
   53% {
+    opacity: 1;
     width: 98%;
     height: 98%;
   }
   97.5%,
   100% {
+    opacity: 0.7;
     width: 100px;
     height: 100px;
   }
@@ -192,16 +198,19 @@ export default defineComponent({
 @keyframes breath-odd {
   0%,
   2.5% {
+    opacity: 0.7;
     width: 100px;
     height: 100px;
   }
   48%,
   53% {
+    opacity: 1;
     width: 98%;
     height: 98%;
   }
   97.5%,
   100% {
+    opacity: 0.7;
     width: 100px;
     height: 100px;
   }
