@@ -55,6 +55,14 @@
         @modify="changeHandler"
         >Disable animation</app-checkbox
       >
+
+      <app-checkbox
+        id="disable-start-tips"
+        name="disableStartTips"
+        :value="disableStartTips"
+        @modify="changeHandler"
+        >Disable start tips shown before exercise phases</app-checkbox
+      >
     </div>
     <div>
       <app-button @click="restoreDefault">Restore Default</app-button>

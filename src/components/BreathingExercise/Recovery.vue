@@ -123,17 +123,23 @@ export default defineComponent({
 
     return false;
   },
+  beforeMount() {
+    this.showStartTip = !this.$store.state.exercise.disableStartTips;
+  },
   mounted() {
     this.$store.commit(
       namespaceName("exercise", ExerciseMutations.SetRoundState),
       RoundState.Recovery
     );
 
-    startTipTimeout = setTimeout(() => {
-      startTipTimeout = void 0;
-      this.showStartTip = false;
-      interval = setInterval(this.count, 1000);
-    }, 1400);
+    startTipTimeout = setTimeout(
+      () => {
+        startTipTimeout = void 0;
+        this.showStartTip = false;
+        interval = setInterval(this.count, 1000);
+      },
+      this.showStartTip ? 1400 : 0
+    );
   },
   beforeUnmount() {
     if (startTipTimeout) {
