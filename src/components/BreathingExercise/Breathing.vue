@@ -1,9 +1,9 @@
 <template>
   <section class="exercise__breath">
-    <app-exercise-header>Breathing</app-exercise-header>
+    <app-exercise-header>{{ $t("ex.breathing.title") }}</app-exercise-header>
 
     <app-start-tip v-if="showStartTip">
-      Breath deeply with counter.
+      {{ $t("ex.breathing.start_tip") }}
     </app-start-tip>
     <template v-else>
       <app-lungs
@@ -13,11 +13,11 @@
       />
       <app-counter :number="counter" />
       <app-button variant="link" @click="nextScreen">
-        Skip to the next phase
+        {{ $t("ex.breathing.skip_to_next") }}
       </app-button>
 
       <app-exercise-footer>
-        Inhale deeply and exhale as counter changes.
+        {{ $t("ex.breathing.footer_tip") }}
       </app-exercise-footer>
     </template>
   </section>

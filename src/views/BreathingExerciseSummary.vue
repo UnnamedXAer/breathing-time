@@ -1,39 +1,46 @@
 <template>
   <article class="summary">
     <h2 v-if="!fromRecovery">
-      Go to
-      <router-link :to="{ name: 'BreathingExercise-Start' }"
-        >Breathing Exercise</router-link
-      >
-      and start your breathing.
+      {{ $t("ex.summary.go_to") }}
+      <router-link :to="{ name: 'BreathingExercise-Start' }">
+        {{ $t("ex.title") }}
+      </router-link>
+      {{ $t("ex.summary.and_start_breathing") }}
     </h2>
     <h2 v-else-if="holdTimes.length === numberOfRounds">
-      Congrats you finished your breathing!
+      {{ $t("ex.summary.congrats_finished") }}
     </h2>
-    <h2 v-else-if="holdTimes.length === 0">You did not finish any rounds.</h2>
-    <h2 v-else>Breathing finished.</h2>
+    <h2 v-else-if="holdTimes.length === 0">
+      {{ $t("ex.summary.no_rounds_finished") }}
+    </h2>
+    <h2 v-else>
+      {{ $t("ex.summary.breathing_finished") }}
+    </h2>
     <div v-if="holdTimes.length > 0">
       <div v-if="canShare" class="share_btn__wrapper">
         <button
           @click="share"
           ref="shareBtn"
           class="share_btn"
-          title="Share results"
+          :title="$t('ex.summary.share_results')"
         >
           <app-share-svg />
         </button>
       </div>
       <table class="summary__results_table">
         <tr v-for="(time, idx) in holdTimes" :key="idx">
-          <th>Round {{ idx + 1 }}</th>
+          <th>
+            {{ $t("ex.summary.round_with_num", [idx + 1]) }}
+          </th>
           <td>{{ time }} s</td>
         </tr>
       </table>
     </div>
-    <p class="average" v-if="holdTimes.length > 1">
-      Average Time:
-      <strong style="font-size: 1.1em">{{ averageTime }}</strong> seconds.
-    </p>
+    <p
+      class="average"
+      v-if="holdTimes.length > 1"
+      v-html="$t('ex.summary.averageTime', [averageTime])"
+    />
   </article>
 </template>
 
@@ -43,7 +50,6 @@ import {
   ExerciseModuleMap,
   ExerciseMutations,
 } from "@/store/modules/exercise/types";
-import { RoundState } from "@/types/breath";
 import ShareSvgVue from "../components/svg/ShareSvg.vue";
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
@@ -150,6 +156,10 @@ export default defineComponent({
 .summary h2,
 .average {
   text-align: center;
+}
+
+.average strong {
+  font-size: 1.1em;
 }
 
 .share_btn__wrapper {

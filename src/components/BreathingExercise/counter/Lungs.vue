@@ -3,7 +3,9 @@
     <div
       class="counter__lungs_wrapper"
       @click="toggleAnimation"
-      :title="(disableAnimation ? 'Enable' : 'Disable') + ' animation'"
+      :title="
+        $t(`ex.breathing.${disableAnimation ? 'enable' : 'disable'}_animation`)
+      "
     >
       <div
         v-if="!disableAnimation"
@@ -21,7 +23,9 @@
         </div>
       </div>
       <div v-else>
-        <p class="enable_animation_text">Enable animation</p>
+        <p class="enable_animation_text">
+          {{ $t("ex.breathing.enable_animation") }}
+        </p>
       </div>
     </div>
   </div>

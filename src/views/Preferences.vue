@@ -1,6 +1,6 @@
 <template>
   <section class="preferences">
-    <h1>Breathing Exercise Preferences</h1>
+    <h1>{{ $t("preferences.title") }}</h1>
     <div class="preferences__fields_container">
       <app-range
         id="num-of-rounds"
@@ -9,8 +9,9 @@
         :max="10"
         :value="numberOfRounds"
         @modify="changeHandler"
-        >Number of rounds:</app-range
       >
+        {{ $t("preferences.num_of_rounds") }}
+      </app-range>
 
       <app-range
         id="breaths-per-round"
@@ -19,8 +20,9 @@
         :max="60"
         :value="breathsPerRound"
         @modify="changeHandler"
-        >Breaths per round:</app-range
       >
+        {{ $t("preferences.breaths_per_round") }}
+      </app-range>
 
       <app-range
         id="breath-time"
@@ -31,12 +33,13 @@
         :value="breathTime"
         @modify="changeHandler"
         :valueTranslation="{
-          1400: 'fast',
-          2000: 'moderate',
-          2600: 'slow',
+          1400: $t('preferences.breathing_pace_fast'),
+          2000: $t('preferences.breathing_pace_moderate'),
+          2600: $t('preferences.breathing_pace_slow'),
         }"
-        >Breathing pace:</app-range
       >
+        {{ $t("preferences.breathing_pace") }}
+      </app-range>
 
       <app-range
         id="recovery-time"
@@ -45,27 +48,33 @@
         :max="30"
         :value="recoveryTime"
         @modify="changeHandler"
-        >Recovery time:</app-range
       >
+        {{ $t("preferences.recovery_time") }}
+      </app-range>
 
       <app-checkbox
         id="disable-animation"
         name="disableAnimation"
         :value="disableAnimation"
         @modify="changeHandler"
-        >Disable animation</app-checkbox
       >
+        {{ $t("preferences.disable_animation") }}
+      </app-checkbox>
 
       <app-checkbox
         id="disable-start-tips"
         name="disableStartTips"
         :value="disableStartTips"
         @modify="changeHandler"
-        >Disable start tips shown before exercise phases</app-checkbox
       >
+        {{ $t("preferences.disable_start_tips") }}
+      </app-checkbox>
     </div>
+	
     <div>
-      <app-button @click="restoreDefault">Restore Default</app-button>
+      <app-button @click="restoreDefault">
+        {{ $t("preferences.restore_default") }}
+      </app-button>
     </div>
   </section>
 </template>

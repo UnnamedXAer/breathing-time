@@ -1,14 +1,10 @@
 <template>
   <article class="round_phases">
-    <h2>Round's phases</h2>
+    <h2>{{ $t("ex.phases.title") }}</h2>
     <ol style="line-height: 2em">
-      <li>Breathing - take {{ breathsPerRound }} deep breaths.</li>
-      <li>
-        Breath hold - exhale then stop breathing until you feel urge to inhale.
-      </li>
-      <li>
-        Recovery - inhale deeply and hold breath for {{ recoveryTime }} seconds.
-      </li>
+      <li>{{ $t("ex.phases.breathing", { breathsPerRound }) }}</li>
+      <li>{{ $t("ex.phases.hold") }}</li>
+      <li>{{ $t("ex.phases.hold", { recoveryTime }) }}</li>
     </ol>
   </article>
 </template>

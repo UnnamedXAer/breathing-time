@@ -1,30 +1,30 @@
 <template>
   <div class="about">
-    <h1>About</h1>
+    <h1>{{ $t("about.title") }}</h1>
     <article class="about__contetn">
-      <p>
-        <strong>Breathing Time</strong> is a simple web application designed to
-        help you with breathing exercises based on the Wim Hof method.<br />It
-        allows you to easily adjust tempo of exercise based on your
-        <router-link :to="{ name: 'BreathingExercisePreferences' }"
-          >preferences</router-link
-        >. The breathing exercises are the first of the three pillars in the Wim
-        Hof Method. You can find more information on the
+      <i18n-t keypath="about.text" tag="p" for="title">
+        <strong>Breathing Time</strong>
+        <br />
+        <router-link :to="{ name: 'BreathingExercisePreferences' }">{{
+          $t("about.preferences")
+        }}</router-link>
         <a
           href="https://www.wimhofmethod.com/"
           target="_blank"
           title='Open oficial "Wim Hof Method" website'
           >Wim Hof Method</a
         >
-        official website.
-      </p>
+      </i18n-t>
     </article>
-    <p class="about__app_version">App Version: {{ version }}</p>
+    <p class="about__app_version">
+      {{ $t("about.app_version", [version]) }}
+    </p>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 export default defineComponent({
   data() {
     return {

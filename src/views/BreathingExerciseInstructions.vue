@@ -2,7 +2,11 @@
   <app-warning-note />
 
   <article class="instructions">
-    <h1>Exercise instructions</h1>
+    <h1>{{ $t("instructions.title") }}</h1>
+    <hr />
+    {{ $t("instr") }}
+    <hr />
+    <hr />
     <ol>
       <li>
         <p>
