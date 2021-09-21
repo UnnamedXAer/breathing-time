@@ -20,7 +20,8 @@ body {
 }
 
 html,
-button {
+button,
+option {
   font-family: "Lato", sans-serif;
 }
 

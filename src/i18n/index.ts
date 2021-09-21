@@ -10,8 +10,28 @@ const messages: I18nMessages = {
   pl,
 };
 
-export const i18n = createI18n({
-  locale: "en" as Language,
-  fallback: "en" as Language,
-  messages,
-});
+export const i18n = (() => {
+  let locale = <Language>"en";
+  const savedLocale = localStorage.getItem("locale");
+  if (savedLocale && languages.includes(<Language>savedLocale)) {
+    locale = <Language>savedLocale;
+  } else {
+    const browserLang = navigator.language.split("-")[0];
+    if (languages.includes(<Language>browserLang)) {
+      locale = <Language>browserLang;
+    } else {
+      for (const lang in navigator.languages) {
+        if (languages.includes(<Language>lang)) {
+          locale = <Language>lang;
+          break;
+        }
+      }
+    }
+  }
+
+  return createI18n({
+    locale,
+    fallback: "en" as Language,
+    messages,
+  });
+})();
