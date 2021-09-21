@@ -107,14 +107,12 @@ export default defineComponent({
 
 .languages.pl {
   appearance: none;
-  background: url(https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/facebook/65/flag-for-poland_1f1f5-1f1f1.png)
-    91% / 30% no-repeat var(--light);
+  background: url("../../assets/icons/pl.png") 91% / 30% no-repeat var(--light);
 }
 
 .languages.en {
   appearance: none;
-  background: url(https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/facebook/65/flag-for-united-states_1f1fa-1f1f8.png)
-    91% / 30% no-repeat var(--light);
+  background: url("../../assets/icons/en.png") 91% / 30% no-repeat var(--light);
 }
 
 .languages * {
