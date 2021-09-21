@@ -12,7 +12,7 @@
           $t("header.about")
         }}</router-link>
       </div>
-      <div>
+      <div class="languages_container">
         <select
           class="languages"
           :class="$i18n.locale"
@@ -64,7 +64,6 @@ export default defineComponent({
 
 .nav {
   display: flex;
-  justify-content: center;
 }
 
 .nav__links {
@@ -76,6 +75,10 @@ export default defineComponent({
   font-size: 1.3rem;
   color: cadetblue;
   padding: 0.5rem 0.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
 
 @media screen and (min-width: 540px) {
@@ -85,13 +88,18 @@ export default defineComponent({
   }
 }
 
+.languages_container {
+  display: flex;
+  align-items: center;
+}
+
 .languages {
   font-size: 1rem;
   height: 40px;
   width: 66px;
   text-transform: uppercase;
   user-select: none;
-  margin: 1rem 0.5rem;
+  margin: 0.5rem;
   padding: 0.5rem 2rem 0.5rem 0.5rem;
   border: 1px solid #ccc;
   background-color: var(--dark);
