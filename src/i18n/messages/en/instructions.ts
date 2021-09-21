@@ -2,9 +2,11 @@ export default {
   title: "Breathing Exercise Instructions",
 
   paragraphs: [
-    " Get comfortable - lie down or sit depending what is the most comfortable for you, make sure you can breath freely - your lungs can expand without any constriction. Any additional muscle constraction will hinder the exercise and shorten the duration of your breath holding.",
     [
-      ` Take 30 - 50 deep breaths - inhale deeply through nose or mouth and
+      "Get comfortable - lie down or sit depending what is the most comfortable for you, make sure you can breath freely - your lungs can expand without any constriction. Any additional muscle constraction will hinder the exercise and shorten the duration of your breath holding.",
+    ],
+    [
+      `Take 30 - 50 deep breaths - inhale deeply through nose or mouth and
 	exhale through mouth. Try to inhale deeply to the belly. Do not force
 	exhale, just let the air go.`,
       ` You may experience dizziness, tingling and numbness in fingers and legs

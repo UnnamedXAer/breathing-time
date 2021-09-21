@@ -1,8 +1,6 @@
 import { LanguageMessages } from "@/i18n/types";
+import enInstructions from "../en/instructions";
 
-const instructions: LanguageMessages["instructions"] = {
-  title: "XCV",
-  paragraphs: ["1231"],
-};
+const instructions: LanguageMessages["instructions"] = enInstructions;
 
 export default instructions;

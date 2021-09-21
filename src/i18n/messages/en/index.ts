@@ -98,5 +98,4 @@ export default {
     label_close: "close dialog",
   },
   instructions,
-  instr: ["1", "2"],
 };

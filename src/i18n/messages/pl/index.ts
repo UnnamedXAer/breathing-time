@@ -102,7 +102,6 @@ const pl: LanguageMessages = {
     label_close: "zakmnij dialog",
   },
   instructions,
-  instr: ["1", "2"],
 };
 
 export default pl;
