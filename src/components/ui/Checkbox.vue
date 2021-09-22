@@ -1,5 +1,5 @@
 <template>
-  <label class="control control-checkbox" :for="id">
+  <label class="control control-checkbox" :for="id" data-test="checkbox">
     <slot />
     <input
       type="checkbox"
@@ -20,9 +20,8 @@ export default defineComponent({
   emits: ["modify"],
   props: {
     name: String,
-    value: Boolean,
+    value: { type: Boolean, required: true },
     disabled: Boolean,
-    lable: String,
     id: String,
   },
 });

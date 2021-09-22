@@ -1,5 +1,6 @@
 <template>
   <div
+    data-test="alert"
     role="alert"
     class="alert"
     :class="{
@@ -10,7 +11,7 @@
     }"
   >
     <component :is="icon" :aria-label="mode + ' icon'" class="alert_icon" />
-    <span style="flex: 1"><slot></slot></span>
+    <span style="flex: 1" data-test="slotwrapper"><slot></slot></span>
     <div v-if="!!dismiss" class="close_btn__wrapper">
       <button class="close_btn" aria-label="close warning" @click="dismiss">
         &times;
@@ -56,6 +57,9 @@ export default defineComponent({
       let icon: string | null = null;
 
       switch (this.mode) {
+        case "normal":
+          // no icon
+          break;
         case "info":
           icon = "app-info-icon";
           break;
