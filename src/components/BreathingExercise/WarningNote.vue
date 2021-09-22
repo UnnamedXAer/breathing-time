@@ -5,12 +5,10 @@
         class="warning_note__icon"
         fill="rgba(220, 165, 0, 0.3)"
       />
-      Attention
+      {{ $t("ex.warning.title") }}
     </h2>
     <p>
-      This breathing exercises can affect your motor control, cause temporary
-      dizziness or even make you faint - do NOT do it while driving or in kind
-      of dangerous places. Find safe place like sofa or bed.
+      {{ $t("ex.warning.text") }}
     </p>
   </article>
 </template>

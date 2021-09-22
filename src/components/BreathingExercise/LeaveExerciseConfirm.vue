@@ -1,15 +1,15 @@
 <template>
   <app-modal
-    title="Warning!"
-    content="Leave exercise? Progress will be lost."
+    :title="$t('ex.leave.title')"
+    :content="$t('ex.leave.content')"
     :dismiss="onCancel"
     :actions="[
       {
-        label: 'Yes',
+        label: $t('common.yes'),
         handler: onConfirm,
       },
       {
-        label: 'No',
+        label: $t('common.no'),
         handler: onCancel,
       },
     ]"

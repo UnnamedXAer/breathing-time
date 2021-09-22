@@ -10,7 +10,7 @@
     >
       <div class="modal__content">
         <div id="modal-title" class="modal__title">
-          <p role="heading">{{ title || "Message" }}</p>
+          <p role="heading">{{ title || $t("modal.default_title") }}</p>
         </div>
         <div id="moda-body" class="modal__body">
           <p v-if="content">{{ content }}</p>
@@ -26,12 +26,11 @@
           </app-button>
 
           <app-button
-            aria-label="close dialog"
+            :aria-label="$t('modal.label_close')"
             v-if="!actions"
             @click="dismiss"
+            >{{ $t("common.ok") }}</app-button
           >
-            Ok
-          </app-button>
         </div>
       </div>
       <div class="modal__backdrop" @click="dismiss" tabindex="-1"></div>

@@ -1,32 +1,33 @@
 <template>
   <section class="exercise__hould_out">
     <app-exercise-header>
-      Breath Hold
+      {{ $t("ex.hold.title") }}
       <template v-slot:additional>
         <app-alert
           v-if="showAreYouThere"
           mode="warning"
           :dismiss="dismissAlert"
         >
-          Are you still there?
+          {{ $t("ex.hold.are_you_still_there") }}
         </app-alert>
       </template>
     </app-exercise-header>
 
     <app-start-tip v-if="showStartTip">
-      Take final deep breath, then exhale and stop breathing.
+      {{ $t("ex.hold.start_tip") }}
     </app-start-tip>
     <template v-else>
       <app-counter :number="counter" />
       <section>
         <app-exercise-action-btn @click="nextScreen">
-          Next Phase
+          {{ $t("ex.hold.skip_to_next") }}
         </app-exercise-action-btn>
       </section>
       <app-exercise-footer>
-        Stop breathing until you feel urge to inhale.
+        {{ $t("ex.hold.footer_tip") }}
+
         <small class="last_round_info" v-if="isLastRound">
-          This is last round. Don't forget about recover phase.
+          {{ $t("ex.hold.last_round_tip") }}
         </small>
       </app-exercise-footer>
     </template>

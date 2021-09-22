@@ -5,11 +5,11 @@
         @click="startExercise"
         v-if="counter === countdountTime"
         style="padding-left: 3rem; padding-right: 3rem"
-        >START</app-button
+        >{{ $t("ex.start.start") }}</app-button
       >
       <div v-else class="exercise__start__get_ready">
-        <p>Get Ready!</p>
-        <p>{{ counter > 0 ? counter : "Go" }}</p>
+        <p>{{ $t("ex.start.get_ready") }}</p>
+        <p>{{ counter > 0 ? counter : $t("ex.start.go") }}</p>
       </div>
     </section>
     <hr v-if="counter === countdountTime" />
@@ -27,7 +27,7 @@
           })
         "
       >
-        See instructions
+        {{ $t("ex.start.see_instructions") }}
       </app-button>
     </template>
   </section>

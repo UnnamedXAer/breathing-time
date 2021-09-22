@@ -1,6 +1,6 @@
 <template>
   <div class="breathing_exercise">
-    <h1 class="breathing_exercise__header">Breathing Exercise</h1>
+    <h1 class="breathing_exercise__header">{{ $t("ex.title") }}</h1>
     <router-view></router-view>
   </div>
 </template>

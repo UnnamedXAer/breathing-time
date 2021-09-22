@@ -1,19 +1,21 @@
 <template>
   <section class="exercise__recovery">
-    <app-exercise-header> Recovery </app-exercise-header>
+    <app-exercise-header>
+      {{ $t("ex.recovery.title") }}
+    </app-exercise-header>
 
     <app-start-tip v-if="showStartTip">
-      Inhale deeply and stop breathing.
+      {{ $t("ex.recovery.start_tip") }}
     </app-start-tip>
     <template v-else>
       <app-counter :number="counter" />
 
       <app-button variant="link" @click="nextScreen">
-        Skip to the {{ isLastRound ? "Summary screen" : "next phase" }}
+        {{ $t("ex.recovery.skip_to_" + (isLastRound ? "summary" : "next")) }}
       </app-button>
 
       <app-exercise-footer>
-        Stop breathing for {{ recoveryTime }} seconds.
+        {{ $t("ex.recovery.footer_tip", [recoveryTime]) }}
       </app-exercise-footer>
     </template>
   </section>
