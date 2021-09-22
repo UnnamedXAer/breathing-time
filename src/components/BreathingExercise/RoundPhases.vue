@@ -4,7 +4,7 @@
     <ol style="line-height: 2em">
       <li>{{ $t("ex.phases.breathing", { breathsPerRound }) }}</li>
       <li>{{ $t("ex.phases.hold") }}</li>
-      <li>{{ $t("ex.phases.hold", { recoveryTime }) }}</li>
+      <li>{{ $t("ex.phases.recovery", { recoveryTime }) }}</li>
     </ol>
   </article>
 </template>
