@@ -35,6 +35,7 @@ const pl: LanguageMessages = {
     start: {
       start: "START",
       get_ready: "Przygotuj się!",
+      go: "Zaczynamy",
       see_instructions: "Zobacz Instrukcje",
     },
     breathing: {

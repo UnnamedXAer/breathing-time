@@ -9,7 +9,7 @@
       >
       <div v-else class="exercise__start__get_ready">
         <p>{{ $t("ex.start.get_ready") }}</p>
-        <p>{{ counter > 0 ? counter : "Go" }}</p>
+        <p>{{ counter > 0 ? counter : $t("ex.start.go") }}</p>
       </div>
     </section>
     <hr v-if="counter === countdountTime" />

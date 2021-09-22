@@ -34,6 +34,7 @@ export default {
     start: {
       start: "START",
       get_ready: "Get Ready!",
+      go: "Go",
       see_instructions: "See instructions",
     },
     breathing: {
