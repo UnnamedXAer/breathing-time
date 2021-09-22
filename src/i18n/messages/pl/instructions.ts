@@ -4,7 +4,7 @@ const instructions: LanguageMessages["instructions"] = {
   title: "Informacje o Ćwiczeniu Oddechowym",
   paragraphs: [
     [
-      "Ułóż się wygodnie - połóż się lub usiądź zależnie co jest dla ciebie bardziej komfortowe, upewnij się, że może swobodnie oddychać - Twoje płuca mogą się rozszerzać bez żadnych ograniczeń. Każde dodatkowe spięcie mięśni utrudni ćwiczenie co będzie skutkować skróceniem czasu jaki wytrzymasz na wstrzymanym oddechu.",
+      "Ułóż się wygodnie - połóż się lub usiądź zależnie co jest dla ciebie bardziej komfortowe, upewnij się, że możesz swobodnie oddychać - Twoje płuca mogą się rozszerzać bez żadnych ograniczeń. Każde dodatkowe spięcie mięśni utrudni ćwiczenie co będzie skutkować skróceniem czasu jaki wytrzymasz na wstrzymanym oddechu.",
     ],
     [
       "Weź 30-50 głębokich oddechów - wdychaj powietrze głęboko przez nos lub usta i wydychaj przez usta. Staraj się wdychać głęboko w stronę brzucha. Nie zmuszaj się do wydychania, po prostu wypuść powietrze (około 30% powietrza zostanie w płucach).",
