@@ -59,9 +59,9 @@ export default defineComponent({
   },
   setup() {
     const focusable: HTMLElement[] = [];
-    const prevAvtiveElement = document.activeElement;
+    const prevActiveElement = document.activeElement;
 
-    return { focusable, prevAvtiveElement };
+    return { focusable, prevActiveElement };
   },
 
   methods: {
@@ -119,8 +119,8 @@ export default defineComponent({
   },
 
   unmounted() {
-    if (this.prevAvtiveElement) {
-      (this.prevAvtiveElement as HTMLElement).focus();
+    if (this.prevActiveElement) {
+      (this.prevActiveElement as HTMLElement).focus();
     }
   },
 });
