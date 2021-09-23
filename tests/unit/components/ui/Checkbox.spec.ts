@@ -28,7 +28,7 @@ describe("Checkbox.vue", () => {
     expect(input.element.checked).to.be.true;
   });
 
-  it("check on click", async () => {
+  it("check on click / emits", async () => {
     const id = "kittens_allowed";
     const wrapper = shallowMount(Checkbox, {
       props: {
@@ -37,8 +37,11 @@ describe("Checkbox.vue", () => {
         value: false,
       },
     });
-    const input = wrapper.get("input");
-    const ctrlIndicator = wrapper.get(".control_indicator");
-    // check if emitted "modify"
+
+    await wrapper.trigger("click");
+    expect(wrapper.emitted()).haveOwnProperty("modify");
+    expect(wrapper.emitted()["modify"][0]).to.be.eql([id, true]);
+    await wrapper.trigger("click");
+    expect(wrapper.emitted()["modify"][1]).to.be.eql([id, false]);
   });
 });

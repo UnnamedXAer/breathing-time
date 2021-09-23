@@ -1,8 +1,8 @@
 <template>
   <label :for="id">
     <div style="display: flex; justify-content: space-between">
-      <span><slot /></span
-      ><span style="font-size: 1.2em">{{ displayValue }}</span>
+      <span data-test="label"><slot /></span>
+      <span style="font-size: 1.2em" data-test="value">{{ displayValue }}</span>
     </div>
     <input
       type="range"

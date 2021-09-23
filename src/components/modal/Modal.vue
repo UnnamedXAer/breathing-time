@@ -1,6 +1,7 @@
 <template>
   <teleport to="body">
     <div
+      data-test="modal"
       class="modal"
       role="dialog"
       aria-labelledby="modal-title"
@@ -10,13 +11,15 @@
     >
       <div class="modal__content">
         <div id="modal-title" class="modal__title">
-          <p role="heading">{{ title || $t("modal.default_title") }}</p>
+          <p role="heading" data-test="title">
+            {{ title || $t("modal.default_title") }}
+          </p>
         </div>
         <div id="moda-body" class="modal__body">
-          <p v-if="content">{{ content }}</p>
-          <slot />
+          <p v-if="content" data-test="content">{{ content }}</p>
+          <slot data-test="slot-default" />
         </div>
-        <div class="modal__actions">
+        <div class="modal__actions" data-test="actions">
           <app-button
             v-for="action in actions"
             :key="action.label"
