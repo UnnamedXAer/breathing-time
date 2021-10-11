@@ -1,19 +1,21 @@
 <template>
-  <app-modal
-    :title="$t('ex.leave.title')"
-    :content="$t('ex.leave.content')"
-    :dismiss="onCancel"
-    :actions="[
-      {
-        label: $t('common.yes'),
-        handler: onConfirm,
-      },
-      {
-        label: $t('common.no'),
-        handler: onCancel,
-      },
-    ]"
-  />
+  <teleport to="body">
+    <app-modal
+      :title="$t('ex.leave.title')"
+      :content="$t('ex.leave.content')"
+      :dismiss="onCancel"
+      :actions="[
+        {
+          label: $t('common.yes'),
+          handler: onConfirm,
+        },
+        {
+          label: $t('common.no'),
+          handler: onCancel,
+        },
+      ]"
+    />
+  </teleport>
 </template>
 
 <script lang="ts">
