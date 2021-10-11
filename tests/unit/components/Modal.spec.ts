@@ -1,17 +1,13 @@
 import { expect } from "chai";
-import { mount } from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
 import Modal from "@/components/modal/Modal.vue";
-import { createI18n } from "@/i18n";
 
-// const i18n = new VueI18n({
-// 	locale: 'en',
-// 	silentTranslationWarn: true
-//   })
+config.global.mocks.$t = (key: string) => key;
 
 describe("Modal.vue", () => {
   const title = "Kittens Level:";
   const content = "The Kittens, kittens, kittens";
-  const slotDefault = "Kittens in slot";
+  const slotDefault = "Kittens in default slot";
   const dismiss = () => {
     console.log("dismiss");
   };
@@ -34,20 +30,31 @@ describe("Modal.vue", () => {
     dismiss,
   };
 
+  Modal.i18n = Modal.i18n || {
+    locale: "en",
+  };
+
+  afterEach(() => {
+    document.body.outerHTML = "";
+  });
+
   it("render", async () => {
     const wrapper = mount(Modal, {
       props,
       slots: {
         default: slotDefault,
       },
-      i18n: createI18n(),
     });
-    expect(wrapper.get('[data-test]="slot-default"').text()).eq(slotDefault);
-    expect(wrapper.get('[data-test]="content"').text()).eq(content);
-    expect(wrapper.get('[data-test]="title"').text()).eq(title);
+    console.log(document.body);
+    const modalWrapper = wrapper.getComponent(Modal);
 
+    expect(modalWrapper.get('[data-test="modal-body"]').text()).contains(
+      slotDefault
+    );
+    expect(modalWrapper.get('[data-test="content"]').text()).eq(content);
+    expect(modalWrapper.get('[data-test="title"]').text()).eq(title);
     expect(
-      wrapper.get<HTMLDivElement>('[data-test]="actions"').element.children
+      modalWrapper.get<HTMLDivElement>('[data-test="actions"]').element.children
         .length
     ).eq(1);
   });
