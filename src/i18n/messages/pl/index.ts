@@ -40,7 +40,7 @@ const pl: LanguageMessages = {
     },
     breathing: {
       title: "Oddychanie",
-      skip_to_next: "Przejdź do dostępnego etapu",
+      skip_to_next: "Przejdź do następnego etapu",
       start_tip: "Oddychaj głeboko zgodnie z licznikiem.",
       footer_tip:
         "Wdychaj głęboko i wypuszczaj powietrze zgodnie z licznikiem.",
