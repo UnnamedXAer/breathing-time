@@ -30,8 +30,8 @@ describe("Range.vue", () => {
         default: label,
       },
     });
-    expect(wrapper.get('[data-test="label"').text()).eq(label);
-    expect(wrapper.get('[data-test="value"').text()).eq("" + (min + 1));
+    expect(wrapper.get('[data-test="label"]').text()).eq(label);
+    expect(wrapper.get('[data-test="value"]').text()).eq("" + (min + 1));
 
     const input = wrapper.get("input");
     expect(input.attributes("id")).eq(id);
@@ -64,7 +64,7 @@ describe("Range.vue", () => {
       },
     });
 
-    expect(wrapper.get('[data-test="value"').text()).eq(
+    expect(wrapper.get('[data-test="value"]').text()).eq(
       "" + valueTranslation[2]
     );
     const input = wrapper.get("input");
