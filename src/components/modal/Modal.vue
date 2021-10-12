@@ -53,10 +53,12 @@ export default defineComponent({
       type: Function as PropType<(ev: Event) => void>,
       required: true,
     },
-    actions: Object as PropType<{
-      label: string;
-      handler: (ev: MouseEvent) => void;
-    }>,
+    actions: Object as PropType<
+      Array<{
+        label: string;
+        handler: (ev: MouseEvent) => void;
+      }>
+    >,
   },
   setup() {
     const focusable: HTMLElement[] = [];
