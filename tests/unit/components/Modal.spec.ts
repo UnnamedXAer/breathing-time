@@ -8,19 +8,24 @@ describe("Modal.vue", () => {
   const title = "Kittens Level:";
   const content = "The Kittens, kittens, kittens";
   const slotDefault = "Kittens in default slot";
+
+  let lastAction = "";
+
   const dismiss = () => {
-    console.log("dismiss");
+    lastAction = "dismiss";
   };
   const actions = [
     {
       label: "common.yes",
       handler: () => {
-        console.log("yes");
+        lastAction = actions[0].label;
       },
     },
     {
       label: "common.no",
-      handler: dismiss,
+      handler: () => {
+        lastAction = actions[1].label;
+      },
     },
   ];
 
@@ -38,24 +43,98 @@ describe("Modal.vue", () => {
     document.body.outerHTML = "";
   });
 
-  it("render", async () => {
+  it("render correctly with title content and default slot filled", () => {
     const wrapper = mount(Modal, {
       props,
       slots: {
         default: slotDefault,
       },
     });
-    console.log(document.body);
+
     const modalWrapper = wrapper.getComponent(Modal);
 
+    expect(modalWrapper.get('[data-test="modal-backdrop"]')).to.exist;
     expect(modalWrapper.get('[data-test="modal-body"]').text()).contains(
       slotDefault
     );
     expect(modalWrapper.get('[data-test="content"]').text()).eq(content);
     expect(modalWrapper.get('[data-test="title"]').text()).eq(title);
     expect(
-      modalWrapper.get<HTMLDivElement>('[data-test="actions"]').element.children
-        .length
-    ).eq(1);
+      modalWrapper
+        .get<HTMLDivElement>('[data-test="actions"] [data-test="btn"]')
+        .text()
+    ).eq("common.ok");
+  });
+
+  it("execute default action", async () => {
+    const wrapper = mount(Modal, {
+      props,
+    });
+
+    const modalWrapper = wrapper.getComponent(Modal);
+
+    const actionElements = modalWrapper
+      .get<HTMLDivElement>('[data-test="actions"]')
+      .findAll<HTMLButtonElement>('[data-test="btn"]');
+
+    lastAction = "";
+    await actionElements[0].trigger("click");
+    expect(lastAction).eq("dismiss");
+  });
+
+  it("render with custom actions", () => {
+    const wrapper = mount(Modal, {
+      props: {
+        ...props,
+        actions,
+      },
+    });
+
+    const modalWrapper = wrapper.getComponent(Modal);
+    const actionElements = modalWrapper.get<HTMLDivElement>(
+      '[data-test="actions"]'
+    ).element.children;
+
+    expect(actionElements.length).eq(actions.length);
+    expect(actionElements[0].textContent).eq(actions[0].label);
+    expect(actionElements[1].textContent).eq(actions[1].label);
+  });
+
+  it("custom actions executed", async () => {
+    const wrapper = mount(Modal, {
+      props: {
+        ...props,
+        actions,
+      },
+    });
+
+    const modalWrapper = wrapper.getComponent(Modal);
+
+    const actionElements = modalWrapper
+      .get<HTMLDivElement>('[data-test="actions"]')
+      .findAll<HTMLButtonElement>('[data-test="btn"]');
+
+    lastAction = "";
+    await actionElements[0].trigger("click");
+    expect(lastAction).eq(actions[0].label);
+
+    lastAction = "";
+    await actionElements[1].trigger("click");
+    expect(lastAction).eq(actions[1].label);
+  });
+
+  it("dismiss on backdrop", async () => {
+    const wrapper = mount(Modal, {
+      props: {
+        ...props,
+        actions,
+      },
+    });
+
+    const modalWrapper = wrapper.getComponent(Modal);
+
+    lastAction = "";
+    await modalWrapper.get('[data-test="modal-backdrop"]').trigger("click");
+    expect(lastAction).eq("dismiss");
   });
 });

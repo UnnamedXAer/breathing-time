@@ -35,7 +35,12 @@
         >
       </div>
     </div>
-    <div class="modal__backdrop" @click="dismiss" tabindex="-1"></div>
+    <div
+      class="modal__backdrop"
+      @click="dismiss"
+      tabindex="-1"
+      data-test="modal-backdrop"
+    ></div>
   </div>
 </template>
 
