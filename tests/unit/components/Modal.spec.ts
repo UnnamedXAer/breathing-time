@@ -1,8 +1,6 @@
 import { expect } from "chai";
-import { mount, config } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import Modal from "@/components/modal/Modal.vue";
-
-config.global.mocks.$t = (key: string) => key;
 
 describe("Modal.vue", () => {
   const title = "Kittens Level:";

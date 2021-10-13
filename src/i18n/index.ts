@@ -5,7 +5,7 @@ import { I18nMessages, Language } from "./types";
 
 export const languages = ["en", "pl"] as const;
 
-const messages: I18nMessages = {
+export const messages: I18nMessages = {
   en,
   pl,
 };

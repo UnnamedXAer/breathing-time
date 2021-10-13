@@ -1,11 +1,11 @@
 <template>
-  <header id="header">
-    <nav class="nav">
+  <header id="header" data-test="header">
+    <nav class="nav" data-test="nav">
       <router-link class="nav__item" to="/">
         <app-logo />
       </router-link>
       <div class="nav__links">
-        <router-link class="nav__item" to="/">{{
+        <router-link class="nav__item" to="/" data-test="home-link">{{
           $t("header.home")
         }}</router-link>
         <router-link class="nav__item" to="/about">{{
@@ -14,10 +14,10 @@
       </div>
       <div class="languages_container">
         <select
+          data-test="languages"
           class="languages"
           :class="$i18n.locale"
           v-model="$i18n.locale"
-          @change="languageHangeHandler"
         >
           <option
             class="languages__option"
@@ -46,6 +46,7 @@ export default defineComponent({
 
   watch: {
     "$i18n.locale"(val) {
+      console.log("watch", val);
       localStorage.setItem("locale", val);
     },
   },
