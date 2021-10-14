@@ -1,6 +1,7 @@
 <template>
   <div class="counter__lungs">
     <div
+      data-test="animation-wrapper"
       class="counter__lungs_wrapper"
       @click="toggleAnimation"
       :title="
@@ -9,6 +10,7 @@
     >
       <div
         v-if="!disableAnimation"
+        data-test="animation"
         class="counter__lungs_animated one"
         :class="{
           animate: !disableAnimation,
@@ -22,7 +24,7 @@
           </div>
         </div>
       </div>
-      <div v-else>
+      <div v-else data-test="animation-disabled">
         <p class="enable_animation_text">
           {{ $t("ex.breathing.enable_animation") }}
         </p>
