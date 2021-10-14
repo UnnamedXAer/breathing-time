@@ -46,7 +46,6 @@ export default defineComponent({
 
   watch: {
     "$i18n.locale"(val) {
-      console.log("watch", val);
       localStorage.setItem("locale", val);
     },
   },

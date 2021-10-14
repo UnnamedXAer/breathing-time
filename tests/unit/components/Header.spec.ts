@@ -1,14 +1,16 @@
 import { expect } from "chai";
-import { shallowMount, mount, RouterLinkStub } from "@vue/test-utils";
-import { languages, messages } from "@/i18n";
+import { mount, RouterLinkStub } from "@vue/test-utils";
+import { createI18n, languages } from "@/i18n";
 import Header from "@/components/header/Header.vue";
 import Logo from "@/components/ui/Logo.vue";
-import { Language } from "@/i18n/types";
 
-describe("Header.vue", () => {
+describe("Header.vue", function () {
   it("render correctly", () => {
     const wrapper = mount(Header, {
       global: {
+        mocks: {
+          $i18n: { locale: "en" },
+        },
         stubs: {
           RouterLink: RouterLinkStub,
         },
@@ -18,45 +20,39 @@ describe("Header.vue", () => {
     const languageOptions = wrapper
       .get('[data-test="languages"]')
       .findAll("option");
-
     expect(wrapper.getComponent(Logo)).exist;
     expect(languageOptions.length).eq(languages.length);
+    expect(wrapper.findAll('[data-test="nav"] a').length).greaterThanOrEqual(2);
   });
 
-  it.only("change language", async (d) => {
+  it("change language", async () => {
     localStorage.removeItem("locale");
-    const i18nMock = { locale: "pl" as Language, messages };
-    const wrapper = shallowMount(Header, {
+
+    const wrapper = mount(Header, {
       global: {
-        mocks: {
-          $i18n: i18nMock,
-          $t: (key: string) =>
-            i18nMock.messages[i18nMock.locale]["header"]["home"],
-        },
+        plugins: [createI18n()],
         stubs: {
           RouterLink: RouterLinkStub,
         },
       },
     });
 
+    const defaultLocale = wrapper.vm.$i18n.locale;
+    const newLocale = languages.find((l) => l !== defaultLocale);
     const languageSelect = wrapper.get('[data-test="languages"]');
-    // const locale = Header.i18n!.locale;
-    const locale = "en";
+    const defaultHomeText = wrapper.get('[data-test="home-link"]').text();
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const newLocale = languages.find((l) => l !== locale)!;
-
-    console.log(
-      "LLLL --> ",
-      (languageSelect.element as HTMLSelectElement).value
+    expect(defaultLocale).not.eq(newLocale);
+    expect((languageSelect.element as HTMLSelectElement).value).eq(
+      defaultLocale
     );
-    expect((languageSelect.element as HTMLSelectElement).value).eq(locale);
     await languageSelect.setValue(newLocale);
-
     expect((languageSelect.element as HTMLSelectElement).value).eq(newLocale);
-    setTimeout(() => {
-      expect(localStorage.getItem("locale")).eq(newLocale);
-      d();
-    }, 200);
+    expect(wrapper.vm.$i18n.locale).eq(newLocale);
+    expect(localStorage.getItem("locale")).eq(newLocale);
+
+    expect(wrapper.get('[data-test="home-link"]').text()).to.not.be.eq(
+      defaultHomeText
+    );
   });
 });
