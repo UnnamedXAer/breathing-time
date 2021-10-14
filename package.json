@@ -6,6 +6,7 @@
 	"scripts": {
 		"serve": "vue-cli-service serve",
 		"build": "vue-cli-service build",
+		"test:debug": "npm node --inspect --inspect-brk & yarn run test:unit --no-timeout",
 		"test:unit": "vue-cli-service test:unit --require tests/unit/setup.js",
 		"test:only": "vue-cli-service test:unit --require tests/unit/setup.js  -g",
 		"test:e2e": "vue-cli-service test:e2e",
