@@ -2,23 +2,29 @@
   <section class="exercise__start">
     <section style="display: flex; justify-content: center; margin: 3rem auto">
       <app-button
+        data-test="ex-start-start-btn"
         @click="startExercise"
-        v-if="counter === countdountTime"
+        v-if="counter === countdownTime"
         style="padding-left: 3rem; padding-right: 3rem"
         >{{ $t("ex.start.start") }}</app-button
       >
-      <div v-else class="exercise__start__get_ready">
+      <div
+        v-else
+        class="exercise__start__get_ready"
+        data-test="ex-start-counter"
+      >
         <p>{{ $t("ex.start.get_ready") }}</p>
         <p>{{ counter > 0 ? counter : $t("ex.start.go") }}</p>
       </div>
     </section>
-    <hr v-if="counter === countdountTime" />
+    <hr v-if="counter === countdownTime" />
 
-    <template v-if="counter === countdountTime">
-      <app-warning-note />
-      <app-round-phases />
+    <template v-if="counter === countdownTime">
+      <app-warning-note data-test="ex-start-warning-note" />
+      <app-round-phases data-test="ex-start-round-phases" />
 
       <app-button
+        data-test="ex-start-see-instr-btn"
         style="margin-top: 2rem"
         variant="outlined"
         @click="
@@ -50,10 +56,10 @@ export default defineComponent({
     appRoundPhases: RoundPhasesVue,
   },
   data() {
-    const countdountTime = process.env.NODE_ENV === "development" ? 0 : 3 + 1;
+    const countdownTime = process.env.NODE_ENV === "development" ? 0 : 3 + 1;
     return {
-      countdountTime,
-      counter: countdountTime,
+      countdownTime,
+      counter: countdownTime,
     };
   },
 
