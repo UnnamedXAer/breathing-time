@@ -3,15 +3,15 @@
     <app-modal
       :title="$t('ex.leave.title')"
       :content="$t('ex.leave.content')"
-      :dismiss="onCancel"
+      :dismiss="cancelHandler"
       :actions="[
         {
           label: $t('common.yes'),
-          handler: onConfirm,
+          handler: confirmHandler,
         },
         {
           label: $t('common.no'),
-          handler: onCancel,
+          handler: cancelHandler,
         },
       ]"
     />
@@ -19,17 +19,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import ModalVue from "../modal/Modal.vue";
 
 export default defineComponent({
+  name: "LeaveExerciseConfirm",
   components: {
     appModal: ModalVue,
   },
 
   props: {
-    onCancel: Function,
-    onConfirm: Function,
+    cancelHandler: { type: Function as PropType<() => void> },
+    confirmHandler: { type: Function as PropType<() => void> },
   },
 });
 </script>
