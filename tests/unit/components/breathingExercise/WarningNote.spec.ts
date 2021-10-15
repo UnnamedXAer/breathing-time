@@ -2,7 +2,7 @@ import { shallowMount } from "@vue/test-utils";
 import WarningNote from "@/components/BreathingExercise/WarningNote.vue";
 import { expect } from "chai";
 
-describe("WarningNote.vue", () => {
+describe("Breathing Exercise / WarningNote.vue", () => {
   it("renders warning note text", () => {
     const wrapper = shallowMount(WarningNote);
 

@@ -2,7 +2,7 @@ import Footer from "@/components/BreathingExercise/Footer.vue";
 import { mount } from "@vue/test-utils";
 import { expect } from "chai";
 
-describe("BreathingExercise/Footer.vue", () => {
+describe("Breathing Exercise / Footer.vue", () => {
   it("renders childrens in slots", () => {
     const defaultSlotText = "default kittens";
     const additionalSlotText = "more kittens";

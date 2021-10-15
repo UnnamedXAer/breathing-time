@@ -10,7 +10,7 @@ import {
 
 chai.use(spies);
 
-describe("Lungs.vue", () => {
+describe("Breathing Exercise / Lungs.vue", () => {
   it("render correctly", () => {
     const number = 13;
     const wrapper = shallowMount(Lungs, {

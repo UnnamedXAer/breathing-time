@@ -3,7 +3,7 @@ import { mount } from "@vue/test-utils";
 import LeaveExerciseConfirm from "@/components/BreathingExercise/LeaveExerciseConfirm.vue";
 import Modal from "@/components/modal/Modal.vue";
 
-describe("LeaveExerciseConfirm.vue", () => {
+describe("Breathing Exercise / LeaveExerciseConfirm.vue", () => {
   afterEach(() => {
     document.body.outerHTML = "";
   });

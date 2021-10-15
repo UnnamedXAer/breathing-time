@@ -2,7 +2,7 @@ import Header from "@/components/BreathingExercise/Header.vue";
 import { mount } from "@vue/test-utils";
 import { expect } from "chai";
 
-describe("BreathingExercise/Header.vue", () => {
+describe("Breathing Exercise / Header.vue", () => {
   it("renders childrens in slots", () => {
     const defaultSlotText = "default kittens";
     const additionalSlotText = "more kittens";
