@@ -22,8 +22,8 @@
 
   <app-leave-exercise-confirm
     v-if="showModal"
-    :onCancel="preventCancelExercise"
-    :onConfirm="confirmCancelExercise"
+    :cancelHandler="preventCancelExercise"
+    :confirmHandler="confirmCancelExercise"
   />
 </template>
 
