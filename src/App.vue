@@ -10,8 +10,8 @@ import { defineComponent } from "vue";
 import HeaderVue from "./components/header/Header.vue";
 import FooterVue from "./components/footer/Footer.vue";
 import "./assets/fonts/fonts.module.css";
-import { namespaceName } from "./store";
 import { ExerciseActions } from "./store/modules/exercise/types";
+import { namespaceName } from "./store/createStore";
 
 export default defineComponent({
   components: {

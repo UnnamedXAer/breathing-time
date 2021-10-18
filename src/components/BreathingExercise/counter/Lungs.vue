@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { namespaceName } from "@/store";
+import { namespaceName } from "@/store/createStore";
 import {
   ExerciseActions,
   UpdatePreferencesPayload,

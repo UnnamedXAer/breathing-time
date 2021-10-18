@@ -45,7 +45,6 @@
 </template>
 
 <script lang="ts">
-import { namespaceName, StoreState } from "@/store";
 import {
   ExerciseModuleMap,
   ExerciseMutations,
@@ -53,6 +52,8 @@ import {
 import ShareSvgVue from "../components/svg/ShareSvg.vue";
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
+import { StoreState } from "@/store/types";
+import { namespaceName } from "@/store/createStore";
 
 const exerciseStateProps = ["holdTimes", "numberOfRounds"] as const;
 

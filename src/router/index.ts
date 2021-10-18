@@ -7,7 +7,8 @@ import BreathingVue from "../components/BreathingExercise/Breathing.vue";
 import BreathHoldVue from "../components/BreathingExercise/BreathHold.vue";
 import RecoveryVue from "../components/BreathingExercise/Recovery.vue";
 import PreferencesVue from "../views/Preferences.vue";
-import store, { StoreState } from "@/store";
+import store from "@/store";
+import { StoreState } from "@/store/types";
 
 const routes: Array<RouteRecordRaw> = [
   {

@@ -28,7 +28,6 @@
 </template>
 
 <script lang="ts">
-import { namespaceName } from "@/store";
 import { ExerciseMutations } from "@/store/modules/exercise/types";
 import { RoundState } from "@/types/breath";
 import { TimeoutReturn } from "@/types/timeout";
@@ -41,6 +40,7 @@ import HeaderVue from "./Header.vue";
 import StartTipVue from "./StartTip.vue";
 import LeaveExerciseConfirmVue from "./LeaveExerciseConfirm.vue";
 import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
+import { namespaceName } from "@/store/createStore";
 
 let interval: TimeoutReturn = void 0;
 let startTipTimeout: TimeoutReturn = void 0;

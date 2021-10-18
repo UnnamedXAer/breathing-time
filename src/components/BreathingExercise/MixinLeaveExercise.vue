@@ -1,5 +1,5 @@
 <script lang="ts">
-import { namespaceName } from "@/store";
+import { namespaceName } from "@/store/createStore";
 import { ExerciseActions } from "@/store/modules/exercise/types";
 import { defineComponent } from "vue";
 import { RouteRecordName } from "vue-router";

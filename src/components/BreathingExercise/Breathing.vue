@@ -29,7 +29,6 @@
 </template>
 
 <script lang="ts">
-import { namespaceName, StoreState } from "@/store";
 import {
   ExerciseModuleMap,
   ExerciseMutations,
@@ -46,6 +45,8 @@ import LungsVue from "./counter/Lungs.vue";
 import LeaveExerciseConfirmVue from "./LeaveExerciseConfirm.vue";
 import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
 import StartTipVue from "./StartTip.vue";
+import { StoreState } from "@/store/types";
+import { namespaceName } from "@/store/createStore";
 
 const exerciseStateProps = [
   "breathTime",

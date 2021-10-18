@@ -1,4 +1,4 @@
-import { RootState } from "@/store";
+import { RootState } from "@/store/types";
 import { RoundState } from "@/types/breath";
 import { Module } from "vuex";
 import { getProductionExerciseDefaultState } from "./defaultState";

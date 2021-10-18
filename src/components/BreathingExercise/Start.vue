@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { namespaceName } from "@/store";
+import { namespaceName } from "@/store/createStore";
 import { ExerciseMutations } from "@/store/modules/exercise/types";
 import { defineComponent } from "vue";
 import ButtonVue from "../ui/Button.vue";
