@@ -2,7 +2,7 @@ import chai, { expect } from "chai";
 import spies from "chai-spies";
 import { shallowMount } from "@vue/test-utils";
 import Lungs from "@/components/BreathingExercise/counter/Lungs.vue";
-import { namespaceName } from "@/store";
+import { namespaceName } from "@/store/createStore";
 import {
   ExerciseActions,
   UpdatePreferencesPayload,
