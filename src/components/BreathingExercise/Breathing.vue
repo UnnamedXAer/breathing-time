@@ -12,7 +12,11 @@
         :counter="counter"
       />
       <app-counter :number="counter" />
-      <app-button variant="link" @click="nextScreen">
+      <app-button
+        data-test="breathing-counter"
+        variant="link"
+        @click="nextScreen"
+      >
         {{ $t("ex.breathing.skip_to_next") }}
       </app-button>
 
