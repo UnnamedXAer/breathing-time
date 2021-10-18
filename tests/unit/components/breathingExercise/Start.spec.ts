@@ -1,7 +1,8 @@
-import { mount, shallowMount } from "@vue/test-utils";
+import { flushPromises, mount, shallowMount } from "@vue/test-utils";
 import Start from "@/components/BreathingExercise/Start.vue";
-import { expect } from "chai";
-import store from "@/store";
+import chai, { expect } from "chai";
+import { ExerciseMutations } from "@/store/modules/exercise/types";
+import { createStoreFactory, namespaceName } from "@/store/createStore";
 
 describe("Breathing Exercise / Start.vue", () => {
   it("renders correctly", () => {
@@ -17,7 +18,8 @@ describe("Breathing Exercise / Start.vue", () => {
     expect(warningNote.exists(), "warningNote").to.be.true;
   });
 
-  it.only("changes content when counting starts", async () => {
+  it("changes content when counting starts", async () => {
+    const store = createStoreFactory();
     const wrapper = mount(Start, {
       global: {
         plugins: [store],
@@ -34,7 +36,8 @@ describe("Breathing Exercise / Start.vue", () => {
     expect(roundPhases.exists(), "roundPhases").to.be.true;
     expect(warningNote.exists(), "warningNote").to.be.true;
 
-    await wrapper.setData({ counter: 1 });
+    wrapper.vm.counter = 1;
+    await flushPromises();
 
     startBtn = wrapper.find('[data-test="ex-start-start-btn"]');
     seeInstrBtn = wrapper.find('[data-test="ex-start-see-instr-btn"]');
@@ -49,14 +52,68 @@ describe("Breathing Exercise / Start.vue", () => {
     expect(counter.exists(), "counter").to.be.true;
   });
 
-  it.only("counter content for different counter values", async () => {
+  it("counter content for different counter values", async () => {
     const countdownTime = 4;
+    const wrapper = shallowMount(Start, {});
+
+    wrapper.vm.counter = countdownTime - 1;
+    await flushPromises();
+
+    const counterWrapper = wrapper.get('[data-test="ex-start-counter"]');
+    expect(counterWrapper.get("p:first-child").text()).eq("ex.start.get_ready");
+    expect(counterWrapper.get("p:nth-child(2)").text()).eq(
+      "" + (countdownTime - 1)
+    );
+
+    wrapper.vm.counter = 0;
+    await flushPromises();
+
+    expect(counterWrapper.get("p:nth-child(2)").text()).eq("ex.start.go");
+  });
+
+  it("starts counting on start pressed", async () => {
+    const wrapper = shallowMount(Start);
+
+    const startBtnWrapper = wrapper.get('[data-test="ex-start-start-btn"]');
+
+    await startBtnWrapper.trigger("click");
+
+    const counterWrapper = wrapper.find('[data-test="ex-start-counter"]');
+    expect(counterWrapper.exists()).to.be.true;
+  });
+
+  it.skip("redirects after counting finish", (done) => {
+    const commitSpy = chai.spy();
+    const replaceSpy = chai.spy();
     const wrapper = shallowMount(Start, {
-      //   props: {},
-      //   data: {
-      //     countdownTime,
-      //     counter: countdownTime,
-      //   },
+      global: {
+        mocks: {
+          $store: {
+            commit: commitSpy,
+          },
+          $router: {
+            replace: replaceSpy,
+          },
+        },
+      },
     });
+    wrapper.vm.counter = 0;
+    const startBtnWrapper = wrapper.get('[data-test="ex-start-start-btn"]');
+
+    void startBtnWrapper.trigger("click");
+
+    setTimeout(() => {
+      expect(commitSpy).to.have.been.called.once;
+      expect(commitSpy).to.have.been.called.with(
+        namespaceName("exercise", ExerciseMutations.Start)
+      );
+      expect(replaceSpy).to.have.been.called.once;
+
+      expect(replaceSpy).to.have.been.called.with({
+        name: "BreathingExercise-Breathing",
+      });
+
+      done();
+    }, 1001);
   });
 });

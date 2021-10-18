@@ -42,7 +42,7 @@
 <script lang="ts">
 import { namespaceName } from "@/store/createStore";
 import { ExerciseMutations } from "@/store/modules/exercise/types";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import ButtonVue from "../ui/Button.vue";
 import RoundPhasesVue from "./RoundPhases.vue";
 import WarningNoteVue from "./WarningNote.vue";
@@ -55,11 +55,14 @@ export default defineComponent({
     appWarningNote: WarningNoteVue,
     appRoundPhases: RoundPhasesVue,
   },
-  data() {
+
+  setup() {
     const countdownTime = process.env.NODE_ENV === "development" ? 0 : 3 + 1;
+    const counter = ref(countdownTime);
+
     return {
       countdownTime,
-      counter: countdownTime,
+      counter,
     };
   },
 
@@ -67,22 +70,28 @@ export default defineComponent({
     startExercise() {
       this.counter--;
 
-      interval = setInterval(() => {
-        if (this.counter <= 0) {
-          clearInterval(interval);
-          interval = void 0;
-          this.$store.commit(
-            namespaceName("exercise", ExerciseMutations.Start)
-          );
-          this.$router.replace({
-            name: "BreathingExercise-Breathing",
-          });
-
-          return;
-        }
-        this.counter--;
-      }, 1000);
+      interval = setInterval(this.descrease, 1000);
     },
+
+    descrease() {
+      if (this.counter > 0) {
+        this.counter--;
+        return;
+      }
+      clearInterval(interval);
+      interval = void 0;
+      this.$store.commit(namespaceName("exercise", ExerciseMutations.Start));
+      this.$router.replace({
+        name: "BreathingExercise-Breathing",
+      });
+    },
+  },
+
+  beforeRouteLeave() {
+    if (interval) {
+      clearInterval(interval);
+      interval = void 0;
+    }
   },
 });
 </script>
