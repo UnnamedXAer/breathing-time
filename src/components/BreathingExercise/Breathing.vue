@@ -13,7 +13,7 @@
       />
       <app-counter :number="counter" />
       <app-button
-        data-test="breathing-counter"
+        data-test="breathing-next-screen-btn"
         variant="link"
         @click="nextScreen"
       >
