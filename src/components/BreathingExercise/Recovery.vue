@@ -81,6 +81,7 @@ export default defineComponent({
         return;
       }
 
+      // @TODO: #8 screen does not change after the canceling before leave dialog if counter already finished
       this.nextScreen();
     },
 

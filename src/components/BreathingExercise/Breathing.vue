@@ -103,6 +103,7 @@ export default defineComponent({
       breathTiemout = setTimeout(this.breath, this.breathTime);
     },
     breath() {
+      // @TODO: #9 counter goes beyond breathsPerRound if the leave dialog is displayed
       this.counter++;
       if (this.counter <= this.breathsPerRound) {
         breathTiemout = setTimeout(this.breath, this.breathTime);
