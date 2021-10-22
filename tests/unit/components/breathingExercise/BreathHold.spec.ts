@@ -447,7 +447,7 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     expect(alertWrapper.exists()).to.be.false;
   });
 
-  it.only("does not shows idle alert after dismissing it", async () => {
+  it("does not shows idle alert after dismissing it", async () => {
     const store = createStoreFactory();
     const state = store.state as StoreState;
     (state as StoreState).exercise = {
