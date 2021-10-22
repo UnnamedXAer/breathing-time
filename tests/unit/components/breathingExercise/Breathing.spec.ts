@@ -202,8 +202,8 @@ describe("Breathing Exercise / Breathing.vue", () => {
 
     expect(Breathing.beforeRouteLeave).to.not.be.undefined;
 
-    expect(Breathing.beforeRouteLeave).to.not.be.undefined;
     if (!Breathing.beforeRouteLeave) {
+      expect(false, "beforeRouteLeave hook is missing").eq(true);
       return;
     }
 
@@ -220,7 +220,7 @@ describe("Breathing Exercise / Breathing.vue", () => {
     expect(leaveExerciseConfirmWrapper.exists()).to.be.true;
   });
 
-  it.only("leaves exercise if user confirms dialog", async () => {
+  it("leaves exercise if user confirms dialog", async () => {
     const store = createStoreFactory();
     const state = store.state as StoreState;
     (state as StoreState).exercise = {
@@ -284,5 +284,88 @@ describe("Breathing Exercise / Breathing.vue", () => {
         allowNavigation: 1,
       },
     });
+  });
+
+  it("allows to navigate to next phase without asking", () => {
+    const store = createStoreFactory();
+    const state = store.state as StoreState;
+    (state as StoreState).exercise = {
+      ...state.exercise,
+      disableStartTips: true,
+    };
+
+    const replaceSpy = chai.spy();
+
+    const wrapper = mount(Breathing, {
+      data() {
+        return {
+          showStartTip: false,
+          counter: 5,
+        };
+      },
+      global: {
+        plugins: [store],
+        mixins: [MixinLeaveExercise],
+        mocks: {
+          $router: {
+            replace: replaceSpy,
+          },
+        },
+      },
+    });
+
+    const routeName = "BreathingExercise-BreathHold";
+
+    const to = {
+      name: routeName,
+      params: {},
+    } as RouteLocationNormalized;
+    const from = {} as RouteLocationNormalized;
+    const next = () => void 0;
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    let accepted = Breathing.beforeRouteLeave!.call(wrapper.vm, to, from, next);
+
+    expect(accepted).to.be.true;
+
+    to.name = "BreathingExercise-Summary";
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    accepted = Breathing.beforeRouteLeave!.call(wrapper.vm, to, from, next);
+
+    expect(accepted).to.be.false;
+  });
+
+  it.only('hides animation is disabled in the "Preferences"', async () => {
+    const store = createStoreFactory();
+    const state = store.state as StoreState;
+    (state as StoreState).exercise = {
+      ...state.exercise,
+      disableStartTips: true,
+      disableAnimation: false,
+    };
+
+    const wrapper = mount(Breathing, {
+      data() {
+        return {
+          showStartTip: false,
+        };
+      },
+      global: {
+        plugins: [store],
+        mocks: {
+          $router: {
+            replace: () => void 0,
+          },
+        },
+      },
+    });
+
+    const animationWrapper = wrapper.get('[data-test="animation-wrapper"]');
+    expect(animationWrapper.text()).empty;
+
+    state.exercise.disableAnimation = true;
+    await wrapper.vm.$nextTick();
+    expect(animationWrapper.text()).eq("ex.breathing.enable_animation");
   });
 });
