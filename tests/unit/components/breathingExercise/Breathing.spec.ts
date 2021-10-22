@@ -1,6 +1,6 @@
 import Breathing from "@/components/BreathingExercise/Breathing.vue";
 import { createStoreFactory } from "@/store/createStore";
-import { flushPromises, mount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import chai, { expect } from "chai";
 import Header from "@/components/BreathingExercise/Header.vue";
 import StartTip from "@/components/BreathingExercise/StartTip.vue";
@@ -52,7 +52,7 @@ describe("Breathing Exercise / Breathing.vue", () => {
     expect(counterWrapper.exists()).eq(!showStartTip);
   });
 
-  it("counts up automatically", async () => {
+  it("counts up automatically", (done) => {
     const store = createStoreFactory();
     const state = store.state as StoreState;
     (state as StoreState).exercise = {
@@ -79,9 +79,10 @@ describe("Breathing Exercise / Breathing.vue", () => {
       },
     });
 
-    await flushPromises();
-
-    expect(wrapper.vm.counter).greaterThan(1);
+    setTimeout(() => {
+      expect(wrapper.vm.counter).greaterThan(1);
+      done();
+    });
   });
 
   it('navigates to the next screen on "Next Screen" press', async () => {
@@ -122,7 +123,7 @@ describe("Breathing Exercise / Breathing.vue", () => {
     });
   });
 
-  it("calls next screen when counter reaches 'breaths per round'", async () => {
+  it("calls next screen when counter reaches 'breaths per round'", (done) => {
     const store = createStoreFactory();
     const state = store.state as StoreState;
     (state as StoreState).exercise = {
@@ -150,11 +151,13 @@ describe("Breathing Exercise / Breathing.vue", () => {
       },
     });
 
-    await flushPromises();
+    setTimeout(() => {
+      expect(replaceSpy).to.have.been.called.once;
+      expect(replaceSpy).to.have.been.called.with({
+        name: "BreathingExercise-BreathHold",
+      });
 
-    expect(replaceSpy).to.have.been.called.once;
-    expect(replaceSpy).to.have.been.called.with({
-      name: "BreathingExercise-BreathHold",
+      done();
     });
   });
 
