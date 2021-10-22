@@ -336,7 +336,7 @@ describe("Breathing Exercise / Breathing.vue", () => {
     expect(accepted).to.be.false;
   });
 
-  it.only('hides animation is disabled in the "Preferences"', async () => {
+  it('hides animation is disabled in the "Preferences"', async () => {
     const store = createStoreFactory();
     const state = store.state as StoreState;
     (state as StoreState).exercise = {
