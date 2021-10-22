@@ -10,7 +10,6 @@ import Counter from "@/components/BreathingExercise/counter/Counter.vue";
 import Footer from "@/components/BreathingExercise/Footer.vue";
 import { StoreState } from "@/store/types";
 import { RouteLocationNormalized } from "vue-router";
-import MixinLeaveExercise from "@/components/BreathingExercise/MixinLeaveExercise.vue";
 import Modal from "@/components/modal/Modal.vue";
 
 describe("Breathing Exercise / Breathing.vue", () => {
@@ -180,7 +179,6 @@ describe("Breathing Exercise / Breathing.vue", () => {
       },
       global: {
         plugins: [store],
-        mixins: [MixinLeaveExercise],
         mocks: {
           $router: {
             replace: replaceSpy,
@@ -243,7 +241,6 @@ describe("Breathing Exercise / Breathing.vue", () => {
       },
       global: {
         plugins: [store],
-        mixins: [MixinLeaveExercise],
         mocks: {
           $router: {
             replace: replaceSpy,
@@ -308,7 +305,6 @@ describe("Breathing Exercise / Breathing.vue", () => {
       },
       global: {
         plugins: [store],
-        mixins: [MixinLeaveExercise],
         mocks: {
           $router: {
             replace: replaceSpy,
