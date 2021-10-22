@@ -50,13 +50,13 @@ describe("Range.vue", () => {
     });
 
     const input = wrapper.get("input");
-    input.setValue("3");
-    console.log(wrapper.emitted());
+    await input.setValue("3");
+
     expect(wrapper.emitted()).haveOwnProperty("modify");
     expect(wrapper.emitted()["modify"][0]).to.be.eql([id, 3]);
   });
 
-  it("value translation", async () => {
+  it.only("value translation", async () => {
     const wrapper = mount(Range, {
       props: { ...props, valueTranslation },
       slots: {
@@ -64,10 +64,12 @@ describe("Range.vue", () => {
       },
     });
 
-    expect(wrapper.get('[data-test="value"]').text()).eq(
-      "" + valueTranslation[2]
-    );
-    const input = wrapper.get("input");
-    input.setValue("3");
+    expect(wrapper.get('[data-test="value"]').text()).eq(valueTranslation[2]);
+
+    await wrapper.setProps({ value: 3 });
+
+    const displayValue = wrapper.get('[data-test="value"]').text();
+
+    expect(displayValue).eq(valueTranslation[3]);
   });
 });
