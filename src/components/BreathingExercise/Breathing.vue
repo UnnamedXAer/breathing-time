@@ -158,7 +158,7 @@ export default defineComponent({
       startTipTimeout = void 0;
       this.showStartTip = false;
       this.count();
-    }, 1400);
+    }, this.breathTime);
   },
   beforeUnmount() {
     if (startTipTimeout) {
