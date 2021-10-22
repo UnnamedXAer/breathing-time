@@ -21,7 +21,7 @@
       <section>
         <app-exercise-action-btn
           @click="nextScreen"
-          data-test="next-screen-action-btn"
+          data-test="breath-hold-next-screen-action-btn"
         >
           {{ $t("ex.hold.skip_to_next") }}
         </app-exercise-action-btn>

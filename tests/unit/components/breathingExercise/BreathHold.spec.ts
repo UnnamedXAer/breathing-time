@@ -8,7 +8,6 @@ import LeaveExerciseConfirm from "@/components/BreathingExercise/LeaveExerciseCo
 import Counter from "@/components/BreathingExercise/counter/Counter.vue";
 import Footer from "@/components/BreathingExercise/Footer.vue";
 import { StoreState } from "@/store/types";
-import ActionBtn from "@/components/BreathingExercise/ActionBtn.vue";
 import Modal from "@/components/modal/Modal.vue";
 import Alert from "@/components/ui/Alert.vue";
 import { ExerciseMutations } from "@/store/modules/exercise/types";
@@ -30,7 +29,9 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     const headerWrapper = wrapper.findComponent(Header);
     let starTipWrapper = wrapper.findComponent(StartTip);
     let counterWrapper = wrapper.findComponent(Counter);
-    let actionBtnWrapper = wrapper.findComponent(ActionBtn);
+    let actionBtnWrapper = wrapper.find(
+      '[data-test="breath-hold-next-screen-action-btn"]'
+    );
     let footerWrapper = wrapper.findComponent(Footer);
     const leaveExerciseConfirmWrapper =
       wrapper.findComponent(LeaveExerciseConfirm);
@@ -50,7 +51,9 @@ describe("Breathing Exercise / BreathHold.vue", () => {
 
     starTipWrapper = wrapper.findComponent(StartTip);
     counterWrapper = wrapper.findComponent(Counter);
-    actionBtnWrapper = wrapper.findComponent(ActionBtn);
+    actionBtnWrapper = wrapper.find(
+      '[data-test="breath-hold-next-screen-action-btn"]'
+    );
     footerWrapper = wrapper.findComponent(Footer);
     expect(starTipWrapper.exists()).eq(showStartTip);
     expect(counterWrapper.exists()).eq(!showStartTip);
@@ -204,7 +207,7 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     });
 
     const actionBtnWrapper = wrapper.get(
-      '[data-test="next-screen-action-btn"]'
+      '[data-test="breath-hold-next-screen-action-btn"]'
     );
     await actionBtnWrapper.trigger("click");
 
@@ -404,7 +407,9 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     expect(alertWrapper.exists()).to.be.false;
 
     await wrapper.setData({ counter: 601 });
+    wrapper.vm.count();
 
+    await wrapper.vm.$nextTick();
     alertWrapper = wrapper.findComponent(Alert);
 
     expect(alertWrapper.exists()).to.be.true;
