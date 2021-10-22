@@ -56,7 +56,7 @@ describe("Range.vue", () => {
     expect(wrapper.emitted()["modify"][0]).to.be.eql([id, 3]);
   });
 
-  it.only("value translation", async () => {
+  it("value translation", async () => {
     const wrapper = mount(Range, {
       props: { ...props, valueTranslation },
       slots: {
