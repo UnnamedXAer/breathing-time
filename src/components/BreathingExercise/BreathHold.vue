@@ -19,7 +19,10 @@
     <template v-else>
       <app-counter :number="counter" />
       <section>
-        <app-exercise-action-btn @click="nextScreen">
+        <app-exercise-action-btn
+          @click="nextScreen"
+          data-test="next-screen-action-btn"
+        >
           {{ $t("ex.hold.skip_to_next") }}
         </app-exercise-action-btn>
       </section>
@@ -150,7 +153,10 @@ export default defineComponent({
         startTipTimeout = void 0;
         this.showStartTip = false;
         this.startTime = Date.now();
-        interval = setInterval(this.count, 1000);
+        interval = setInterval(
+          this.count,
+          process.env.NODE_ENV === "test" ? 0 : 1000
+        );
       },
       this.showStartTip ? this.$store.state.exercise.breathTime : 0
     );

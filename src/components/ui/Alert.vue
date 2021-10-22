@@ -13,7 +13,12 @@
     <component :is="icon" :aria-label="mode + ' icon'" class="alert_icon" />
     <span style="flex: 1" data-test="slotwrapper"><slot></slot></span>
     <div v-if="!!dismiss" class="close_btn__wrapper">
-      <button class="close_btn" aria-label="close warning" @click="dismiss">
+      <button
+        class="close_btn"
+        aria-label="close warning"
+        @click="dismiss"
+        data-test="alert-dismiss-btn"
+      >
         &times;
       </button>
     </div>
