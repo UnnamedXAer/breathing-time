@@ -10,7 +10,11 @@
     <template v-else>
       <app-counter :number="counter" />
 
-      <app-button variant="link" @click="nextScreen">
+      <app-button
+        variant="link"
+        @click="nextScreen"
+        data-test="recovery-next-screen-btn"
+      >
         {{ $t("ex.recovery.skip_to_" + (isLastRound ? "summary" : "next")) }}
       </app-button>
 
@@ -139,9 +143,12 @@ export default defineComponent({
       () => {
         startTipTimeout = void 0;
         this.showStartTip = false;
-        interval = setInterval(this.count, 1000);
+        interval = setInterval(
+          this.count,
+          process.env.NODE_ENV === "test" ? 0 : 1000
+        );
       },
-      this.showStartTip ? 1400 : 0
+      this.showStartTip ? this.$store.state.exercise.breathTime : 0
     );
   },
   beforeUnmount() {
