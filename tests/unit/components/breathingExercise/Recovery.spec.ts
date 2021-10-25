@@ -15,11 +15,12 @@ import { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 
 describe("Breathing Exercise / Recovery.vue", () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let wrapper: VueWrapper<any>;
+  let wrapper: VueWrapper<any> | undefined;
 
   beforeEach(() => {
     if (wrapper) {
       wrapper.unmount();
+      wrapper = void 0;
     }
   });
 
@@ -99,7 +100,8 @@ describe("Breathing Exercise / Recovery.vue", () => {
 
     setTimeout(() => {
       setTimeout(() => {
-        expect(wrapper.vm.counter).greaterThan(0);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        expect(wrapper!.vm.counter).greaterThan(0);
         done();
       });
     });

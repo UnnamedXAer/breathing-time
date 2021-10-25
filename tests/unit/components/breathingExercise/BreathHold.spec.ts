@@ -1,4 +1,4 @@
-import { mount } from "@vue/test-utils";
+import { mount, VueWrapper } from "@vue/test-utils";
 import chai, { expect } from "chai";
 import { createStoreFactory, namespaceName } from "@/store/createStore";
 import BreathHold from "@/components/BreathingExercise/BreathHold.vue";
@@ -15,10 +15,20 @@ import { RoundState } from "@/types/breath";
 import { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 
 describe("Breathing Exercise / BreathHold.vue", () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let wrapper: VueWrapper<any> | undefined;
+
+  beforeEach(() => {
+    if (wrapper) {
+      wrapper.unmount();
+      wrapper = void 0;
+    }
+  });
+
   it("renders correctly", async () => {
     const store = createStoreFactory();
 
-    const wrapper = mount(BreathHold, {
+    wrapper = mount(BreathHold, {
       global: {
         plugins: [store],
       },
@@ -73,7 +83,7 @@ describe("Breathing Exercise / BreathHold.vue", () => {
       breathTime: 0,
     };
 
-    const wrapper = mount(BreathHold, {
+    wrapper = mount(BreathHold, {
       data() {
         return {
           showStartTip: false,
@@ -95,7 +105,8 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     // to be called in component before testing results
     setTimeout(() => {
       setTimeout(() => {
-        expect(wrapper.vm.counter).greaterThan(0);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        expect(wrapper!.vm.counter).greaterThan(0);
         done();
       });
     });
@@ -146,7 +157,7 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     const commitSpy = chai.spy();
     store.commit = commitSpy;
 
-    const wrapper = mount(BreathHold, {
+    wrapper = mount(BreathHold, {
       data() {
         return {
           showStartTip: false,
@@ -190,7 +201,7 @@ describe("Breathing Exercise / BreathHold.vue", () => {
 
     const replaceSpy = chai.spy();
 
-    const wrapper = mount(BreathHold, {
+    wrapper = mount(BreathHold, {
       data() {
         return {
           showStartTip: false,
@@ -226,7 +237,7 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     };
     store.commit = () => void 0;
 
-    const wrapper = mount(BreathHold, {
+    wrapper = mount(BreathHold, {
       data() {
         return {
           showStartTip: false,
@@ -274,7 +285,7 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     };
     store.commit = () => void 0;
 
-    const wrapper = mount(BreathHold, {
+    wrapper = mount(BreathHold, {
       data() {
         return {
           showStartTip: false,
@@ -326,7 +337,7 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     store.commit = () => void 0;
     const replaceSpy = chai.spy();
 
-    const wrapper = mount(BreathHold, {
+    wrapper = mount(BreathHold, {
       data() {
         return {
           showStartTip: false,
@@ -386,7 +397,7 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     };
     store.commit = () => void 0;
 
-    const wrapper = mount(BreathHold, {
+    wrapper = mount(BreathHold, {
       data() {
         return {
           showStartTip: false,
@@ -424,7 +435,7 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     };
     store.commit = () => void 0;
 
-    const wrapper = mount(BreathHold, {
+    wrapper = mount(BreathHold, {
       data() {
         return {
           counter: 601,
@@ -461,7 +472,7 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     };
     store.commit = () => void 0;
 
-    const wrapper = mount(BreathHold, {
+    wrapper = mount(BreathHold, {
       data() {
         return {
           counter: 666,
@@ -502,7 +513,7 @@ describe("Breathing Exercise / BreathHold.vue", () => {
     };
     store.commit = () => void 0;
 
-    const wrapper = mount(BreathHold, {
+    wrapper = mount(BreathHold, {
       data() {
         return {
           counter: 601,

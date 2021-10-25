@@ -1,12 +1,27 @@
-import { flushPromises, mount, shallowMount } from "@vue/test-utils";
+import {
+  flushPromises,
+  mount,
+  shallowMount,
+  VueWrapper,
+} from "@vue/test-utils";
 import Start from "@/components/BreathingExercise/Start.vue";
 import chai, { expect } from "chai";
 import { ExerciseMutations } from "@/store/modules/exercise/types";
 import { createStoreFactory, namespaceName } from "@/store/createStore";
 
 describe("Breathing Exercise / Start.vue", () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let wrapper: VueWrapper<any> | undefined;
+
+  beforeEach(() => {
+    if (wrapper) {
+      wrapper.unmount();
+      wrapper = void 0;
+    }
+  });
+
   it("renders correctly", () => {
-    const wrapper = shallowMount(Start, {});
+    wrapper = shallowMount(Start, {});
     const startBtn = wrapper.find('[data-test="ex-start-start-btn"]');
     const seeInstrBtn = wrapper.find('[data-test="ex-start-see-instr-btn"]');
     const roundPhases = wrapper.find('[data-test="ex-start-round-phases"]');
@@ -20,7 +35,7 @@ describe("Breathing Exercise / Start.vue", () => {
 
   it("changes content when counting starts", async () => {
     const store = createStoreFactory();
-    const wrapper = mount(Start, {
+    wrapper = mount(Start, {
       global: {
         plugins: [store],
       },
@@ -54,7 +69,7 @@ describe("Breathing Exercise / Start.vue", () => {
 
   it("counter content for different counter values", async () => {
     const countdownTime = 4;
-    const wrapper = shallowMount(Start, {});
+    wrapper = shallowMount(Start, {});
 
     wrapper.vm.counter = countdownTime - 1;
     await flushPromises();
@@ -72,7 +87,7 @@ describe("Breathing Exercise / Start.vue", () => {
   });
 
   it("starts counting on start pressed", async () => {
-    const wrapper = shallowMount(Start);
+    wrapper = shallowMount(Start);
 
     const startBtnWrapper = wrapper.get('[data-test="ex-start-start-btn"]');
 
@@ -85,7 +100,7 @@ describe("Breathing Exercise / Start.vue", () => {
   it.skip("redirects after counting finish", (done) => {
     const commitSpy = chai.spy();
     const replaceSpy = chai.spy();
-    const wrapper = shallowMount(Start, {
+    wrapper = shallowMount(Start, {
       global: {
         mocks: {
           $store: {

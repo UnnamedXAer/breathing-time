@@ -1,6 +1,6 @@
 import Breathing from "@/components/BreathingExercise/Breathing.vue";
 import { createStoreFactory } from "@/store/createStore";
-import { mount } from "@vue/test-utils";
+import { mount, VueWrapper } from "@vue/test-utils";
 import chai, { expect } from "chai";
 import Header from "@/components/BreathingExercise/Header.vue";
 import StartTip from "@/components/BreathingExercise/StartTip.vue";
@@ -13,11 +13,21 @@ import { RouteLocationNormalized } from "vue-router";
 import Modal from "@/components/modal/Modal.vue";
 
 describe("Breathing Exercise / Breathing.vue", () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let wrapper: VueWrapper<any> | undefined;
+
+  beforeEach(() => {
+    if (wrapper) {
+      wrapper.unmount();
+      wrapper = void 0;
+    }
+  });
+
   it("renders correctly", async () => {
     const store = createStoreFactory();
     let showStartTip = true;
 
-    const wrapper = mount(Breathing, {
+    wrapper = mount(Breathing, {
       global: {
         plugins: [store],
       },
@@ -60,7 +70,7 @@ describe("Breathing Exercise / Breathing.vue", () => {
       breathTime: 0,
     };
 
-    const wrapper = mount(Breathing, {
+    wrapper = mount(Breathing, {
       data() {
         return {
           showStartTip: false,
@@ -79,7 +89,8 @@ describe("Breathing Exercise / Breathing.vue", () => {
     });
 
     setTimeout(() => {
-      expect(wrapper.vm.counter).greaterThan(1);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(wrapper!.vm.counter).greaterThan(1);
       done();
     });
   });
@@ -94,7 +105,7 @@ describe("Breathing Exercise / Breathing.vue", () => {
 
     const replaceSpy = chai.spy();
 
-    const wrapper = mount(Breathing, {
+    wrapper = mount(Breathing, {
       data() {
         return {
           showStartTip: false,
@@ -170,7 +181,7 @@ describe("Breathing Exercise / Breathing.vue", () => {
 
     const replaceSpy = chai.spy();
 
-    const wrapper = mount(Breathing, {
+    wrapper = mount(Breathing, {
       data() {
         return {
           showStartTip: false,
@@ -231,7 +242,7 @@ describe("Breathing Exercise / Breathing.vue", () => {
 
     const replaceSpy = chai.spy();
 
-    const wrapper = mount(Breathing, {
+    wrapper = mount(Breathing, {
       attachTo: document.body,
       data() {
         return {
@@ -296,7 +307,7 @@ describe("Breathing Exercise / Breathing.vue", () => {
 
     const replaceSpy = chai.spy();
 
-    const wrapper = mount(Breathing, {
+    wrapper = mount(Breathing, {
       data() {
         return {
           showStartTip: false,
@@ -344,7 +355,7 @@ describe("Breathing Exercise / Breathing.vue", () => {
       disableAnimation: false,
     };
 
-    const wrapper = mount(Breathing, {
+    wrapper = mount(Breathing, {
       data() {
         return {
           showStartTip: false,
