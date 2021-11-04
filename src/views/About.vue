@@ -1,7 +1,7 @@
 <template>
   <div class="about">
-    <h1>{{ $t("about.title") }}</h1>
-    <article class="about__contetn">
+    <h1 data-test="about-title">{{ $t("about.title") }}</h1>
+    <article class="about__contetn" data-test="about-content">
       <i18n-t keypath="about.text" tag="p" for="title">
         <strong>Breathing Time</strong>
         <br />
@@ -16,7 +16,7 @@
         >
       </i18n-t>
     </article>
-    <p class="about__app_version">
+    <p class="about__app_version" data-test="about-version">
       {{ $t("about.app_version", [version]) }}
     </p>
   </div>
@@ -27,6 +27,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   data() {
+    console.log("--->>> v: ", process.env.APP_VERSION as string);
     return {
       version: process.env.APP_VERSION as string,
     };
