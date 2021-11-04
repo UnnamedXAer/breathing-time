@@ -27,7 +27,6 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   data() {
-    console.log("--->>> v: ", process.env.APP_VERSION as string);
     return {
       version: process.env.APP_VERSION as string,
     };
