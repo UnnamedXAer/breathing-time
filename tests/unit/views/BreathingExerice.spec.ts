@@ -36,7 +36,7 @@ describe("Breathing Exercise - View", () => {
     expect(routerWrapper.exists()).to.be.true;
   });
 
-  it.only("adds and removes window before unload event on exercise start / stop", async () => {
+  it("adds and removes window before unload event on exercise start / stop", async () => {
     storeMock.state.exercise.started = false;
 
     const wrapper = shallowMount(BreathingExercise);
