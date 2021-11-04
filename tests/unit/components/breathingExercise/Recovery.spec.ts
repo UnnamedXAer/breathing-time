@@ -68,7 +68,9 @@ describe("Breathing Exercise / Recovery.vue", () => {
     expect(nextBtnWrapper.exists()).eq(!showStartTip);
     expect(footerWrapper.exists()).eq(!showStartTip);
 
-    expect(footerWrapper.text()).eq("ex.recovery.footer_tip");
+    expect(footerWrapper.text()).eq(
+      "ex.recovery.footer_tip" + wrapper.vm.recoveryTime
+    );
   });
 
   it("counts up automatically", (done) => {

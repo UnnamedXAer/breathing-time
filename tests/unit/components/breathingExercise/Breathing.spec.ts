@@ -143,7 +143,7 @@ describe("Breathing Exercise / Breathing.vue", () => {
 
     const replaceSpy = chai.spy();
 
-    mount(Breathing, {
+    wrapper = mount(Breathing, {
       data() {
         return {
           showStartTip: false,
