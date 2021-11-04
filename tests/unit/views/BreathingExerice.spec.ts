@@ -22,7 +22,11 @@ describe("Breathing Exercise - View", () => {
   });
 
   it("renders correctly", async () => {
-    const wrapper = shallowMount(BreathingExercise);
+    wrapper = shallowMount(BreathingExercise, {
+      global: {
+        stubs: ["router-view"],
+      },
+    });
 
     const headerWrapper = wrapper.find<HTMLHeadingElement>(
       '[data-test="ex-title"]'
@@ -39,7 +43,11 @@ describe("Breathing Exercise - View", () => {
   it("adds and removes window before unload event on exercise start / stop", async () => {
     storeMock.state.exercise.started = false;
 
-    const wrapper = shallowMount(BreathingExercise);
+    wrapper = shallowMount(BreathingExercise, {
+      global: {
+        stubs: ["router-view"],
+      },
+    });
 
     const addEventListenerSpy = chai.spy();
     const removeEventListenerSpy = chai.spy();
