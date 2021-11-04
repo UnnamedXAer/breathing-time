@@ -6,13 +6,6 @@ import { WatchCallback } from "vue";
 describe("Breathing Exercise - View", () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let wrapper: VueWrapper<any> | undefined;
-  const storeMock = {
-    state: {
-      exercise: {
-        started: false,
-      },
-    },
-  };
 
   beforeEach(() => {
     if (wrapper) {
@@ -41,8 +34,6 @@ describe("Breathing Exercise - View", () => {
   });
 
   it("adds and removes window before unload event on exercise start / stop", async () => {
-    storeMock.state.exercise.started = false;
-
     wrapper = shallowMount(BreathingExercise, {
       global: {
         stubs: ["router-view"],

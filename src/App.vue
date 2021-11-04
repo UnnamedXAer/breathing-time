@@ -1,10 +1,11 @@
 <template>
   <app-header />
   <main class="main">
-    <router-view />
+    <router-view data-test="app-router" />
   </main>
   <app-footer />
 </template>
+
 <script lang="ts">
 import { defineComponent } from "vue";
 import HeaderVue from "./components/header/Header.vue";
@@ -20,8 +21,6 @@ export default defineComponent({
   },
 
   mounted() {
-    console.log(process.env);
-
     this.$store.dispatch(
       namespaceName("exercise", ExerciseActions.ReadCachedPreferences)
     );
