@@ -46,4 +46,42 @@ describe("Home.vue", () => {
         );
       });
   });
+
+  it("can open breathing instructions", function () {
+    const initialLocale = getBestLocale();
+
+    cy.visit("/");
+
+    const showInstructionsLinkText =
+      messages[initialLocale].home.exercise_instructions;
+    cy.contains(showInstructionsLinkText).trigger("click");
+
+    cy.url().should("equal", Cypress.config().baseUrl + "instructions");
+  });
+
+  it("can open preferences", function () {
+    const initialLocale = getBestLocale();
+
+    cy.visit("/");
+
+    const preferencesLinkText =
+      messages[initialLocale].home.exercise_preferences;
+    cy.contains(preferencesLinkText).trigger("click");
+
+    cy.url().should("equal", Cypress.config().baseUrl + "preferences");
+  });
+
+  it("can open breathing exercise start screen", function () {
+    const initialLocale = getBestLocale();
+
+    cy.visit("/");
+
+    const exerciseLinkText = messages[initialLocale].home.start_exercise;
+    cy.contains(exerciseLinkText).trigger("click");
+
+    cy.url().should(
+      "equal",
+      Cypress.config().baseUrl + "breathing-exercise/start"
+    );
+  });
 });

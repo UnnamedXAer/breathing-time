@@ -1,6 +1,6 @@
 import { getBestLocale, messages } from "../../../src/i18n";
 
-describe("Header.vue", () => {
+describe("App Header", () => {
   beforeEach(() => {
     cy.clearLocalStorage();
   });

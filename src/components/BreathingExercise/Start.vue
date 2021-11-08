@@ -14,7 +14,9 @@
         data-test="ex-start-counter"
       >
         <p>{{ $t("ex.start.get_ready") }}</p>
-        <p>{{ counter > 0 ? counter : $t("ex.start.go") }}</p>
+        <p data-test="ex-start-counter-value">
+          {{ counter > 0 ? counter : $t("ex.start.go") }}
+        </p>
       </div>
     </section>
     <hr v-if="counter === countdownTime" />

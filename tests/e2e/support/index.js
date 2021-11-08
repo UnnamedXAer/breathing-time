@@ -22,5 +22,5 @@ import "./commands";
 import { appTitle, version } from "../../../package.json";
 
 before(() => {
-  cy.wrap({ appTitle, version }).as("packageJson");
+  cy.wrap({ appTitle, appVersion: version }).as("packageJson");
 });
