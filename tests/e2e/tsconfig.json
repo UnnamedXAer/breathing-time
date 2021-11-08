@@ -1,0 +1,23 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+	  "types": [
+		"cypress",
+		"webpack",
+		"webpack-env",
+		"mocha",
+		"chai"
+	  ],
+	  "skipLibCheck": true
+	},
+	"include": [
+	  "../../src/**/*.ts",
+	  "../../src/**/*.tsx",
+	  "../../src/**/*.vue",
+	  "**/*.ts",
+	  "**/*.tsx"
+	],
+	"exclude": [
+	  "../unit/**/*.ts"
+	]
+  }
