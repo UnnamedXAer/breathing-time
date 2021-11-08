@@ -12,6 +12,16 @@ export const messages: I18nMessages = {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const createI18n = () => {
+  const locale = getBestLocale();
+
+  return createI18nBase({
+    locale,
+    fallback: "en" as Language,
+    messages,
+  });
+};
+
+export function getBestLocale(): Language {
   let locale = <Language>"en";
   const savedLocale = localStorage.getItem("locale");
   if (savedLocale && languages.includes(<Language>savedLocale)) {
@@ -30,9 +40,5 @@ export const createI18n = () => {
     }
   }
 
-  return createI18nBase({
-    locale,
-    fallback: "en" as Language,
-    messages,
-  });
-};
+  return locale;
+}

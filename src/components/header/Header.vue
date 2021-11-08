@@ -1,7 +1,7 @@
 <template>
   <header id="header" data-test="header">
     <nav class="nav" data-test="nav">
-      <router-link class="nav__item" to="/">
+      <router-link class="nav__item" to="/" data-test="app-logo-router-link">
         <app-logo />
       </router-link>
       <div class="nav__links">
