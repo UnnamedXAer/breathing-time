@@ -1,5 +1,6 @@
 import { Language } from "@/i18n/types";
 import { messages } from "../../../src/i18n";
+import { getProductionExerciseDefaultState } from "../../../src/store/modules/exercise/defaultState";
 
 describe("Breathing Exercise", () => {
   it("show main elements on start page", function () {
@@ -41,29 +42,81 @@ describe("Breathing Exercise", () => {
     cy.url().should("include", "/instructions");
   });
 
-  it("starts exercise and moves through the phases screens", function () {
-    cy.visit("/breathing-exercise/start");
+  describe("starts exercise and moves through the phases screens", function () {
+    describe("Start screen", function () {
+      it("pressing start and watching count down", function () {
+        cy.clock();
+        cy.visit("/breathing-exercise/start");
 
-    cy.get('[data-test="languages"]').then(($select) => {
-      const locale = $select.val() as string;
-      cy.wrap(locale).as("locale");
+        cy.get('[data-test="languages"]').then(($select) => {
+          const locale = $select.val() as Language;
+          const getReadyText = messages[locale].ex.start.get_ready;
+          cy.get('[data-test="ex-start-start-btn"]').click();
+          cy.get('[data-test="ex-start-counter"]').should("be.visible");
+
+          cy.contains(getReadyText)
+            .get('[data-test="ex-start-counter-value"]', { timeout: 1100 })
+            .should("be.visible")
+            .and("have.text", "3");
+
+          cy.tick(1000);
+          cy.get('[data-test="ex-start-counter-value"]', {
+            timeout: 1,
+          }).should("have.text", "2");
+
+          cy.tick(1000);
+          cy.get('[data-test="ex-start-counter-value"]', {
+            timeout: 1,
+          }).should("have.text", "1");
+
+          cy.tick(1000);
+          cy.get('[data-test="ex-start-counter-value"]', {
+            timeout: 1,
+          }).should("have.text", "Go");
+
+          cy.tick(1000);
+        });
+      });
     });
 
-    cy.get<Language>("@locale").then((locale) => {
-      const getReadyText = messages[locale].ex.start.get_ready;
-      cy.get('[data-test="ex-start-start-btn"]').click();
-      cy.get('[data-test="ex-start-counter"]')
-        .should("be.visible")
-        .contains(getReadyText)
-        .get('[data-test="ex-start-counter-value"]')
-        .should("be.visible")
-        .and("have.text", "3")
-        .get('[data-test="ex-start-counter-value"]')
-        .should("have.text", "2")
-        .get('[data-test="ex-start-counter-value"]')
-        .should("have.text", "1")
-        .get('[data-test="ex-start-counter-value"]')
-        .should("have.text", "Go");
+    describe("Breathing screen", function () {
+      it("should be in the Breathing screen (phase)", function () {
+        cy.url().should(
+          "equal",
+          Cypress.config().baseUrl + "breathing-exercise/breathing"
+        );
+      });
+
+      it("should show start tip for a while, then start counting down", function () {
+        cy.clock();
+
+        cy.get('[data-test="languages"]').then(($select) => {
+          const locale = $select.val() as Language;
+
+          cy.contains(
+            '[data-test="ex-header-title"]',
+            messages[locale].ex.breathing.title
+          );
+
+          cy.contains(
+            '[data-test="start-tip"]',
+            messages[locale].ex.breathing.start_tip
+          ).should("be.visible");
+
+          cy.get('[data-test="ex-phase-counter]').should("not.exist");
+          cy.get('[data-test="breathing-next-screen-btn"]').should("not.exist");
+          cy.get('[data-test="ex-footer-tip"]').should("not.exist");
+
+          const { breathTime } = getProductionExerciseDefaultState();
+          cy.tick(breathTime);
+
+          cy.get('[data-test="ex-phase-counter]').should("be.visible");
+          cy.get('[data-test="breathing-next-screen-btn"]').should(
+            "be.visible"
+          );
+          cy.get('[data-test="ex-footer-tip"]').should("be.visible");
+        });
+      });
     });
   });
 });

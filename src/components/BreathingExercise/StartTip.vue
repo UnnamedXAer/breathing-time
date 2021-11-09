@@ -1,5 +1,5 @@
 <template>
-  <section class="start_tip">
+  <section class="start_tip" data-test="start-tip">
     <p><slot /></p>
   </section>
 </template>
