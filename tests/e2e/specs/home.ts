@@ -23,8 +23,6 @@ describe("Home.vue", () => {
       .then(($select) => {
         const val = $select.val();
 
-        window.navigator.languages;
-
         assert(
           val === initialLocale,
           `initial locale should be: "${initialLocale}"`
