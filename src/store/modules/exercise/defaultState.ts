@@ -1,4 +1,4 @@
-import { RoundState } from "@/types/breath";
+import { RoundState } from "../../../types/breath";
 import { ExerciseState } from "./types";
 
 export const getProductionExerciseDefaultState = (): ExerciseState => ({

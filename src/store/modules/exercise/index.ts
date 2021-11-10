@@ -1,5 +1,5 @@
-import { RootState } from "@/store/types";
-import { RoundState } from "@/types/breath";
+import { RootState } from "../../types";
+import { RoundState } from "../../../types/breath";
 import { Module } from "vuex";
 import { getProductionExerciseDefaultState } from "./defaultState";
 import {
