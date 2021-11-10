@@ -42,9 +42,9 @@ describe("Breathing Exercise", () => {
     cy.url().should("include", "/instructions");
   });
 
-  describe("starts exercise and moves through the phases screens", function () {
-    describe("Start screen", function () {
-      it("pressing start and watching count down", function () {
+  it("starts exercise and moves through the phases screens", function () {
+    context("Start screen", function () {
+      context("pressing start and watching count down", function () {
         cy.clock();
         cy.visit("/breathing-exercise/start");
 
@@ -73,48 +73,64 @@ describe("Breathing Exercise", () => {
           cy.get('[data-test="ex-start-counter-value"]', {
             timeout: 1,
           }).should("have.text", "Go");
-
-          cy.tick(1000);
         });
-      });
-    });
 
-    describe("Breathing screen", function () {
-      it("should be in the Breathing screen (phase)", function () {
-        cy.url().should(
-          "equal",
-          Cypress.config().baseUrl + "breathing-exercise/breathing"
-        );
-      });
+        context("Breathing screen", function () {
+          context("should be in the Breathing screen (phase)", function () {
+            cy.tick(1000);
+            cy.url().should(
+              "equal",
+              Cypress.config().baseUrl + "breathing-exercise/breathing"
+            );
+          });
 
-      it("should show start tip for a while, then start counting down", function () {
-        cy.clock();
+          context(
+            "should show start tip for a while, then start counting down",
+            function () {
+              cy.get('[data-test="languages"]').then(($select) => {
+                const locale = $select.val() as Language;
 
-        cy.get('[data-test="languages"]').then(($select) => {
-          const locale = $select.val() as Language;
+                cy.contains(
+                  '[data-test="ex-header-title"]',
+                  messages[locale].ex.breathing.title
+                );
 
-          cy.contains(
-            '[data-test="ex-header-title"]',
-            messages[locale].ex.breathing.title
+                cy.contains(
+                  '[data-test="start-tip"]',
+                  messages[locale].ex.breathing.start_tip
+                ).should("be.visible");
+
+                cy.get('[data-test="ex-phase-counter"]').should("not.exist");
+                cy.get('[data-test="breathing-next-screen-btn"]').should(
+                  "not.exist"
+                );
+                cy.get('[data-test="ex-footer-tip"]').should("not.exist");
+
+                const { breathTime } = getProductionExerciseDefaultState();
+                cy.tick(breathTime);
+
+                cy.get('[data-test="ex-phase-counter"]').should("be.visible");
+                cy.get('[data-test="breathing-next-screen-btn"]').should(
+                  "be.visible"
+                );
+                cy.get('[data-test="ex-footer-tip"]').should("be.visible");
+              });
+            }
           );
 
-          cy.contains(
-            '[data-test="start-tip"]',
-            messages[locale].ex.breathing.start_tip
-          ).should("be.visible");
+          context('should count up to "breaths per round" value', function () {
+            const counterSelector = '[data-test="ex-phase-counter"]';
 
-          cy.get('[data-test="ex-phase-counter]').should("not.exist");
-          cy.get('[data-test="breathing-next-screen-btn"]').should("not.exist");
-          cy.get('[data-test="ex-footer-tip"]').should("not.exist");
+            const { breathsPerRound, breathTime } =
+              getProductionExerciseDefaultState();
 
-          const { breathTime } = getProductionExerciseDefaultState();
-          cy.tick(breathTime);
-
-          cy.get('[data-test="ex-phase-counter]').should("be.visible");
-          cy.get('[data-test="breathing-next-screen-btn"]').should(
-            "be.visible"
-          );
-          cy.get('[data-test="ex-footer-tip"]').should("be.visible");
+            for (let i = 1; i <= breathsPerRound; i++) {
+              cy.get(counterSelector)
+                .invoke("text")
+                .should("be.eq", "" + i);
+              cy.tick(breathTime);
+            }
+          });
         });
       });
     });
