@@ -49,6 +49,6 @@
 		"typescript": "~4.1.5"
 	},
 	"resolutions": {
-		"cypress": "8.7.0"
+		"cypress": "9.0.0"
 	}
 }
