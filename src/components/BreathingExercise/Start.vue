@@ -83,7 +83,7 @@ export default defineComponent({
       clearInterval(interval);
       interval = void 0;
       this.$store.commit(namespaceName("exercise", ExerciseMutations.Start));
-      this.$router.replace({
+      this.$router.push({
         name: "BreathingExercise-Breathing",
       });
     },
