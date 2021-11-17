@@ -48,6 +48,10 @@ describe("Breathing Exercise - simulate", function () {
     getProductionExerciseDefaultState();
 
   before(function () {
+    // "now" needs to be passed for click events to work.
+    // "Date" must be specified to now to work
+    // so if functions argument is passed other functions
+    // must be specified as well
     cy.clock(Date.now(), [
       "Date",
       "setInterval",
@@ -59,11 +63,6 @@ describe("Breathing Exercise - simulate", function () {
   });
 
   it("starts exercise and moves through the phases screens", function () {
-    // "now" needs to be passed for click events to work.
-    // "Date" must be specified to now to work
-    // so if functions argument is passed other functions
-    // must be specified as well
-
     context("Start screen", function () {
       context("pressing start and watching count down", function () {
         cy.get('[data-test="languages"]').then(($select) => {
@@ -316,28 +315,40 @@ describe("Breathing Exercise - simulate", function () {
               const roundText = messages[
                 locale
               ].ex.summary.round_with_num.replace("{0}", "");
+              const averageText = messages[
+                locale
+              ].ex.summary.averageTime.replace(
+                "@:ex.summary.num_of_seconds",
+                ""
+              );
+              const shareBtnText = messages[locale].ex.summary.share_results;
 
               cy.contains(welcomeMessage);
 
-              cy.get<HTMLTableRowElement>("tr")
-                .then(($rows) => {
-                  console.log($rows.text());
-                  expect($rows.length).equal(numberOfRounds);
-                  $rows.toArray().forEach((row, idx) => {
-                    cy.wrap(row.firstChild)
-                      .should("contain.text", roundText)
-                      .and("contain.text", "" + (idx + 1));
+              cy.get<HTMLTableRowElement>("tr").then(($rows) => {
+                console.log($rows.text());
+                expect($rows.length).equal(numberOfRounds);
+                $rows.toArray().forEach((row, idx) => {
+                  cy.wrap(row.firstChild)
+                    .should("contain.text", roundText)
+                    .and("contain.text", "" + (idx + 1));
 
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    cy.wrap(row.firstChild!.nextSibling!.textContent).should(
-                      "match",
-                      /\d s/
-                    );
-                  });
-                })
-                .then(($rows) => {
-                  console.log($rows);
+                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                  cy.wrap(row.firstChild!.nextSibling!.textContent).should(
+                    "match",
+                    /\d s/
+                  );
                 });
+              });
+              cy.contains(averageText).should("be.visible");
+              cy.contains(averageText)
+                .invoke("text")
+                .and(
+                  "match",
+                  new RegExp(averageText + "\\s*\\d+\\.?\\d*\\s\\w+")
+                );
+
+              cy.get(`button[title="${shareBtnText}"]`).should("be.visible");
             });
           });
         });

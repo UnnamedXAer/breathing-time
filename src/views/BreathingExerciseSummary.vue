@@ -27,7 +27,7 @@
           <app-share-svg />
         </button>
       </div>
-      <table class="summary__results_table">
+      <table class="summary__results_table" data-test="summary-results-table">
         <tr v-for="(time, idx) in holdTimes" :key="idx">
           <th>
             {{ $t("ex.summary.round_with_num", [idx + 1]) }}

@@ -10,7 +10,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-function beforeWindowUnloadHander(ev: Event) {
+function beforeWindowUnloadHander(ev: BeforeUnloadEvent) {
   ev.preventDefault();
   ev.returnValue = true;
   return true;
