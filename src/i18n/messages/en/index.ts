@@ -67,7 +67,7 @@ export default {
       go_to: "Go to",
       and_start_breathing: "and start your breathing.",
       round_with_num: "Round {0}",
-      num_of_seconds: "<string>{0}</string> seconds",
+      num_of_seconds: "<strong>{0}</strong> seconds",
       averageTime: "Average Time: @:ex.summary.num_of_seconds",
       share_results: "Share your results",
     },
