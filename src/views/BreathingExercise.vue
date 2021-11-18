@@ -9,12 +9,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
-function beforeWindowUnloadHander(ev: BeforeUnloadEvent) {
-  ev.preventDefault();
-  ev.returnValue = true;
-  return true;
-}
+import { beforeWindowUnloadHander } from "../helpers/helpers";
 
 export default defineComponent({
   name: "BreathingExercise",

@@ -1,5 +1,6 @@
 import { getProductionExerciseDefaultState } from "../../../src/store/modules/exercise/defaultState";
 import { messages } from "../../../src/i18n";
+import { beforeWindowUnloadHander } from "../../../src/helpers/helpers";
 
 describe("Breathing Exercise route guards", function () {
   it("allows navigate in and out to/from start screen", function () {
@@ -94,6 +95,60 @@ describe("Breathing Exercise route guards", function () {
       );
     });
 
+    beforeEach(() => {
+      type EventArgs = [
+        type: string,
+        listener: EventListenerOrEventListenerObject,
+        options?: boolean | AddEventListenerOptions | undefined
+      ];
+
+      // before we are inside a hook executing as part of the test
+      // we can use cy.on methods and create stubs, something
+      // we could not do from Cypress.on callbacks
+      const returnValueStub = cy.stub().as("returnValue");
+
+      cy.on("window:before:load", (win) => {
+        const original = win.addEventListener;
+        win.addEventListener = function (...args: EventArgs) {
+          if (args && args[0] === "beforeunload") {
+            return original.call(
+              this,
+              "beforeunload",
+              (ev: BeforeUnloadEvent) => {
+                const handler = args[1] as typeof beforeWindowUnloadHander;
+                if (handler["e2eName"] === "beforeWindowUnloadHander") {
+                  Object.defineProperty(ev, "preventDefault", {
+                    get() {
+                      return function () {
+                        void 0;
+                      };
+                    },
+                    set() {
+                      return function () {
+                        void 0;
+                      };
+                    },
+                  });
+                  Object.defineProperty(ev, "returnValue", {
+                    get() {
+                      return "";
+                    },
+                    set: returnValueStub,
+                  });
+
+                  handler.call(this, ev);
+                  return;
+                }
+
+                return handler.call(this, ev);
+              }
+            );
+          }
+          return original.apply(this, args);
+        };
+      });
+    });
+
     it.only("shows browser prompt when user tries to navigate to different site, reload or close tab", function () {
       cy.clock(Date.now(), [
         "Date",
@@ -102,24 +157,6 @@ describe("Breathing Exercise route guards", function () {
         "clearTimeout",
         "clearInterval",
       ]);
-
-      //   cy.on("window:confirm", function (str) {
-      //     console.log("---window:confirm", str);
-      //   });
-
-      cy.on("window:before:unload", function (ev) {
-        setTimeout(() => {
-          console.log(
-            "+++window:before:unload",
-            ev.returnValue,
-            ev.defaultPrevented,
-            ev
-          );
-
-          expect(ev.returnValue).to.be.equal("true");
-          expect(ev.defaultPrevented).to.be.true;
-        }, 1234);
-      });
 
       cy.visit("/breathing-exercise/start");
 
@@ -131,10 +168,8 @@ describe("Breathing Exercise route guards", function () {
       );
       cy.tick(breathTime);
       cy.reload();
-      //   cy.url().should(
-      //     "equal",
-      //     Cypress.config().baseUrl + "breathing-exercise/breathing"
-      //   );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      cy.get<any>("@returnValue").should("to.have.been.calledWith", true);
     });
   });
 });
