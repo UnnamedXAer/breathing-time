@@ -54,6 +54,7 @@ import { defineComponent } from "vue";
 import { mapState } from "vuex";
 import { StoreState } from "@/store/types";
 import { namespaceName } from "@/store/createStore";
+import { canShareContent } from "@/helpers/helpers";
 
 const exerciseStateProps = ["holdTimes", "numberOfRounds"] as const;
 
@@ -71,7 +72,7 @@ export default defineComponent({
 
   data() {
     return {
-      canShare: !!navigator.clipboard || !!navigator.share,
+      canShare: canShareContent(),
       copiedResults: false,
     };
   },

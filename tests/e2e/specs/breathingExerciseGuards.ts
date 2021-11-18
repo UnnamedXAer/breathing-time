@@ -35,8 +35,10 @@ describe("Breathing Exercise route guards", function () {
   });
 
   context("asks before leaving phase screen", function () {
-    const { breathsPerRound, breathTime, numberOfRounds, recoveryTime } =
-      getProductionExerciseDefaultState();
+    const { breathsPerRound, breathTime } = getProductionExerciseDefaultState();
+    const startCountdownTime = 4_000;
+    const phaseTipTime = breathTime;
+
     it("show warning dialog if user tries to navigate out via in-app links", function () {
       cy.clock(Date.now(), [
         "Date",
@@ -47,12 +49,12 @@ describe("Breathing Exercise route guards", function () {
       ]);
       cy.visit("/breathing-exercise/start");
       cy.contains("button", messages.en.ex.start.start).click();
-      cy.tick(4_000);
+      cy.tick(startCountdownTime);
       cy.url().should(
         "equal",
         Cypress.config().baseUrl + "breathing-exercise/breathing"
       );
-      cy.tick(breathTime);
+      cy.tick(phaseTipTime);
 
       cy.contains("a", messages.en.header.home).click();
 
@@ -67,8 +69,42 @@ describe("Breathing Exercise route guards", function () {
       // test if modal in on top of others elements
       cy.get('[data-test="ex-phase-counter"]').trigger("mousemove");
 
+      cy.tick(breathsPerRound * breathTime);
+
+      cy.url().should(
+        "equal",
+        Cypress.config().baseUrl + "breathing-exercise/breath-hold"
+      );
+
+      cy.tick(phaseTipTime);
+      cy.get('[data-test="modal"]').should("not.exist");
       cy.contains("a", messages.en.header.home).click();
-      cy.contains("button", messages.en.common.yes).click();
+      cy.get('[data-test="modal"]').should("be.visible");
+      cy.contains("button", messages.en.common.no).click();
+      cy.get('[data-test="ex-phase-counter"]').trigger("mousemove");
+
+      cy.contains(messages.en.ex.hold.skip_to_next).click();
+
+      cy.url().should(
+        "equal",
+        Cypress.config().baseUrl + "breathing-exercise/recovery"
+      );
+
+      cy.tick(phaseTipTime);
+      cy.get('[data-test="modal"]').should("not.exist");
+      cy.contains("a", messages.en.header.home).click();
+      cy.get('[data-test="modal"]').should("be.visible");
+      cy.contains("button", messages.en.common.no).click();
+      cy.get('[data-test="ex-phase-counter"]').trigger("mousemove");
+
+      cy.visit("/breathing-exercise/summary");
+
+      cy.url().should(
+        "equal",
+        Cypress.config().baseUrl + "breathing-exercise/summary"
+      );
+
+      cy.contains("a", messages.en.header.home).click();
       cy.url().should("equal", Cypress.config().baseUrl);
     });
 
@@ -82,7 +118,7 @@ describe("Breathing Exercise route guards", function () {
       ]);
       cy.visit("/breathing-exercise/start");
       cy.contains("button", messages.en.ex.start.start).click();
-      cy.tick(4_000 + breathTime);
+      cy.tick(startCountdownTime + phaseTipTime);
       cy.url().should(
         "equal",
         Cypress.config().baseUrl + "breathing-exercise/breathing"
@@ -92,6 +128,107 @@ describe("Breathing Exercise route guards", function () {
       cy.url().should(
         "equal",
         Cypress.config().baseUrl + "breathing-exercise/breathing"
+      );
+    });
+
+    it("exits from exercise if user confirms the dialog", function () {
+      cy.clock(Date.now(), [
+        "Date",
+        "setInterval",
+        "setTimeout",
+        "clearTimeout",
+        "clearInterval",
+      ]);
+      cy.visit("/breathing-exercise/start");
+      cy.contains("button", messages.en.ex.start.start).click();
+      cy.tick(startCountdownTime + phaseTipTime);
+      cy.url().should(
+        "equal",
+        Cypress.config().baseUrl + "breathing-exercise/breathing"
+      );
+      cy.contains("a", messages.en.header.home).click();
+      cy.contains("button", messages.en.common.yes).click();
+      cy.url().should("equal", Cypress.config().baseUrl);
+    });
+
+    it("counts even if leave dialog is displayed", function () {
+      cy.clock(Date.now(), [
+        "Date",
+        "setInterval",
+        "setTimeout",
+        "clearTimeout",
+        "clearInterval",
+      ]);
+
+      cy.visit("/breathing-exercise/start");
+      cy.contains("button", messages.en.ex.start.start).click();
+      cy.tick(startCountdownTime);
+      cy.url().should(
+        "equal",
+        Cypress.config().baseUrl + "breathing-exercise/breathing"
+      );
+      cy.tick(phaseTipTime);
+
+      cy.get<HTMLScriptElement>('[data-test="ex-phase-counter"]').then(
+        ($counter) => {
+          const counterValue = $counter.text();
+          expect(counterValue).to.be.equal("1");
+
+          cy.contains("a", messages.en.header.home).click();
+          expect(breathsPerRound).greaterThan(
+            4,
+            "should be at least 5 breath per round"
+          );
+
+          const passedBreaths = Math.floor(breathsPerRound / 2);
+
+          cy.tick(passedBreaths * breathTime);
+
+          cy.contains("button", messages.en.common.no).click();
+
+          cy.get('[data-test="ex-phase-counter"]').contains(
+            (passedBreaths + 1).toString()
+          );
+          cy.tick((breathsPerRound - passedBreaths) * breathTime);
+        }
+      );
+
+      cy.url().should(
+        "equal",
+        Cypress.config().baseUrl + "breathing-exercise/breath-hold"
+      );
+    });
+
+    it("stays on current screen until user does not dismiss leave dialog", function () {
+      cy.clock(Date.now(), [
+        "Date",
+        "setInterval",
+        "setTimeout",
+        "clearTimeout",
+        "clearInterval",
+      ]);
+
+      cy.visit("/breathing-exercise/start");
+      cy.contains("button", messages.en.ex.start.start).click();
+      cy.tick(startCountdownTime + phaseTipTime);
+      cy.url().should(
+        "equal",
+        Cypress.config().baseUrl + "breathing-exercise/breathing"
+      );
+      cy.contains("a", messages.en.header.home).click();
+
+      cy.tick(breathTime * (breathsPerRound + 1));
+
+      cy.url().should(
+        "equal",
+        Cypress.config().baseUrl + "breathing-exercise/breathing"
+      );
+
+      cy.contains("button", messages.en.common.no).click();
+
+      cy.url().should(
+        "equal",
+        Cypress.config().baseUrl + "breathing-exercise/breath-hold"
       );
     });
 
@@ -149,7 +286,7 @@ describe("Breathing Exercise route guards", function () {
       });
     });
 
-    it.only("shows browser prompt when user tries to navigate to different site, reload or close tab", function () {
+    it("shows browser prompt when user tries to navigate to different site, reload or close tab", function () {
       cy.clock(Date.now(), [
         "Date",
         "setInterval",
@@ -161,15 +298,61 @@ describe("Breathing Exercise route guards", function () {
       cy.visit("/breathing-exercise/start");
 
       cy.contains("button", messages.en.ex.start.start).click();
-      cy.tick(4_000);
+      cy.tick(startCountdownTime);
       cy.url().should(
         "equal",
         Cypress.config().baseUrl + "breathing-exercise/breathing"
       );
-      cy.tick(breathTime);
+      cy.tick(phaseTipTime);
       cy.reload();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       cy.get<any>("@returnValue").should("to.have.been.calledWith", true);
+
+      // check breath hold phase
+      cy.visit("/breathing-exercise/start");
+      cy.contains("button", messages.en.ex.start.start).click();
+      cy.tick(startCountdownTime);
+      cy.get('[data-test="start-tip"]').should("exist");
+      cy.tick(phaseTipTime);
+      cy.get('[data-test="breathing-next-screen-btn"]').click();
+      cy.get('[data-test="start-tip"]').should("exist");
+      cy.tick(phaseTipTime);
+
+      cy.url().should(
+        "equal",
+        Cypress.config().baseUrl + "breathing-exercise/breath-hold"
+      );
+
+      cy.reload();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      cy.get<any>("@returnValue").should("have.callCount", 2);
+
+      // check breath recovery phase
+      cy.visit("/breathing-exercise/start");
+      cy.contains("button", messages.en.ex.start.start).click();
+      cy.tick(startCountdownTime);
+      cy.get('[data-test="start-tip"]').should("exist");
+      cy.tick(phaseTipTime);
+      cy.get('[data-test="breathing-next-screen-btn"]').click();
+      cy.get('[data-test="start-tip"]').should("exist");
+      cy.tick(phaseTipTime);
+      cy.get('[data-test="breath-hold-next-screen-action-btn"]').click();
+      cy.get('[data-test="start-tip"]').should("exist");
+      cy.tick(phaseTipTime);
+
+      cy.url().should(
+        "equal",
+        Cypress.config().baseUrl + "breathing-exercise/recovery"
+      );
+
+      cy.reload();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      cy.get<any>("@returnValue").should("have.callCount", 3);
+
+      cy.visit("/breathing-exercise/summary");
+      cy.reload();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      cy.get<any>("@returnValue").should("have.callCount", 3);
     });
   });
 });

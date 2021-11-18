@@ -1,3 +1,4 @@
+import { canShareContent } from "../../../src/helpers/helpers";
 import { Language } from "@/i18n/types";
 import { messages } from "../../../src/i18n";
 import { getProductionExerciseDefaultState } from "../../../src/store/modules/exercise/defaultState";
@@ -348,7 +349,11 @@ describe("Breathing Exercise - simulate", function () {
                   new RegExp(averageText + "\\s*\\d+\\.?\\d*\\s\\w+")
                 );
 
-              cy.get(`button[title="${shareBtnText}"]`).should("be.visible");
+              const canShare = canShareContent();
+              cy.log(`Can share: ${canShare}`);
+              cy.get(`button[title="${shareBtnText}"]`).should(
+                canShare ? "be.visible" : "not.exist"
+              );
             });
           });
         });
