@@ -1,5 +1,4 @@
-export function beforeWindowUnloadHander(ev: BeforeUnloadEvent) {
-  console.log("real event -> beforeWindowUnloadHander");
+export function beforeWindowUnloadHander(ev: BeforeUnloadEvent): boolean {
   ev.preventDefault();
   ev.returnValue = true;
   return true;
