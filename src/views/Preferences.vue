@@ -1,7 +1,7 @@
 <template>
   <section class="preferences">
     <h1>{{ $t("preferences.title") }}</h1>
-    <div class="preferences__fields_container">
+    <div class="preferences__fields_container" data-test="preferences-fields">
       <app-range
         id="num-of-rounds"
         name="numberOfRounds"
