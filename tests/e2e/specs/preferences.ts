@@ -115,7 +115,7 @@ describe("/preferences screen", function () {
     });
   });
 
-  it.only("Preferences allow to alter the exercise", function () {
+  it("Preferences allow to alter the exercise", function () {
     cy.visit("/preferences");
 
     cy.contains(prefMsgs.disable_start_tips).click();
