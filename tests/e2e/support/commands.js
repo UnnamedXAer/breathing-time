@@ -23,3 +23,21 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add(
+  "setSliderValue",
+  { prevSubject: "element" },
+  (subject, value) => {
+    const element = subject[0];
+
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+      window.HTMLInputElement.prototype,
+      "value"
+    ).set;
+
+    if (nativeInputValueSetter) {
+      nativeInputValueSetter.call(element, value);
+    }
+    element.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+);

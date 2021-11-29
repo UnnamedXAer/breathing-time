@@ -6,7 +6,8 @@
 		"webpack",
 		"webpack-env",
 		"mocha",
-		"chai"
+		"chai",
+		"./support"
 	  ],
 	  "skipLibCheck": true
 	},
@@ -15,9 +16,9 @@
 	  "../../src/**/*.tsx",
 	  "../../src/**/*.vue",
 	  "**/*.ts",
-	  "**/*.tsx"
-	],
+	  "**/*.tsx",
+	  "support/commands.js", "support/index.js"	],
 	"exclude": [
 	  "../unit/**/*.ts"
 	]
-  }
+}
