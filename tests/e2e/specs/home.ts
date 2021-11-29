@@ -1,6 +1,6 @@
 import { getBestLocale, languages, messages } from "../../../src/i18n/index";
 
-describe("Home.vue", () => {
+describe("Home.vue", function () {
   beforeEach(() => {
     cy.clearLocalStorage();
   });
@@ -81,5 +81,31 @@ describe("Home.vue", () => {
       "equal",
       Cypress.config().baseUrl + "breathing-exercise/start"
     );
+  });
+
+  it.only("shows banner about mobile app on mobile devices", function () {
+    cy.visit("/");
+
+    cy.contains("Google Play Store").should("not.exist");
+
+    cy.viewport("samsung-s10");
+
+    cy.contains("Google Play Store").should("be.visible");
+
+    cy.contains("Google Play Store").within(() => {
+      const openStub = cy.stub();
+      cy.window().then((win) => {
+        win.open = openStub;
+      });
+      cy.contains("button", messages.en.home.download).click();
+
+      expect(openStub).to.have.been.called.with(
+        "https://play.google.com/store/apps/details?id=com.unnamedxaer.breathingtime"
+      );
+
+      cy.get("#play-store-banner #close-btn").click();
+
+      cy.contains("Google Play Store").should("not.exist");
+    });
   });
 });

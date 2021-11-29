@@ -12,6 +12,7 @@ const pl: LanguageMessages = {
     start_exercise: "Zacznij Oddychać",
     exercise_instructions: "Informacje o Ćwiczeniu Oddechowym",
     exercise_preferences: "Preferencje Oddechowe",
+    download: "Pobierz",
   },
   header: {
     home: "Strona Główna",

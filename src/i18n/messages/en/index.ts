@@ -15,6 +15,7 @@ export default {
     start_exercise: "Start Your Breathing",
     exercise_instructions: "Breathing Instructions",
     exercise_preferences: "Breathing Preferences",
+    download: "Download",
   },
   preferences: {
     title: "Breathing Exercise Preferences",
