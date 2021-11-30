@@ -1,7 +1,7 @@
 <template>
   <section class="footer">
     <slot name="additional" />
-    <p class="tip">
+    <p class="tip" data-test="ex-footer-tip">
       <slot />
     </p>
   </section>
@@ -9,7 +9,6 @@
 
 <style scoped>
 .footer {
-  /* justify-self: flex-end; */
   color: rgba(var(--dark-rgb), 0.7);
 }
 

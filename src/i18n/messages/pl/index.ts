@@ -7,6 +7,11 @@ const pl: LanguageMessages = {
     no: "Nie",
     ok: "Ok",
   },
+  banner: {
+    title: "Aplikacja {0}",
+    text: "na Twoim urządzeniu mobilnym",
+    download: "Pobierz",
+  },
   home: {
     welcome: "Witaj w {0}",
     start_exercise: "Zacznij Oddychać",
@@ -40,7 +45,7 @@ const pl: LanguageMessages = {
     },
     breathing: {
       title: "Oddychanie",
-      skip_to_next: "Przejdź do dostępnego etapu",
+      skip_to_next: "Przejdź do następnego etapu",
       start_tip: "Oddychaj głeboko zgodnie z licznikiem.",
       footer_tip:
         "Wdychaj głęboko i wypuszczaj powietrze zgodnie z licznikiem.",

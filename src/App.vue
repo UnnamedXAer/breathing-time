@@ -1,27 +1,29 @@
 <template>
+  <app-mobile-banner />
   <app-header />
   <main class="main">
-    <router-view />
+    <router-view data-test="app-router" />
   </main>
   <app-footer />
 </template>
+
 <script lang="ts">
 import { defineComponent } from "vue";
 import HeaderVue from "./components/header/Header.vue";
 import FooterVue from "./components/footer/Footer.vue";
 import "./assets/fonts/fonts.module.css";
-import { namespaceName } from "./store";
 import { ExerciseActions } from "./store/modules/exercise/types";
+import { namespaceName } from "./store/createStore";
+import MobileBannerVue from "./components/ui/MobileBanner.vue";
 
 export default defineComponent({
   components: {
+    appMobileBanner: MobileBannerVue,
     appHeader: HeaderVue,
     appFooter: FooterVue,
   },
 
   mounted() {
-    console.log(process.env);
-
     this.$store.dispatch(
       namespaceName("exercise", ExerciseActions.ReadCachedPreferences)
     );

@@ -1,10 +1,11 @@
 <template>
   <button
+    data-test="btn"
     class="btn"
     :class="{ [mode]: true, disabled, loading, [variant]: true }"
     :disabled="disabled || loading"
   >
-    <app-loading v-if="loading" />
+    <app-loading v-if="loading" data-test="btn-loading" />
     <slot></slot>
   </button>
 </template>

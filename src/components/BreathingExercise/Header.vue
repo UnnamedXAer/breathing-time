@@ -1,6 +1,6 @@
 <template>
   <section class="header">
-    <h2><slot /></h2>
+    <h2 data-test="ex-header-title"><slot /></h2>
     <slot name="additional" />
   </section>
 </template>

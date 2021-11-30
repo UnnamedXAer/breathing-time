@@ -1,7 +1,7 @@
 <template>
   <section class="preferences">
     <h1>{{ $t("preferences.title") }}</h1>
-    <div class="preferences__fields_container">
+    <div class="preferences__fields_container" data-test="preferences-fields">
       <app-range
         id="num-of-rounds"
         name="numberOfRounds"
@@ -70,7 +70,7 @@
         {{ $t("preferences.disable_start_tips") }}
       </app-checkbox>
     </div>
-	
+
     <div>
       <app-button @click="restoreDefault">
         {{ $t("preferences.restore_default") }}
@@ -83,13 +83,14 @@
 import ButtonVue from "@/components/ui/Button.vue";
 import CheckboxVue from "@/components/ui/Checkbox.vue";
 import RangeVue from "@/components/ui/Range.vue";
-import { namespaceName, StoreState } from "@/store";
+import { namespaceName } from "@/store/createStore";
 import { customizableExerciseStateProps } from "@/store/modules/exercise";
 import {
   ExerciseActions,
   ExerciseModuleMap,
   UpdatePreferencesPayload,
 } from "@/store/modules/exercise/types";
+import { StoreState } from "@/store/types";
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
 

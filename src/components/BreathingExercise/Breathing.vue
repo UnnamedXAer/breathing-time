@@ -12,7 +12,11 @@
         :counter="counter"
       />
       <app-counter :number="counter" />
-      <app-button variant="link" @click="nextScreen">
+      <app-button
+        data-test="breathing-next-screen-btn"
+        variant="link"
+        @click="nextScreen"
+      >
         {{ $t("ex.breathing.skip_to_next") }}
       </app-button>
 
@@ -23,13 +27,12 @@
   </section>
   <app-leave-exercise-confirm
     v-if="showModal"
-    :onCancel="preventCancelExercise"
-    :onConfirm="confirmCancelExercise"
+    :cancelHandler="preventCancelExercise"
+    :confirmHandler="confirmCancelExercise"
   />
 </template>
 
 <script lang="ts">
-import { namespaceName, StoreState } from "@/store";
 import {
   ExerciseModuleMap,
   ExerciseMutations,
@@ -46,6 +49,8 @@ import LungsVue from "./counter/Lungs.vue";
 import LeaveExerciseConfirmVue from "./LeaveExerciseConfirm.vue";
 import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
 import StartTipVue from "./StartTip.vue";
+import { StoreState } from "@/store/types";
+import { namespaceName } from "@/store/createStore";
 
 const exerciseStateProps = [
   "breathTime",
@@ -98,6 +103,7 @@ export default defineComponent({
       breathTiemout = setTimeout(this.breath, this.breathTime);
     },
     breath() {
+      // @TODO: #9 counter goes beyond breathsPerRound if the leave dialog is displayed
       this.counter++;
       if (this.counter <= this.breathsPerRound) {
         breathTiemout = setTimeout(this.breath, this.breathTime);
@@ -152,7 +158,7 @@ export default defineComponent({
       startTipTimeout = void 0;
       this.showStartTip = false;
       this.count();
-    }, 1400);
+    }, this.breathTime);
   },
   beforeUnmount() {
     if (startTipTimeout) {

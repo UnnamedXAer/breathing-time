@@ -10,7 +10,11 @@
     <template v-else>
       <app-counter :number="counter" />
 
-      <app-button variant="link" @click="nextScreen">
+      <app-button
+        variant="link"
+        @click="nextScreen"
+        data-test="recovery-next-screen-btn"
+      >
         {{ $t("ex.recovery.skip_to_" + (isLastRound ? "summary" : "next")) }}
       </app-button>
 
@@ -22,13 +26,12 @@
 
   <app-leave-exercise-confirm
     v-if="showModal"
-    :onCancel="preventCancelExercise"
-    :onConfirm="confirmCancelExercise"
+    :cancelHandler="preventCancelExercise"
+    :confirmHandler="confirmCancelExercise"
   />
 </template>
 
 <script lang="ts">
-import { namespaceName } from "@/store";
 import { ExerciseMutations } from "@/store/modules/exercise/types";
 import { RoundState } from "@/types/breath";
 import { TimeoutReturn } from "@/types/timeout";
@@ -41,6 +44,7 @@ import HeaderVue from "./Header.vue";
 import StartTipVue from "./StartTip.vue";
 import LeaveExerciseConfirmVue from "./LeaveExerciseConfirm.vue";
 import MixinLeaveExerciseVue from "./MixinLeaveExercise.vue";
+import { namespaceName } from "@/store/createStore";
 
 let interval: TimeoutReturn = void 0;
 let startTipTimeout: TimeoutReturn = void 0;
@@ -81,6 +85,7 @@ export default defineComponent({
         return;
       }
 
+      // @TODO: #8 screen does not change after the canceling before leave dialog if counter already finished
       this.nextScreen();
     },
 
@@ -138,9 +143,12 @@ export default defineComponent({
       () => {
         startTipTimeout = void 0;
         this.showStartTip = false;
-        interval = setInterval(this.count, 1000);
+        interval = setInterval(
+          this.count,
+          process.env.NODE_ENV === "test" ? 0 : 1000
+        );
       },
-      this.showStartTip ? 1400 : 0
+      this.showStartTip ? this.$store.state.exercise.breathTime : 0
     );
   },
   beforeUnmount() {

@@ -1,18 +1,15 @@
 <template>
   <div class="breathing_exercise">
-    <h1 class="breathing_exercise__header">{{ $t("ex.title") }}</h1>
-    <router-view></router-view>
+    <h1 class="breathing_exercise__header" data-test="ex-title">
+      {{ $t("ex.title") }}
+    </h1>
+    <router-view data-test="ex-router"></router-view>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
-function beforeWindowUnloadHander(ev: Event) {
-  ev.preventDefault();
-  ev.returnValue = true;
-  return true;
-}
+import { beforeWindowUnloadHander } from "../helpers/helpers";
 
 export default defineComponent({
   name: "BreathingExercise",

@@ -18,3 +18,9 @@ import "./commands";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+import { appTitle, version } from "../../../package.json";
+
+before(() => {
+  cy.wrap({ appTitle, appVersion: version }).as("packageJson");
+});

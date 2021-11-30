@@ -1,16 +1,27 @@
-import { createI18n } from "vue-i18n";
+import { createI18n as createI18nBase } from "vue-i18n";
 import en from "./messages/en/";
 import pl from "./messages/pl/";
 import { I18nMessages, Language } from "./types";
 
 export const languages = ["en", "pl"] as const;
 
-const messages: I18nMessages = {
+export const messages: I18nMessages = {
   en,
   pl,
 };
 
-export const i18n = (() => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const createI18n = () => {
+  const locale = getBestLocale();
+
+  return createI18nBase({
+    locale,
+    fallback: "en" as Language,
+    messages,
+  });
+};
+
+export function getBestLocale(): Language {
   let locale = <Language>"en";
   const savedLocale = localStorage.getItem("locale");
   if (savedLocale && languages.includes(<Language>savedLocale)) {
@@ -29,9 +40,5 @@ export const i18n = (() => {
     }
   }
 
-  return createI18n({
-    locale,
-    fallback: "en" as Language,
-    messages,
-  });
-})();
+  return locale;
+}

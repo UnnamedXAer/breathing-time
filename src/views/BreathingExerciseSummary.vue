@@ -27,7 +27,7 @@
           <app-share-svg />
         </button>
       </div>
-      <table class="summary__results_table">
+      <table class="summary__results_table" data-test="summary-results-table">
         <tr v-for="(time, idx) in holdTimes" :key="idx">
           <th>
             {{ $t("ex.summary.round_with_num", [idx + 1]) }}
@@ -45,7 +45,6 @@
 </template>
 
 <script lang="ts">
-import { namespaceName, StoreState } from "@/store";
 import {
   ExerciseModuleMap,
   ExerciseMutations,
@@ -53,6 +52,9 @@ import {
 import ShareSvgVue from "../components/svg/ShareSvg.vue";
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
+import { StoreState } from "@/store/types";
+import { namespaceName } from "@/store/createStore";
+import { canShareContent } from "@/helpers/helpers";
 
 const exerciseStateProps = ["holdTimes", "numberOfRounds"] as const;
 
@@ -70,7 +72,7 @@ export default defineComponent({
 
   data() {
     return {
-      canShare: !!navigator.clipboard || !!navigator.share,
+      canShare: canShareContent(),
       copiedResults: false,
     };
   },

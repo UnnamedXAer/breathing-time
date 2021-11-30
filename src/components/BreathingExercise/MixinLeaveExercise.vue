@@ -1,5 +1,5 @@
 <script lang="ts">
-import { namespaceName } from "@/store";
+import { namespaceName } from "@/store/createStore";
 import { ExerciseActions } from "@/store/modules/exercise/types";
 import { defineComponent } from "vue";
 import { RouteRecordName } from "vue-router";
@@ -13,19 +13,6 @@ export default defineComponent({
     };
   },
 
-  watch: {
-    allowNavigation(val: boolean) {
-      if (val && this.routeToNavigate) {
-        this.$router.replace({
-          name: this.routeToNavigate,
-          params: {
-            allowNavigation: 1,
-          },
-        });
-      }
-    },
-  },
-
   methods: {
     askBeforeLeave(routeName: RouteRecordName | null) {
       this.routeToNavigate = routeName;
@@ -35,6 +22,14 @@ export default defineComponent({
     confirmCancelExercise() {
       this.$store.dispatch(namespaceName("exercise", ExerciseActions.Cancel));
       this.allowNavigation = true;
+      if (this.routeToNavigate) {
+        this.$router.replace({
+          name: this.routeToNavigate,
+          params: {
+            allowNavigation: 1,
+          },
+        });
+      }
     },
     preventCancelExercise() {
       this.allowNavigation = false;

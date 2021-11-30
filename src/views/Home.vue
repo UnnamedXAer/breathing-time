@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>{{ $t("home.welcome", ["Breathing Time"]) }}</h1>
+    <h1>{{ $t("home.welcome", [appTitle]) }}</h1>
     <section class="dashboard">
       <router-link :to="{ name: 'BreathingExercise-Start' }" class="card">
         <div class="image">
@@ -47,6 +47,9 @@ export default defineComponent({
     appCouthingAltSvg: CoughingAltSvgVue,
     appPreferencesSvg: PreferencesSvgVue,
     appInstructionSvg: InstructionSvgVue,
+  },
+  computed: {
+    appTitle: () => process.env.APP_TITLE,
   },
 });
 </script>

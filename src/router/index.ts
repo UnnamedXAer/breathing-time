@@ -1,4 +1,9 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  Router,
+  RouteRecordRaw,
+} from "vue-router";
 import HomeVue from "../views/Home.vue";
 import BreathingExerciseVue from "../views/BreathingExercise.vue";
 import BreathingExerciseSummaryVue from "../views/BreathingExerciseSummary.vue";
@@ -7,7 +12,8 @@ import BreathingVue from "../components/BreathingExercise/Breathing.vue";
 import BreathHoldVue from "../components/BreathingExercise/BreathHold.vue";
 import RecoveryVue from "../components/BreathingExercise/Recovery.vue";
 import PreferencesVue from "../views/Preferences.vue";
-import store, { StoreState } from "@/store";
+import store from "@/store";
+import { StoreState } from "@/store/types";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -86,11 +92,6 @@ const routes: Array<RouteRecordRaw> = [
   },
 ];
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes,
-});
-
 function beforeExercisePartialRouteEnter() {
   if (!(store.state as StoreState).exercise.started) {
     return {
@@ -99,4 +100,11 @@ function beforeExercisePartialRouteEnter() {
   }
 }
 
-export default router;
+const createRouterFactory = (): Router => {
+  return createRouter({
+    history: createWebHistory(process.env.BASE_URL),
+    routes,
+  });
+};
+
+export default createRouterFactory;

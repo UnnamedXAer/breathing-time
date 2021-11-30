@@ -1,5 +1,5 @@
 <template>
-  <section class="counter">
+  <section class="counter" data-test="ex-phase-counter">
     <div class="counter__time">
       {{ number }}
     </div>
