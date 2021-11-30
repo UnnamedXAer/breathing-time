@@ -6,6 +6,11 @@ export default {
     no: "No",
     ok: "Ok",
   },
+  banner: {
+    title: "Application {0}",
+    text: "on your mobile device",
+    download: "Download",
+  },
   header: {
     home: "Home",
     about: "About",
@@ -15,7 +20,6 @@ export default {
     start_exercise: "Start Your Breathing",
     exercise_instructions: "Breathing Instructions",
     exercise_preferences: "Breathing Preferences",
-    download: "Download",
   },
   preferences: {
     title: "Breathing Exercise Preferences",

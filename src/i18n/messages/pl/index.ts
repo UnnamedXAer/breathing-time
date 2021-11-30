@@ -7,12 +7,16 @@ const pl: LanguageMessages = {
     no: "Nie",
     ok: "Ok",
   },
+  banner: {
+    title: "Aplikacja {0}",
+    text: "na Twoim urządzeniu mobilnym",
+    download: "Pobierz",
+  },
   home: {
     welcome: "Witaj w {0}",
     start_exercise: "Zacznij Oddychać",
     exercise_instructions: "Informacje o Ćwiczeniu Oddechowym",
     exercise_preferences: "Preferencje Oddechowe",
-    download: "Pobierz",
   },
   header: {
     home: "Strona Główna",

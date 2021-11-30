@@ -1,4 +1,5 @@
 <template>
+  <app-mobile-banner />
   <app-header />
   <main class="main">
     <router-view data-test="app-router" />
@@ -13,9 +14,11 @@ import FooterVue from "./components/footer/Footer.vue";
 import "./assets/fonts/fonts.module.css";
 import { ExerciseActions } from "./store/modules/exercise/types";
 import { namespaceName } from "./store/createStore";
+import MobileBannerVue from "./components/ui/MobileBanner.vue";
 
 export default defineComponent({
   components: {
+    appMobileBanner: MobileBannerVue,
     appHeader: HeaderVue,
     appFooter: FooterVue,
   },
